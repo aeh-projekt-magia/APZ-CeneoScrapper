@@ -1,0 +1,23 @@
+FROM python:3.11
+
+RUN apt-get update --force-yes
+RUN apt-get install --force-yes --assume-yes --no-install-recommends netcat
+RUN apt-get -q clean
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# python libs install
+COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# copy files
+COPY . /usr/src/app
+
+#CMD flask run -h 0.0.0.0
+# copy entrypoint
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+
+# start server
+CMD ["./entrypoint.sh"]
