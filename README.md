@@ -6,3 +6,4 @@
 
 ## 2. Wymagania na zaliczenie:
 ![alt text](docs/wymagania_na_zjo.png)
+
