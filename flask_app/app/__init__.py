@@ -19,4 +19,7 @@ def create_app(config_class=Config):
     from app.questions import bp as questions_bp
     app.register_blueprint(questions_bp, url_prefix='/questions')
 
+    from app.products import bp as products_bp
+    app.register_blueprint(products_bp, url_prefix='/products')
+
     return app
