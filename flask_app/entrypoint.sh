@@ -8,4 +8,4 @@ echo "Waiting for postgres to start..."
 #
 #echo "Postgres started"
 
-python manage.py run -h 0.0.0.0
+python manage.py run --host=0.0.0.0

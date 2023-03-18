@@ -13,6 +13,12 @@ def recreate_db():
     db.session.commit()
 
 
+@cli.command('show')
+def show():
+    for x in app.config:
+        print(x)
+
+
 @cli.command('populate_Posts')
 def populate_Posts():
     from app.models.post import Post

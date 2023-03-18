@@ -9,7 +9,12 @@ services:
       - '.:/usr/src/app'
     ports:
       - '5001:5000'
+    networks:
+      - appnetwork
     environment:
       - FLASK_DEBUG=1
       - FLASK_APP=app
       - FLASK_ENV=development
+networks:
+  appnetwork:
+    driver: bridge
