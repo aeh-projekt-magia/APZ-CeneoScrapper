@@ -17,7 +17,7 @@ COPY . /usr/src/app
 
 #CMD flask run -h 0.0.0.0
 # copy entrypoint
-COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+#COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
 
 # start server
-CMD ["./entrypoint.sh"]
+CMD python manage.py run --host=0.0.0.0
