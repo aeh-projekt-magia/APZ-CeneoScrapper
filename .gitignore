@@ -1,6 +1,6 @@
 .idea
-CeneoWebScrapper-main
-flaskapp/app/__pycache__
+flask_app\__pycache__
+flask_app\app\__pycache__
+flask_app\app\models\__pycache__
+flask_app\app\controllers\__pycache__
 *.pyc
-flask_app/app/main/__pycache__/routes.cpython-311.pyc
-flask_app/app/__pycache__/extensions.cpython-311.pyc

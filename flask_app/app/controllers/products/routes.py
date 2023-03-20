@@ -1,5 +1,5 @@
 from flask import render_template, request, url_for, redirect
-from app.products import bp
+from app.controllers.products import bp
 from app.services.scrapper import QueryReviews
 from app.models.models import Review
 from app.extensions import db
