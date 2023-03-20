@@ -5,8 +5,8 @@ from app.services.scrapper import QueryReviews
 
 @bp.route('/<int:productid>', methods=['GET'])
 def show_reviews_by_id(productid):
-    a = QueryReviews(productid).get_reviews()
-    return render_template('products/index.html', reviews=a)
+    reviews = QueryReviews(productid).get_reviews()
+    return render_template('products/index.html', reviews=reviews, productid=productid)
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -16,4 +16,4 @@ def index():
         pass
     else:
         a = QueryReviews('143471602').get_reviews()
-        return render_template('products/index.html', reviews=a)
+        return render_template('products/index.html', reviews=a, productid='143471602')
