@@ -7,6 +7,7 @@ from app.services.forms import LoginForm, RegisterForm
 
 from app.controllers.accounts import bp
 
+
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:

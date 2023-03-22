@@ -1,19 +1,21 @@
-# from flask import render_template
-#
-# from app.controllers.main import bp
-#
-# @bp.route('/')
-# def index():
-#     return render_template("index.html")
-
-
 from flask import Blueprint, render_template
 from flask_login import login_required
+from app import db
+from app.models.models import User
 
-core_bp = Blueprint("core", __name__)
+
+bp = Blueprint("core", __name__)
 
 
-@core_bp.route("/")
+@bp.route("/")
 @login_required
 def home():
     return render_template("index.html")
+
+@bp.route("/1")
+def testowy():
+    users = User.query.all()
+    lista = []
+    for a in users:
+        lista.append([a.id, a.email, str(a.password), a.created_on, a.is_admin])
+    return lista

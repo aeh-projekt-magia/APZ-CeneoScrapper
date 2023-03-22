@@ -1,5 +1,5 @@
 from flask.cli import FlaskGroup
-
+import unittest
 from app import create_app, db
 
 app = create_app()
@@ -18,6 +18,16 @@ def show():
     for x in app.config:
         print(x)
 
+
+@cli.command("test")
+def test():
+    """Runs the unit tests without coverage."""
+    tests = unittest.TestLoader().discover("app/tests", pattern='test*.py')
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+    if result.wasSuccessful():
+        return 0
+    else:
+        return 1
 
 @cli.command('populate_Posts')
 def populate_Posts():

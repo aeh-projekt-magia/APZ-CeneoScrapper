@@ -1,10 +1,11 @@
 from flask import Flask
 
 from app.extensions import db, bcrypt, migrate, login_manager
-from config import Config
+from config import DevelopmentConfig
 from app.models.models import User
 
-def create_app(config_class=Config):
+
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
@@ -25,7 +26,7 @@ def create_app(config_class=Config):
     # from app.controllers.main import bp as main_bp
     # app.register_blueprint(main_bp)
 
-    from app.controllers.main.routes import core_bp as main_bp
+    from app.controllers.main.routes import bp as main_bp
     app.register_blueprint(main_bp)
 
     from app.controllers.accounts.routes import bp as accounts_bp
@@ -34,4 +35,5 @@ def create_app(config_class=Config):
     from app.controllers.products import bp as products_bp
     app.register_blueprint(products_bp, url_prefix='/products')
 
+    app.shell_context_processor({'app': app, 'db': db})
     return app
