@@ -2,6 +2,12 @@ Flask
 Flask-SQLAlchemy
 psycopg2-binary
 Flask-Testing
+Flask-Login
+Flask-Bcrypt
+Flask-WTF
+Flask-Migrate
+email_validator
+python-decouple
 markdown
 requests
 bs4
