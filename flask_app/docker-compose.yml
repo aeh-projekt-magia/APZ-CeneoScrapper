@@ -9,6 +9,10 @@ services:
       - '.:/usr/src/app'
     ports:
       - '5001:5000'
+    env_file:
+      - ./.env.dev
+    networks:
+      - appnetwork
     depends_on:
       - db
     environment:
@@ -23,6 +27,13 @@ services:
       - POSTGRES_USER=hello
       - POSTGRES_PASSWORD=hello12
       - POSTGRES_DB=hello_db
+    networks:
+      - appnetwork
       
 volumes:
   postgres_data:
+
+networks:
+  appnetwork:
+    driver: bridge
+
