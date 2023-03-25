@@ -4,3 +4,4 @@ flask_app\app\__pycache__
 flask_app\app\models\__pycache__
 flask_app\app\controllers\__pycache__
 *.pyc
+/flask_app/tests/.pytest_cache/
