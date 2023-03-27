@@ -17,6 +17,20 @@ services:
       - FLASK_ENV=development
       - EMAIL_ADDRESS=ceneowebscrapper@gmail.com
       - EMAIL_PASSWORD=populate_the_password_here
+    depends_on:
+      - db
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello
+      - POSTGRES_PASSWORD=hello
+      - POSTGRES_DB=hello_db
+
+volumes:
+  postgres_data:
+
 networks:
   appnetwork:
     driver: bridge
