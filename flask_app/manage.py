@@ -1,6 +1,7 @@
 from flask.cli import FlaskGroup
 import unittest
 from app import create_app, db
+from app.models.models import User
 
 app = create_app()
 cli = FlaskGroup(create_app=create_app)
@@ -18,6 +19,12 @@ def show():
     for x in app.config:
         print(x)
 
+@cli.command('show_users')
+def show_users():
+    users = User.query.all()
+
+    for user in users:
+        print(f'User: {user.id}: {user.email}, is_confirmed: {user.is_confirmed}')
 
 @cli.command("test")
 def test():
@@ -28,6 +35,19 @@ def test():
         return 0
     else:
         return 1
+
+@cli.command("create_admin")
+def create_admin():
+    """Create admin user"""
+    try:
+        admin_user = User(email='j@j.com', password='123456', is_admin=True, is_confirmed=True)
+        db.session.add(admin_user)
+        db.session.commit()
+        print(f'Created admin account')
+    except Exception as e: 
+        print(f'Failed to create admin acccount! {e}')
+  
+
 
 @cli.command('populate_Posts')
 def populate_Posts():

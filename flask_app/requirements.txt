@@ -11,3 +11,4 @@ python-decouple
 markdown
 requests
 bs4
+python-dotenv
