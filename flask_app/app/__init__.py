@@ -1,7 +1,7 @@
 from flask import Flask
 
 from app.extensions import db
-from config import Config
+from flask_app.config import Config
 
 
 def create_app(config_class=Config):
