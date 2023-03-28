@@ -12,3 +12,4 @@ markdown
 requests
 bs4
 python-dotenv
+jsonify
