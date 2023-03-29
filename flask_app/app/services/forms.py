@@ -1,8 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField
+from wtforms import EmailField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from app.models.models import User
+
+
+class ConfirmEmailForm(FlaskForm):
+    token = StringField('token', validators=[DataRequired()])
 
 
 class LoginForm(FlaskForm):
