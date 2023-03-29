@@ -6,8 +6,8 @@ from jinja2 import Template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from flask_app.app.services.emails.email_exception import EmailException
-from flask_app.config import Config
+from app.services.emails.email_exception import EmailException
+from config import Config
 
 
 class EmailSender:

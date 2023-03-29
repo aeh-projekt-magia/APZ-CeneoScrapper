@@ -1,7 +1,7 @@
 import pytest
 
-from flask_app.app.services.emails.email_sender import EmailSender
-from services.emails.conftest import Validations
+from app.services.emails.email_sender import EmailSender
+from tests.services.emails.conftest import Validations
 
 
 @pytest.mark.parametrize(

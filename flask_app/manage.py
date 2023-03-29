@@ -56,15 +56,15 @@ def create_admin():
         print(f'Failed to create admin acccount! {e}')
 
 
-@cli.command('populate_products')
-def populate_Products():
-    """**Currently not used, for future db population**"""
-    from app.models.models import Product
-    post_list = [{'product_id': '30166', 'name': 'Turek'},
-                 {'product_id': '54645', 'name': 'Ama'},
-                 {'product_id': '54156', 'name': 'fyfą'}]
+
+@cli.command('populate_Posts')
+def populate_Posts():
+    from app.models.post import Post
+    post_list = [{'title': 'Jakub', 'content': 'Turek'},
+                 {'title': 'RObson', 'content': 'Ama'},
+                 {'title': 'ema', 'content': 'fyfą'}]
     for x in post_list:
-        db.session.add(Product(product_id=x['product_id'], name=x['name']))
+        db.session.add(Post(title=x['title'], content=x['content']))
         db.session.commit()
 
 

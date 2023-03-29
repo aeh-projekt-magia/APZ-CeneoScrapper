@@ -23,7 +23,7 @@ def from_email_address():
 @pytest.fixture
 def mocked_email_address(mocker, from_email_address):
     mocker.patch(
-        'flask_app.app.services.emails.email_sender.EmailSender.email_address',
+        'app.services.emails.email_sender.EmailSender.email_address',
         from_email_address
     )
 
@@ -36,7 +36,7 @@ def test_resources_path():
 @pytest.fixture
 def mocked_password(mocker):
     mocker.patch(
-        'flask_app.app.services.emails.email_sender.EmailSender.password',
+        'app.services.emails.email_sender.EmailSender.password',
         'fake_password123'
     )
 
@@ -45,7 +45,7 @@ def mocked_password(mocker):
 def mocked__send_email(mocker):
     mock__send_email = mocker.stub(name="on__send_email_stub")
     mocker.patch(
-        'flask_app.app.services.emails.email_sender.EmailSender._send_email',
+        'app.services.emails.email_sender.EmailSender._send_email',
         mock__send_email
     )
     return mock__send_email
