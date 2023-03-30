@@ -35,13 +35,17 @@ def test():
     """Run tests
     --verbose - shows folders
     -rP - shows printouts from tests #can be deleted later#"""
-    pytest.main(['-rP','--verbose','--rootdir', '.'])
+    pytest.main(['-rP','--verbose', '--rootdir', '.'])
 
 @cli.command("test_clean")
-def test():
+def test_clean():
     """Run tests with no extra flags"""
     pytest.main(['--rootdir', '.'])
 
+@cli.command("test_extra")
+def test_extra():
+    """Run tests with --setup-show (fixtures)"""
+    pytest.main(['-rP','--verbose','--setup-show', '--rootdir', '.'])
 
 @cli.command("create_admin")
 def create_admin():

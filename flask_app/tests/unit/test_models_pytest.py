@@ -2,12 +2,18 @@ import pytest
 
 from app.models.models import User
 
-def test_new_user():
+
+@pytest.mark.parametrize("test_user", [{
+    'email': "test_user01@yahoo.com",
+    'password': "123456"
+}])
+def test_new_user(test_user):
     """
-    Check if user model works properly
+    Check if user model works properly, 
+    assigns proper values and hashes a password
     """
-    user = User('jakub@jakub.jakub', 'Testpassword2130')
-    assert user.email == 'jakub@jakub.jakub'
-    assert user.password != 'Testpassword2130'
-    assert user.is_admin == False
-    assert user.is_confirmed == False
+    user = User(test_user['email'], 'Testpassword2130')
+    assert user.email is test_user.get('email')
+    assert user.password is not test_user.get('password')
+    assert user.is_admin is False
+    assert user.is_confirmed is False

@@ -1,7 +1,7 @@
 from flask import Flask
 
 from app.extensions import db, bcrypt, migrate, login_manager
-from config import DevelopmentConfig
+from config import DevelopmentConfig, TestingConfig
 from app.models.models import User
 
 

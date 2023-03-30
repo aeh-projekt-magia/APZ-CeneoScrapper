@@ -22,7 +22,7 @@ def register():
 
         login_user(user)
         flash("You registered and are now logged in. Welcome!", "success")
-        flash(f"{token}")
+        flash(f"token: {token}")
 
         return redirect(url_for("main.home"))
 
