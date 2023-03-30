@@ -2,4 +2,6 @@ from flask import Blueprint
 
 bp = Blueprint('products', __name__)
 
-from app.controllers.products import routes
+"""Not a mistake, this import is crucial for app"""
+from app.controllers.products.routes import bp
+

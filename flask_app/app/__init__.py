@@ -1,8 +1,8 @@
 from flask import Flask
 
 from app.extensions import db, bcrypt, migrate, login_manager
-from config import DevelopmentConfig, TestingConfig
-from app.models.models import User
+
+from config import DevelopmentConfig
 
 
 def create_app(config_class=DevelopmentConfig):
@@ -15,6 +15,7 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.login_view = "accounts.login"
     login_manager.login_message_category = "danger"
 
+    from app.models.models import User
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.filter(User.id == int(user_id)).first()
@@ -23,8 +24,6 @@ def create_app(config_class=DevelopmentConfig):
 
     migrate.init_app(app, db)
 
-    # from app.controllers.main import bp as main_bp
-    # app.register_blueprint(main_bp)
 
     from app.controllers.main.routes import bp as main_bp
     app.register_blueprint(main_bp)
@@ -35,5 +34,5 @@ def create_app(config_class=DevelopmentConfig):
     from app.controllers.products import bp as products_bp
     app.register_blueprint(products_bp, url_prefix='/products')
 
-    app.shell_context_processor({'app': app, 'db': db})
+    # app.shell_context_processor({'app': app, 'db': db})
     return app

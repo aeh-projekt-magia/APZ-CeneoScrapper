@@ -1,13 +1,11 @@
 import pytest
 
 from app import create_app, db
-from config import DevelopmentConfig
 
 
 @pytest.fixture()
 def app():
-    app = create_app(config_class=DevelopmentConfig)
-    # app.config.from_object("config.DevelopmentConfig")
+    app = create_app()
 
     yield app
 
@@ -15,10 +13,12 @@ def app():
 @pytest.fixture()
 def database(app):
     with app.app_context():
+        db.drop_all()
         db.create_all()
 
     yield db
     db.drop_all()
+    db.create_all()
 
 
 @pytest.fixture()
