@@ -8,6 +8,7 @@ cli = FlaskGroup(create_app=create_app)
 
 @cli.command('recreate_db')
 def recreate_db():
+    from app.models.ItemModel import Item
     db.drop_all()
     db.create_all()
     db.session.commit()
@@ -28,6 +29,41 @@ def populate_Posts():
     for x in post_list:
         db.session.add(Post(title=x['title'], content=x['content']))
         db.session.commit()
+
+@cli.command('add_Item')
+def add_Item():
+    itemId = input("Podaj Id itemu:")
+    from app.repository.ItemRepository import addItem
+    addItem(itemId, 'test', True, 9.99, "www.google.com")
+
+
+@cli.command('get_Item')
+def get_Item():
+    from app.repository.ItemRepository import getItem
+    getItem('1234')
+
+
+@cli.command('get_AllItems')
+def get_AllItems():
+    from app.repository.ItemRepository import getAllItems
+    getAllItems()
+
+@cli.command('del_Item')
+def del_Item():
+    from app.repository.ItemRepository import deleteItem
+    itemId = input("Podaj Id itemu:")
+    deleteItem(itemId)
+
+@cli.command('del_AllItems')
+def del_AllItems():
+    from app.repository.ItemRepository import deleteAllItems
+    deleteAllItems()
+
+@cli.command('update_Item')
+def update_Item():
+    from app.repository.ItemRepository import updateItem
+    itemId = input("Podaj Id itemu:")
+    updateItem(itemId,True,9.5)
 
 
 if __name__ == '__main__':

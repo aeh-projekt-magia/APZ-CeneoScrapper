@@ -1,9 +1,9 @@
 from app.extensions import db
 
 
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Text)
+##class Product(db.Model):
+##    id = db.Column(db.Integer, primary_key=True)
+##   product_id = db.Column(db.Text)
 
 
 class Review(db.Model):
