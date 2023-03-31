@@ -10,8 +10,9 @@ class Item(db.Model):
     last_updated = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __str__(self):
-        return (str(self.item_id) + " " + self.item_name + " " + str(self.is_available) + 
-                " " + str(self.lowest_price) + " " + self.offer_url + " " + str(self.last_updated))
+        return (str(self.item_id) + " " + self.item_name + " " + 
+                str(self.is_available) + " " + str(self.lowest_price) + " " + 
+                    self.offer_url + " " + str(self.last_updated))
 
 
 #created_date = DateTime(default=datetime.datetime.utcnow)
