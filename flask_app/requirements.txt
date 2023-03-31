@@ -1,7 +1,9 @@
-Flask
+Flask~=2.2.3
 Flask-SQLAlchemy
 psycopg2-binary
 Flask-Testing
 markdown
-requests
-bs4
+requests~=2.22.0
+bs4~=0.0.1
+selenium~=4.8.3
+beautifulsoup4~=4.8.2
