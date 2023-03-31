@@ -12,15 +12,17 @@ def addItem(itemId, itemName, isAvailable, lowestPrice, offerUrl):
     db.session.commit()
 
 def getItem(itemId):
-    for x in db.session.query(Item).filter(Item.item_id == itemId):
-        print(x)
+    item = db.session.execute(db.select(Item).filter_by(item_id=itemId)).scalar_one()
+    print(item)
 
 def getAllItems():
-    for x in db.session.query(Item):
+    items = db.session.execute(db.select(Item)).scalars()
+    for x in items:
         print(x)
 
 def deleteItem(itemId):
-    db.session.query(Item).filter(Item.item_id == itemId).delete()
+    item = db.session.execute(db.select(Item).filter_by(item_id=itemId)).scalar_one()
+    db.session.delete(item)
     db.session.commit()
 
 def deleteAllItems():
@@ -29,11 +31,11 @@ def deleteAllItems():
 
 def updateItem(itemId,isAvailable,lowestPrice):
 
-    updatedItem = db.session.query(Item).get(itemId)
+    item = db.session.execute(db.select(Item).filter_by(item_id=itemId)).scalar_one()
 
-    updatedItem.is_available = isAvailable
-    updatedItem.lowest_price = lowestPrice
-    updatedItem.last_updated = datetime.datetime.now()
+    item.is_available = isAvailable
+    item.lowest_price = lowestPrice
+    item.last_updated = datetime.datetime.now()
 
     db.session.commit()
 
