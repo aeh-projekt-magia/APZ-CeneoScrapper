@@ -7,8 +7,8 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from flask_app.app.services.ceneo.web_scrapper.ceneo_offer_data import CeneoOfferData
-from flask_app.app.services.ceneo.web_scrapper.ceneo_page import CeneoPage
+from app.services.ceneo.web_scrapper.ceneo_offer_data import CeneoOfferData
+from app.services.ceneo.web_scrapper.ceneo_page import CeneoPage
 
 
 class SortingOptions(Enum):

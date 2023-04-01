@@ -1,4 +1,4 @@
-from flask_app.app.services.ceneo.item_interface import ItemInterface
+from app.services.ceneo.item_interface import ItemInterface
 
 
 class CeneoItem(ItemInterface):

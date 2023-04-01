@@ -1,6 +1,6 @@
 from selenium import webdriver
 
-from flask_app.app.services.ceneo.web_scrapper.ceneo_page import CeneoPage
+from app.services.ceneo.web_scrapper.ceneo_page import CeneoPage
 
 
 class CeneoItemsSearchPage(CeneoPage):
