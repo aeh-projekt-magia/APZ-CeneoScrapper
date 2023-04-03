@@ -2,6 +2,7 @@ from flask.cli import FlaskGroup
 import pytest
 from app import create_app, db
 from app.models.models import User
+from config import DevelopmentConfig, ProductionConfig, TestingConfig
 
 app = create_app()
 cli = FlaskGroup(create_app=create_app)
@@ -54,21 +55,21 @@ def create_admin():
         admin_user = User(email='j@j.com', password='123456', is_admin=True, is_confirmed=True)
         db.session.add(admin_user)
         db.session.commit()
-        print(f'Created admin account')
+        print('Created admin account')
     except Exception as e: 
         print(f'Failed to create admin acccount! {e}')
   
 
 
-@cli.command('populate_Posts')
-def populate_Posts():
-    from app.models.post import Post
-    post_list = [{'title': 'Jakub', 'content': 'Turek'},
-                 {'title': 'RObson', 'content': 'Ama'},
-                 {'title': 'ema', 'content': 'fyfą'}]
-    for x in post_list:
-        db.session.add(Post(title=x['title'], content=x['content']))
-        db.session.commit()
+# @cli.command('populate_Posts')
+# def populate_Posts():
+#     from app.models.post import Post
+#     post_list = [{'title': 'Jakub', 'content': 'Turek'},
+#                  {'title': 'RObson', 'content': 'Ama'},
+#                  {'title': 'ema', 'content': 'fyfą'}]
+#     for x in post_list:
+#         db.session.add(Post(title=x['title'], content=x['content']))
+#         db.session.commit()
 
 
 if __name__ == '__main__':

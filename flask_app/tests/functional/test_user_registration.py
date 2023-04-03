@@ -31,7 +31,7 @@ def test_register(client, test_user_data):
 def test_register_incorrect_email(client, database):
     """Check if user can't be registered using incorrect email"""
     client.get("/logout", follow_redirects=True)
-    response = client.post("/register", data=dict(
+    client.post("/register", data=dict(
         email="test@user",
         password="test_user",
         confirm="test_user"), follow_redirects=True)
