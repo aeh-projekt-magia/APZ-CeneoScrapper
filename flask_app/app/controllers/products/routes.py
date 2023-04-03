@@ -1,14 +1,25 @@
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request
+from flask_login import login_required
+
 from app.controllers.products import bp
-from app.services.scrapper import QueryReviews
-from app.models.models import Review
 from app.extensions import db
+from app.models.models import Review, Product
+from app.services.decorators import confirmed_user_required
+from app.services.scrapper import QueryReviews
 
 
 @bp.route('/<int:productid>', methods=['GET'])
+@login_required
+@confirmed_user_required
 def show_reviews_by_id(productid):
     """Pobranie recenzji o danym produkcie, zapisanie ich do bazy danych i wyświetlenie"""
     reviews = QueryReviews(productid).get_reviews()
+
+    new_product = Product.query.filter_by(product_id=productid).first()
+    if not new_product:
+        new_product = Product(product_id=productid, name='Nieznana')
+        db.session.add(new_product)
+        db.session.commit()
 
     for review in reviews:
         new_review = Review(product_id=productid,
@@ -22,7 +33,7 @@ def show_reviews_by_id(productid):
                             useless=review['useless'],
                             pros=''.join(str(x) for x in review['pros']),
                             cons=''.join(str(x) for x in review['cons']),
-                            review_id=review['review_id'])
+                            review_id=1)
         db.session.add(new_review)
         db.session.commit()
 
@@ -30,10 +41,12 @@ def show_reviews_by_id(productid):
 
 
 @bp.route('/', methods=['GET', 'POST'])
+@login_required
+@confirmed_user_required
 def index():
     """Wyświetlenie pobranych do tej pory recenzji"""
     if request.method == 'POST':
         pass
     else:
-        reviews = Review.query.all()
-        return render_template('products/index.html', reviews=reviews)
+        products = Product.query.all()
+        return render_template('products/index.html', products=products)

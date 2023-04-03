@@ -1,10 +1,6 @@
-import os
-import json
 import requests
 from bs4 import BeautifulSoup
 
-
-# https://www.ceneo.pl/143471602
 
 class QueryReviews:
     def __init__(self, product_id):
