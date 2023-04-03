@@ -3,11 +3,11 @@ from app.extensions import db
 
 
 def addSubscriber(itemId, userId, notificationFreq, notifyOnPriceChange,sendNotification):
-    newSubscriber = Subscription(item_id = itemId,
-                                 user_id = userId,
-                                 notification_frequency = notificationFreq,
-                                 notify_on_price_change = notifyOnPriceChange,
-                                 send_notification = sendNotification)
+    newSubscriber = Subscription(itemId,
+                                 userId,
+                                 notificationFreq,
+                                 notifyOnPriceChange,
+                                 sendNotification)
     db.session.add(newSubscriber)
     db.session.commit()
 

@@ -2,6 +2,8 @@ from flask.cli import FlaskGroup
 
 from app import create_app, db
 
+import pytest
+
 app = create_app()
 cli = FlaskGroup(create_app=create_app)
 
@@ -64,6 +66,13 @@ def update_Item():
     from app.repository.ItemRepository import updateItem
     itemId = input("Podaj Id itemu:")
     updateItem(itemId,True,9.5)
+
+@cli.command("test")
+def test():
+    """Run tests
+    --verbose - shows folders
+    -rP - shows printouts from tests #can be deleted later#"""
+    pytest.main(['-rP','--verbose', '--rootdir', '.'])
 
 
 if __name__ == '__main__':

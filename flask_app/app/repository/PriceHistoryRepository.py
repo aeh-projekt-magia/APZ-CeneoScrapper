@@ -2,8 +2,8 @@ from app.models.PriceHistoryModel import PriceHistory
 from app.extensions import db
 
 def addPriceHistoryRecord(itemId, price):
-    newRecord = PriceHistory(item_id = itemId,
-                             price = price)
+    newRecord = PriceHistory(itemId,
+                             price)
     db.session.add(newRecord)
     db.session.commit()
 

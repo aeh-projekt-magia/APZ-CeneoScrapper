@@ -2,9 +2,9 @@ from app.models.UserModel import User
 from app.extensions import db
 
 def addUser(emailAddress,userPassword,isAdmin):
-    newUser = User(email_address = emailAddress,
-                   password = userPassword,
-                   is_admin = isAdmin)
+    newUser = User(emailAddress,
+                   userPassword,
+                   isAdmin)
     db.session.add(newUser)
     db.session.commit()
 

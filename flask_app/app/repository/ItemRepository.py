@@ -3,11 +3,11 @@ from app.extensions import db
 import datetime
 
 def addItem(itemId, itemName, isAvailable, lowestPrice, offerUrl):
-    newItem = Item(item_id = itemId,
-                   item_name = itemName,
-                   is_available = isAvailable,
-                   lowest_price = lowestPrice,
-                   offer_url = offerUrl)
+    newItem = Item(itemId,
+                   itemName,
+                   isAvailable,
+                   lowestPrice,
+                   offerUrl)
     db.session.add(newItem)
     db.session.commit()
 
