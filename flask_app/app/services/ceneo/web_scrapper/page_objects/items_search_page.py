@@ -1,9 +1,9 @@
 from selenium import webdriver
 
-from app.services.ceneo.web_scrapper.ceneo_page import CeneoPage
+from services.ceneo.web_scrapper.page_objects.ceneo_page import CeneoPage
 
 
-class CeneoItemsSearchPage(CeneoPage):
+class ItemsSearchPage(CeneoPage):
     def __init__(self, driver: webdriver.Chrome):
         pass
 

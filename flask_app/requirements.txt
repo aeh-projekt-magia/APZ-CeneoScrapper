@@ -20,4 +20,5 @@ pytest-mock~=3.10.0
 python-dotenv
 python-decouple
 jsonify
+webdriver-manager
 
