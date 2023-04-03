@@ -1,12 +1,13 @@
 import pytest
 
 from app import create_app, db
+from app.models.models import User
 
 
 @pytest.fixture()
 def app():
     app = create_app()
-
+    
     yield app
 
 
@@ -33,5 +34,9 @@ def runner(app):
 
 @pytest.fixture()
 def test_user_data():
-    dictionary = {'email': "test_user01@yahoo.com", 'password': "123456"}
-    return dictionary
+    return {'email': 'test_user01@yahoo.com', 'password': '123456'}
+
+
+@pytest.fixture()
+def test_admin_data():
+    return {'email': 'admin@admin.admin', 'password': '123456', 'is_admin': True, 'is_confirmed':True}
