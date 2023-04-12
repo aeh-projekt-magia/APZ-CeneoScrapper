@@ -7,6 +7,7 @@ from app.models.models import User
 from app.services.decorators import logout_required
 from app.services.forms import LoginForm, RegisterForm, ConfirmEmailForm
 from app.services.token import generate_token, confirm_token
+from app.services.emails.email_sender import EmailSender
 
 
 @bp.route("/register", methods=["GET", "POST"])
@@ -22,8 +23,13 @@ def register():
 
         login_user(user)
         flash("You registered and are now logged in. Welcome!", "success")
+        try:
+            EmailSender.send_email(
+                message=f"Token: {token}", subject="Your token", recipient=user.email
+            )
+        except:
+            flash(f"Couldn't generate email token")
         flash(f"token: {token}")
-
         return redirect(url_for("main.home"))
 
     return render_template("accounts/register.html", form=form)
