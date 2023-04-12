@@ -26,3 +26,4 @@ recenzje pobrane z Ceneo
 
 ![alt text](docs/wymagania_na_zjo.png)
 
+.
