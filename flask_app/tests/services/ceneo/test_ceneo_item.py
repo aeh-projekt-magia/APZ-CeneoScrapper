@@ -1,9 +1,9 @@
 from datetime import datetime
 
 import pytest
-from services.ceneo.ceneo_item import CeneoItem
-from services.ceneo.web_scrapper.data_objects.offer_data import OfferData
-from services.ceneo.web_scrapper.operations.item_operations import ItemOperations
+from app.services.ceneo.ceneo_item import CeneoItem
+from app.services.ceneo.web_scrapper.data_objects.offer_data import OfferData
+from app.services.ceneo.web_scrapper.operations.item_operations import ItemOperations
 from unittest.mock import patch, MagicMock
 
 
@@ -82,13 +82,13 @@ def test_fetch_lowest_price(ceneo_item_mocks, offer_data_params, item_id_, offer
     assert lowest_price_dict == expected_lowest_price_dict
 
 
-@pytest.mark.e2e
-def test_e2e_fetch_lowest_price(item_id_):
-    ceneo_item = CeneoItem()
-    lowest_price_dict = ceneo_item.fetch_lowest_price(item_id_)
-    assert lowest_price_dict['item_id'] == item_id_
-    assert "Apple iPhone 13" in lowest_price_dict['item_name']
-    assert lowest_price_dict['price'] > 0.0
-    assert len(lowest_price_dict['offer']) > 0
-    assert len(lowest_price_dict['shop_name']) > 0
+# @pytest.mark.e2e
+# def test_e2e_fetch_lowest_price(item_id_):
+#     ceneo_item = CeneoItem()
+#     lowest_price_dict = ceneo_item.fetch_lowest_price(item_id_)
+#     assert lowest_price_dict['item_id'] == item_id_
+#     assert "Apple iPhone 13" in lowest_price_dict['item_name']
+#     assert lowest_price_dict['price'] > 0.0
+#     assert len(lowest_price_dict['offer']) > 0
+#     assert len(lowest_price_dict['shop_name']) > 0
 

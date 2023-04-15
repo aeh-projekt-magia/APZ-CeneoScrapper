@@ -1,7 +1,7 @@
 from app.services.ceneo.item_interface import ItemInterface
 
-from services.ceneo.web_scrapper.webdriver_provider import WebdriverProvider
-from services.ceneo.web_scrapper.operations.item_operations import ItemOperations
+from app.services.ceneo.web_scrapper.webdriver_provider import WebdriverProvider
+from app.services.ceneo.web_scrapper.operations.item_operations import ItemOperations
 from datetime import datetime
 import sys
 
