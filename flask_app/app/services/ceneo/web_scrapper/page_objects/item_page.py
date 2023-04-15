@@ -52,7 +52,7 @@ class ItemPage(CeneoPage):
     def init_web_elements(self):
         self.sort_dropdown = self.driver.find_element(*self.l_sort_dropdown)
         self.item_name = self.driver.find_element(*self.l_item_name)
-        self._load_offers()
+        # self._load_offers()
 
     def sort_offers_by(self, by: SortingOptions):
         """
@@ -68,6 +68,7 @@ class ItemPage(CeneoPage):
         sorting_option = self.driver.find_element(*l_sorting_option)
         sorting_option.click()
         self.init_web_elements()
+        self._load_offers()
 
     def get_first_offer(self) -> OfferData:
         """
@@ -89,11 +90,30 @@ class ItemPage(CeneoPage):
 
     def _web_element_to_offer(self, web_element: WebElement) -> OfferData:
         l_offer_url = (By.XPATH, "//a[contains(@class, 'go-to-shop')]")
+        l_buy_now_button = (By.XPATH, "//button[contains(@class, 'add-to-basket-no-popup')]")
 
         item_name = self.item_name.text
         item_id = web_element.get_attribute('data-productid')
-        price = float(web_element.get_attribute('data-price'))
+        # price = float(web_element.get_attribute('data-price'))
         shop_url = web_element.get_attribute('data-shopurl')
+
+
+        try:
+            item_id = web_element.get_attribute('data-productid')
+            price = float(web_element.get_attribute('data-price'))
+            shop_url = web_element.get_attribute('data-shopurl')
+            offer_url_web_element = web_element.find_element(*l_offer_url)
+            offer_url = offer_url_web_element.get_attribute('href')
+        except TypeError :
+            buy_now_button = web_element.find_element(*l_buy_now_button)
+            item_id = buy_now_button.get_attribute('data-product')
+            price = float(buy_now_button.get_attribute('data-price'))
+            shop_url = None
+            offer_url = f'ceneo.pl{web_element.get_attribute("data-click-url")}'
+
+
+
+        #     price =
 
         offer_url_web_element = web_element.find_element(*l_offer_url)
         offer_url = offer_url_web_element.get_attribute('href')
