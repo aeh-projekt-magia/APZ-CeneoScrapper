@@ -21,6 +21,7 @@ class CeneoItem(ItemInterface):
             item_name=offer_data['item_name'],
             price=offer_data['price'],
             offer=offer_data['offer_url'],
+            shop_name=offer_data['shop_name'],
             timestamp=datetime.now(),
         )
         return lowest_price

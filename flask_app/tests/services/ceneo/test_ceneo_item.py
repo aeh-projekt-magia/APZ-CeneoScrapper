@@ -49,8 +49,8 @@ def offer_data_params(item_id_):
         'item_name': 'test_item_name',
         'item_id': item_id_,
         'price': 1000.00,
-        'shop_url': 'https://test_shop_url.com',
-        'offer_url': 'https://test_shop_url.com/offers/abc12'
+        'shop_name': 'test_shop_name.com',
+        'offer_url': 'https://test_shop_name.com/offers/abc12'
     }
 
 
@@ -68,9 +68,10 @@ def ceneo_item_mocks(mocked_webdriver_provider, mocked_item_operations):
 def test_fetch_lowest_price(ceneo_item_mocks, offer_data_params, item_id_, offer_data):
     expected_lowest_price_dict = {
         'item_id': item_id_,
-        'item_name': 'test_item_name',
-        'price': 1000.00,
-        'offer': 'https://test_shop_url.com/offers/abc12',
+        'item_name': offer_data_params['item_name'],
+        'price': offer_data_params['price'],
+        'offer': offer_data_params['offer_url'],
+        'shop_name': offer_data_params['shop_name'],
         'timestamp': datetime.now()
     }
 
@@ -89,3 +90,5 @@ def test_e2e_fetch_lowest_price(item_id_):
     assert "Apple iPhone 13" in lowest_price_dict['item_name']
     assert lowest_price_dict['price'] > 0.0
     assert len(lowest_price_dict['offer']) > 0
+    assert len(lowest_price_dict['shop_name']) > 0
+
