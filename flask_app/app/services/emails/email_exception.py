@@ -1,4 +1,4 @@
-from flask_app.app.shared.basic_exception import BasicException
+from app.shared.basic_exception import BasicException
 
 
 class EmailException(BasicException):
