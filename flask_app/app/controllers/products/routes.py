@@ -4,13 +4,13 @@ from flask_login import login_required
 from app.controllers.products import bp
 from app.extensions import db
 from app.models.models import Review, Product
-from app.services.decorators import check_is_confirmed
+from app.services.decorators import confirmed_user_required
 from app.services.scrapper import QueryReviews
 
 
 @bp.route('/<int:productid>', methods=['GET'])
 @login_required
-@check_is_confirmed
+@confirmed_user_required
 def show_reviews_by_id(productid):
     """Pobranie recenzji o danym produkcie, zapisanie ich do bazy danych i wyświetlenie"""
     reviews = QueryReviews(productid).get_reviews()
@@ -42,7 +42,7 @@ def show_reviews_by_id(productid):
 
 @bp.route('/', methods=['GET', 'POST'])
 @login_required
-@check_is_confirmed
+@confirmed_user_required
 def index():
     """Wyświetlenie pobranych do tej pory recenzji"""
     if request.method == 'POST':
