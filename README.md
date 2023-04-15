@@ -19,9 +19,10 @@
 - http://localhost:5001/login - panel logowania. Dostępny jedynie gdy użytkownik pozostaje niezalogowany;
 - http://localhost:5001/register - panel rejestracji. Dostępny jedynie gdy użytkownik pozostaje niezalogowany; 
 - http://localhost:5001/confirm/ - potwierdzenie konta po rejestracji;
-- http://localhost:5001/products/<produkt_id_z_ceneo> - pobiera, wyświetla i zapisuje do bazy danych SQLite 
-recenzje pobrane z Ceneo
-- http://localhost:5001/products/ - wyświetla wszystkie pobrane do tej pory pobrane recenzje z Ceneo
+- http://localhost:5001/products/ - wyświetla przykładowy produkt
+- http://localhost:5001/products/?tab=1 - wyświetla opinie nt. wyświetlanego produktu
+- http://localhost:5001/products/?tab=2 - docelowo ma wyświetlać również sklepy oferujące konkretny produkt
+
 ## 2. Wymagania na zaliczenie:
 
 ![alt text](docs/wymagania_na_zjo.png)

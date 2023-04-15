@@ -1,0 +1,16 @@
+{% block content %}
+
+
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-12 mx-auto">
+        <div class="flex flex-wrap -mx-4 -my-8">
+
+            {% for review in reviews %}
+            {% include "products/single_review.html" %}
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

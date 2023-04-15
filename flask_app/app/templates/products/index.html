@@ -2,42 +2,23 @@
 
 {% block content %}
 
-<section class="text-gray-600 body-font overflow-hidden">
-    <div class="container px-5 py-24 mx-auto">
 
-        <!--        <h1>Opinie dla produktu {{productid}} </h1>-->
-        <!--        <br>-->
+{% include "products/single_product.html" %}
 
-        <div class="-my-8 divide-y-2 divide-gray-100">
-            {% for product in products %}
-            <div class="py-8 flex flex-wrap md:flex-nowrap">
-                <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                    <span class="font-semibold title-font text-gray-700">{{product.product_id}}</span>
-                    <span class="mt-1 text-gray-500 text-sm">{{product.name}}</span>
-                </div>
 
-                <div class="md:flex-grow">
-                    <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">aa</h2>
-                    <p class="leading-relaxed">{{product.name}}</p>
-                    <a class="text-indigo-500 inline-flex items-center mt-4">Stars: {{product.name}}
-                        <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14"></path>
-                            <path d="M12 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                </div>
-                {% for xx in products.review%}
 
-                {%endfor%}
-                aa
-                {% endfor %}
+<div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-base justify-center">
+        <a class="mr-5 px-6 py-2 text-white bg-indigo-500 hover:bg-indigo-600 rounded" href="{{ url_for('products.index', tab=1 )}}">Opinie</a>
+        <a class="mr-5 px-6 py-2 text-white bg-indigo-500 hover:bg-indigo-600 rounded" href="{{ url_for('products.index', tab=2) }}">Sklepy</a>
+    </nav>
+</div>
 
-            </div>
 
-        </div>
+{% if tab == 1 %}
+{% include "products/reviews.html" %}
 
-    </div>
-</section>
+{% endif %}
+
 
 {% endblock %}
