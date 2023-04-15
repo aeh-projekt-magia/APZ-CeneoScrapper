@@ -27,6 +27,7 @@ def register():
             EmailSender.send_email(
                 message=f"Token: {token}", subject="Your token", recipient=user.email
             )
+            flash(f"Token has been sent on {user.email}", "success")
         except:
             flash(f"Couldn't generate email token")
         flash(f"token: {token}")
