@@ -72,6 +72,7 @@ product = {
     "available_shops_count": "Available in 50 shops",
     "reviews_count": "12 reviews",
     "description": "Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
+    "reviews" : reviews
 }
 
 @bp.route("/", methods=["GET", "POST"])
@@ -84,7 +85,7 @@ def index():
     if request.args.get("tab") == "1":
         tab = 1
         return render_template(
-            "products/index.html", product=product, tab=tab, reviews=reviews
+            "products/index.html", product=product, tab=tab, reviews=product['reviews']
         )
     return render_template("products/index.html", product=product, tab=tab)
 
