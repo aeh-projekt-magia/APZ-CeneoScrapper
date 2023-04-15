@@ -1,3 +1,5 @@
+selenium
+webdriver-manager
 Flask~=2.2.3
 Flask-SQLAlchemy
 Flask-Testing
@@ -12,7 +14,7 @@ markdown
 
 requests~=2.22.0
 bs4~=0.0.1
-selenium~=4.8.3
+
 beautifulsoup4~=4.8.2
 Jinja2~=3.1.2
 pytest~=7.2.2
@@ -20,5 +22,5 @@ pytest-mock~=3.10.0
 python-dotenv
 python-decouple
 jsonify
-webdriver-manager
+
 
