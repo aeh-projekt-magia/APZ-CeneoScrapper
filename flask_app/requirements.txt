@@ -45,3 +45,7 @@ typing_extensions==4.5.0
 urllib3==1.25.11
 
 
+selenium~=4.8.3
+beautifulsoup4~=4.8.2
+webdriver-manager
+
