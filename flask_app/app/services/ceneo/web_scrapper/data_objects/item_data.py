@@ -1,4 +1,4 @@
-from services.ceneo.web_scrapper.data_objects.ceneo_data_object import CeneoDataObject
+from app.services.ceneo.web_scrapper.data_objects.ceneo_data_object import CeneoDataObject
 
 
 class ItemData(CeneoDataObject):

@@ -3,13 +3,14 @@ from typing import List, Tuple
 
 from selenium import webdriver
 from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from services.ceneo.web_scrapper.data_objects.offer_data import OfferData
-from services.ceneo.web_scrapper.page_objects.ceneo_page import CeneoPage
+from app.services.ceneo.web_scrapper.data_objects.offer_data import OfferData
+from app.services.ceneo.web_scrapper.page_objects.ceneo_page import CeneoPage
 
 
 class SortingOptions(Enum):

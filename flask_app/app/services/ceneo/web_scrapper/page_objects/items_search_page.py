@@ -1,6 +1,6 @@
 from selenium import webdriver
 
-from services.ceneo.web_scrapper.page_objects.ceneo_page import CeneoPage
+from app.services.ceneo.web_scrapper.page_objects.ceneo_page import CeneoPage
 
 
 class ItemsSearchPage(CeneoPage):
