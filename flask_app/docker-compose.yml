@@ -19,6 +19,19 @@ services:
       - EMAIL_ADDRESS=ceneowebscrapper@gmail.com
       # DELETE PASSWORD BEFORE COMMITING!
       - EMAIL_PASSWORD=#####
+
+  selenium:
+    image: selenium/standalone-chrome
+    shm_size: 2gb
+    ports:
+      - '4444:4444'
+      - '7900:7900' 
+      - '5900:5900'
+    networks:
+      - appnetwork
+    environment:
+      - VNC_NO_PASSWORD= 1
+
 #    depends_on:
 #      - db
 #  db:
