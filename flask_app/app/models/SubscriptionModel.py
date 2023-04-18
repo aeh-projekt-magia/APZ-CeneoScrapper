@@ -17,7 +17,7 @@ class Subscription(db.Model):
 
     subscription_id = db.Column(db.Integer, primary_key=True)
     item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     notification_frequency = db.Column(db.Integer, default = 0)
     notify_on_price_change = db.Column(db.Boolean, default = False)
     send_notification = db.Column(db.Boolean, default = False)

@@ -1,7 +1,7 @@
 from flask.cli import FlaskGroup
 import pytest
 from app import create_app, db
-from app.models.models import User_Legacy
+from app.models.UserModel import User
 from app.models.ItemModel import Item
 from app.models.PriceHistoryModel import PriceHistory
 from app.models.SubscriptionModel import Subscription
@@ -28,7 +28,7 @@ def show():
 @cli.command('show_users')
 def show_users():
     """Query all users in database"""
-    users = User_Legacy.query.all()
+    users = User.query.all()
 
     for user in users:
         print(f'User: {user.id}: {user.email}, is_confirmed: {user.is_confirmed}, is_admin: {user.is_admin}')
@@ -55,7 +55,7 @@ def test_extra():
 def create_admin():
     """Create admin user"""
     try:
-        admin_user = User_Legacy(email='j@j.com', password='123456', is_admin=True, is_confirmed=True)
+        admin_user = User(email='j@j.com', password='123456', is_admin=True, is_confirmed=True)
         db.session.add(admin_user)
         db.session.commit()
         print('Created admin account')

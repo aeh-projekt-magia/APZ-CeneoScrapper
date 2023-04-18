@@ -18,7 +18,7 @@ def test_user_model():
     user = User(test_user['email'],test_user['password'],test_user['is_admin'])
 
     assert test_user['email'] is user.email
-    assert test_user['password'] is user.password
+    assert test_user['password'] != user.password
     assert test_user['is_admin'] is user.is_admin
 
 def test_user_model_add(app,database):
@@ -27,9 +27,9 @@ def test_user_model_add(app,database):
         user = db.session.execute(db.select(User).filter_by(email=test_user['email'])).scalar_one()
 
 
-    assert user.user_id is not None
+    assert user.id is not None
     assert user.email == test_user['email']
-    assert user.password == test_user['password']
+    assert user.password != test_user['password']
     assert user.is_admin == test_user['is_admin']
     assert user.created_on is not None
 
@@ -40,7 +40,7 @@ def test_user_model_get(app,database,capfd):
         out, err = capfd.readouterr()
     
     assert test_user['email'] in out
-    assert test_user['password'] in out
+    #assert test_user['password'] in out
     assert str(test_user['is_admin']) in out
 
 def test_user_model_get_all(app,database,capfd):
@@ -53,10 +53,10 @@ def test_user_model_get_all(app,database,capfd):
         out, err = capfd.readouterr()
     
     assert test_user['email'] in out
-    assert test_user['password'] in out
+    #assert test_user['password'] in out
     assert str(test_user['is_admin']) in out
     assert ('1'+test_user['email']) in out
-    assert ('1'+test_user['password']) in out
+    #assert ('1'+test_user['password']) in out
     assert 'True' in out
 
 
