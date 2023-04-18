@@ -3,7 +3,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 
 from app import bcrypt, db
 from app.controllers.accounts import bp
-from app.models.models import User
+from app.models.models import User_Legacy
 from app.services.decorators import logout_required
 from app.services.forms import LoginForm, RegisterForm, ConfirmEmailForm
 from app.services.token import generate_token, confirm_token
@@ -14,7 +14,7 @@ from app.services.token import generate_token, confirm_token
 def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
-        user = User(email=form.email.data, password=form.password.data)
+        user = User_Legacy(email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
 
@@ -35,7 +35,7 @@ def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         """Check if user is in DB"""
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User_Legacy.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, request.form["password"]):
             login_user(user)
             flash("You have logged in successfully", "success")
@@ -65,7 +65,7 @@ def confirm_account():
     if form.validate_on_submit():
         uploaded_token = form.token.data
         email = confirm_token(uploaded_token)
-        user = User.query.filter_by(email=current_user.email).first_or_404()
+        user = User_Legacy.query.filter_by(email=current_user.email).first_or_404()
 
         if user.email == email:
             user.is_confirmed = True

@@ -7,8 +7,8 @@ from app.extensions import db, bcrypt
 
 
 @dataclass
-class User(UserMixin, db.Model):
-    __tablename__ = "users"
+class User_Legacy(UserMixin, db.Model):
+    __tablename__ = "users_legacy"
 
     id: int
     email: str
@@ -39,7 +39,7 @@ class User(UserMixin, db.Model):
 ##   product_id = db.Column(db.Text)
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Text)
+    product_id = db.Column(db.Integer)
     name = db.Column(db.Text)
     review = db.relationship('Review', backref='product')
 
@@ -49,7 +49,7 @@ class Product(db.Model):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Text)
+    product_id = db.Column(db.Integer)
     author = db.Column(db.Text)
     recommendation = db.Column(db.Text)
     stars = db.Column(db.Text)
@@ -62,7 +62,7 @@ class Review(db.Model):
     cons = db.Column(db.Text)
     review_id = db.Column(db.Text)
 
-    product_id = db.Column(db.Text, db.ForeignKey('product.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
 
     def __repr__(self):
         return f'<Review no {self.review_id}: {self.author} - {self.content}>'

@@ -1,7 +1,11 @@
 from flask.cli import FlaskGroup
 import pytest
 from app import create_app, db
-from app.models.models import User
+from app.models.models import User_Legacy
+from app.models.ItemModel import Item
+from app.models.PriceHistoryModel import PriceHistory
+from app.models.SubscriptionModel import Subscription
+from app.models.UserModel import User
 from config import DevelopmentConfig, ProductionConfig, TestingConfig
 
 app = create_app()
@@ -15,7 +19,6 @@ def recreate_db():
     db.create_all()
     db.session.commit()
 
-
 @cli.command('show')
 def show():
     """Show app.config"""
@@ -25,7 +28,7 @@ def show():
 @cli.command('show_users')
 def show_users():
     """Query all users in database"""
-    users = User.query.all()
+    users = User_Legacy.query.all()
 
     for user in users:
         print(f'User: {user.id}: {user.email}, is_confirmed: {user.is_confirmed}, is_admin: {user.is_admin}')
@@ -52,7 +55,7 @@ def test_extra():
 def create_admin():
     """Create admin user"""
     try:
-        admin_user = User(email='j@j.com', password='123456', is_admin=True, is_confirmed=True)
+        admin_user = User_Legacy(email='j@j.com', password='123456', is_admin=True, is_confirmed=True)
         db.session.add(admin_user)
         db.session.commit()
         print('Created admin account')
@@ -75,7 +78,7 @@ def create_admin():
 def add_Item():
     itemId = input("Podaj Id itemu:")
     from app.repository.ItemRepository import addItem
-    addItem(itemId, 'test', True, 9.99, "www.google.com")
+    addItem(db,itemId, 'test', True, 9.99, "www.google.com")
 
 
 @cli.command('get_Item')
@@ -105,6 +108,17 @@ def update_Item():
     from app.repository.ItemRepository import updateItem
     itemId = input("Podaj Id itemu:")
     updateItem(itemId,True,9.5)
+
+@cli.command('add_User')
+def add_User():
+    email = input("Podaj email:")
+    from app.repository.UserRepository import addUser
+    addUser(email,'empty',False)
+
+@cli.command('get_AllUsers')
+def get_AllUsers():
+    from app.repository.UserRepository import getAllUsers
+    getAllUsers()
 
 @cli.command("test")
 def test():

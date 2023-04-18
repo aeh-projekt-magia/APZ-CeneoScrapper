@@ -8,7 +8,7 @@ class Config:
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = os.environ.get('SECRET_KEY', default='zgadnij')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     BCRYPT_LOG_ROUNDS = 4
     WTF_CSRF_ENABLED = True
@@ -33,7 +33,7 @@ class TestingConfig(Config):
     DEBUG = True
     DEBUG_TB_ENABLED = True
     DEVELOPMENT = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test_app.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     """Min 4 rounds, max 31"""
     BCRYPT_LOG_ROUNDS = 4
     WTF_CSRF_ENABLED = False

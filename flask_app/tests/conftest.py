@@ -1,12 +1,14 @@
 import pytest
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
+from config import Config,DevelopmentConfig, ProductionConfig, TestingConfig
 from app import create_app, db
-from app.models.models import User
-
+from app.models.UserModel import User
 
 @pytest.fixture()
 def app():
-    app = create_app()
+    app = create_app(TestingConfig)
     
     yield app
 
@@ -18,8 +20,8 @@ def database(app):
         db.create_all()
 
     yield db
-    db.drop_all()
-    db.create_all()
+    #db.drop_all()
+    #db.create_all()
 
 
 @pytest.fixture()

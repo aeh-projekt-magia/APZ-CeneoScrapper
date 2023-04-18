@@ -1,4 +1,4 @@
-from app.models.models import User
+from app.models.models import User_Legacy
 
 
 def test_home_page(client, test_user_data):
@@ -16,7 +16,7 @@ def test_register(client, test_user_data):
         password=test_user_data['password'],
         confirm=test_user_data['password']), follow_redirects=True)
 
-    user = User.query.filter_by(email=test_user_data['email']).first()
+    user = User_Legacy.query.filter_by(email=test_user_data['email']).first()
 
     assert user.id
     assert user.email == test_user_data['email']
@@ -35,7 +35,7 @@ def test_register_incorrect_email(client, database):
         email="test@user",
         password="test_user",
         confirm="test_user"), follow_redirects=True)
-    user = User.query.filter_by(email="test@user.com").first()
+    user = User_Legacy.query.filter_by(email="test@user.com").first()
     assert not user
 
 
@@ -46,7 +46,7 @@ def test_register_passwords_dont_match(client, database):
         email="test@user.user",
         password="test_user",
         confirm="012345678"), follow_redirects=True)
-    user = User.query.filter_by(email="test@user.com").first()
+    user = User_Legacy.query.filter_by(email="test@user.com").first()
 
     assert not user
     assert b"Passwords must match" in response.data

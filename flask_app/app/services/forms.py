@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-from app.models.models import User
+from app.models.models import User_Legacy
 
 
 class ConfirmEmailForm(FlaskForm):
@@ -34,7 +34,7 @@ class RegisterForm(FlaskForm):
         initial_validation = super(RegisterForm, self).validate()
         if not initial_validation:
             return False
-        user = User.query.filter_by(email=self.email.data).first()
+        user = User_Legacy.query.filter_by(email=self.email.data).first()
         if user:
             self.email.errors.append("Email already registered")
             return False

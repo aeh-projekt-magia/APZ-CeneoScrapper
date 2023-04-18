@@ -1,6 +1,9 @@
 from app.extensions import db
 import datetime
+from dataclasses import dataclass
+from app.models.ItemModel import Item
 
+@dataclass
 class PriceHistory(db.Model):
 
     __tablename__ = "price_history"
@@ -11,7 +14,7 @@ class PriceHistory(db.Model):
     date: datetime
 
     price_id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('Item.item_id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'))
     price = db.Column(db.Numeric(10,2), default = 0.00)
     date = db.Column(db.DateTime, default=datetime.datetime.now)
 
@@ -20,5 +23,5 @@ class PriceHistory(db.Model):
         self.price = price
 
     def __str__(self):
-        return (str(self.price_id) + " " + self.item_id + " " + 
+        return (str(self.price_id) + " " + str(self.item_id) + " " + 
                 str(self.price) + " " + str(self.date))

@@ -8,7 +8,7 @@ def addPriceHistoryRecord(itemId, price):
     db.session.commit()
 
 def getPriceHistoryRecord(id):
-    record = db.session.execute(db.select(PriceHistory).filter_by(id=id)).scalar_one()
+    record = db.session.execute(db.select(PriceHistory).filter_by(price_id=id)).scalar_one()
     print(record)
 
 def getAllPriceHistoryRecords():
@@ -16,11 +16,11 @@ def getAllPriceHistoryRecords():
     for x in records:
         print(x)
 
-def deleteItem(id):
-    record = db.session.execute(db.select(PriceHistory).filter_by(id=id)).scalar_one()
+def deletePriceHistoryRecord(id):
+    record = db.session.execute(db.select(PriceHistory).filter_by(price_id=id)).scalar_one()
     db.session.delete(record)
     db.session.commit()
 
-def deleteAllItems():
+def deleteAllPriceHistoryRecords():
     db.session.query(PriceHistory).delete()
     db.session.commit()

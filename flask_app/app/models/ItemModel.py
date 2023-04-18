@@ -15,10 +15,10 @@ class Item(db.Model):
     last_updated: datetime
 
     item_id = db.Column(db.Integer, primary_key=True)
-    item_name = db.Column(db.Text, default="")
+    item_name = db.Column(db.String, default="")
     is_available = db.Column(db.Boolean, default=False)
     lowest_price = db.Column(db.Numeric(10,2), default = 0.00)
-    offer_url = db.Column(db.Text, default = "")
+    offer_url = db.Column(db.String, default = "")
     last_updated = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __init__(self, itemId, itemName, isAvailable, lowestPrice, offerUrl):

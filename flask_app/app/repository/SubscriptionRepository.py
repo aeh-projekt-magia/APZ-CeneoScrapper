@@ -2,12 +2,11 @@ from app.models.SubscriptionModel import Subscription
 from app.extensions import db
 
 
-def addSubscriber(itemId, userId, notificationFreq, notifyOnPriceChange,sendNotification):
+def addSubscriber(itemId, userId, notificationFreq, notifyOnPriceChange):
     newSubscriber = Subscription(itemId,
                                  userId,
                                  notificationFreq,
-                                 notifyOnPriceChange,
-                                 sendNotification)
+                                 notifyOnPriceChange)
     db.session.add(newSubscriber)
     db.session.commit()
 
