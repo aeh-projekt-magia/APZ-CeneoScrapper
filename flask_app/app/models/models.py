@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
-
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship, mapped_column
 from flask_login import UserMixin
 
 from app.extensions import db, bcrypt
@@ -36,19 +37,44 @@ class User(db.Model, UserMixin) :
         return f"<email {self.email}>"
 
 
-class Product(db.Model):
+class Products(db.Model):
+    __tablename__ = "products_table"    
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Text)
-    name = db.Column(db.Text)
-    # review = db.relationship('Review', backref='product')
+    name = db.Column(db.String)
+    category = Column(String)
+    price = Column(String)
+    available_shops_count = Column(String)
+    reviews_count = Column(String)
+    description = Column(String)
+
+    children = relationship('Reviews', back_populates='parent')
 
     def __repr__(self):
-        return f'{self.id} {self.product_id} {self.name} {self.review}'
+        return f'{self.id} {self.name} {self.name}'
+
+class Reviews(db.Model):
+    __tablename__ = "reviews_table"    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    stars = Column(String)
+    description = Column(String)
+    zalety = Column(String)
+    wady = Column(String)
+    recommendation = Column(String)
+    date = Column(String)
+
+    parent_id = mapped_column(ForeignKey('products_table.id'))
+    parent = relationship('Products', back_populates='children')
+
+    def __repr__(self):
+        return f'{self.id} {self.name} {self.stars}'
+
+# class 
 
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # author = db.Column(db.Text)
+    author = db.Column(db.Text)
     # recommendation = db.Column(db.Text)
     # stars = db.Column(db.Text)
     # content = db.Column(db.Text)
