@@ -46,6 +46,7 @@ class Products(db.Model):
     available_shops_count = Column(String)
     reviews_count = Column(String)
     description = Column(String)
+    image_url = Column(String)
 
     children = relationship('Reviews', back_populates='parent')
 

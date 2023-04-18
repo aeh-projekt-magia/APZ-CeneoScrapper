@@ -46,7 +46,7 @@ soupsieve==2.4
 SQLAlchemy==2.0.9
 typing_extensions==4.5.0
 urllib3==1.25.11
-
+pytest-cov==4.0.0
 
 
 

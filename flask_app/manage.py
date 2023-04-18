@@ -35,14 +35,74 @@ def towar():
     """Add some towar to database"""
     repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
     new_product = Products(
-        name="Iphone 15 pro max ultra giga mega",
+        name="Iphone 14",
         category="Smartphone",
         price="90000 zł",
         available_shops_count="Available in 50 shops",
         reviews_count="12 reviews",
         description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
+        image_url = "https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg"
+    )    
+
+    repo_rev = ReviewsRepository.SqlAlchemyRepository(db.session)
+
+    new_review = Reviews(
+        name="jakub",
+        stars="5",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
     )
-    
+    new_review2 = Reviews(
+        name="robert",
+        stars="4",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
+    )
+    new_review3 = Reviews(
+        name="jakub",
+        stars="5",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
+    )
+    new_review4 = Reviews(
+        name="robert",
+        stars="4",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
+    )
+
+    repo_rev.add_all([new_review, new_review2, new_review3, new_review4])
+    repo_prod.add(new_product)
+    db.session.commit()
+
+
+
+    repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
+    new_product = Products(
+        name="Iphone 13",
+        category="Smartphone",
+        price="95000 zł",
+        available_shops_count="Available in 50 shops",
+        reviews_count="12 reviews",
+        description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
+        image_url = "https://image.ceneostatic.pl/data/products/115151293/i-apple-iphone-13-128gb-niebieski.jpg"
+    )    
 
     repo_rev = ReviewsRepository.SqlAlchemyRepository(db.session)
 
@@ -98,6 +158,11 @@ def test():
     --verbose - shows folders
     -rP - shows printouts from tests #can be deleted later#"""
     pytest.main(["-rP", "--verbose","--rootdir", "."])
+
+@cli.command("coverage")
+def coverage():
+    """Run pytest coverage test"""
+    pytest.main(['--cov'])
 
 
 @cli.command("test_clean")
