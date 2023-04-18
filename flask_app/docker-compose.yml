@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   app:
     container_name: app
@@ -18,9 +16,16 @@ services:
       - EMAIL_ADDRESS=ceneowebscrapper@gmail.com
       # DELETE PASSWORD BEFORE COMMITING!
       - EMAIL_PASSWORD=#####
-      - DATABASE_URI=postgresql://hello:hello@db:5432/hello_db
+      - DATABASE_URI=postgresql://hello:hello@db:5432/database_development
+      - DATABASE_TEST_URI=postgresql://hello:hello@db:5432/database_testing
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
   db:
     container_name: db
     image: postgres:15.2
@@ -30,13 +35,17 @@ services:
     environment:
       - POSTGRES_USER=hello
       - POSTGRES_PASSWORD=hello
-      - POSTGRES_DB=hello_db
+      - POSTGRES_DB=postgres
     networks:
       - appnetwork
+    healthcheck:
+      test: /usr/bin/pg_isready -d database_development -U hello
+      interval: 0.5s
+      timeout: 3s
+      retries: 5
 
 volumes:
   postgres_data:
-
 
 networks:
   appnetwork:
