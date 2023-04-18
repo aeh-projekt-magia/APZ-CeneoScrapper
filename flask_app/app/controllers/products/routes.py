@@ -60,7 +60,6 @@ def add():
         reviews_count="12 reviews",
         description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
     )
-    
 
     repo_rev = ReviewsRepository.SqlAlchemyRepository(db.session)
 
@@ -89,23 +88,38 @@ def add():
     repo_prod.add(new_product)
     db.session.commit()
 
-    return jsonify({'good':'good'})
+    return jsonify({"good": "good"})
+
 
 @bp.route("/", methods=["GET", "POST"])
 @login_required
 @confirmed_user_required
 def index():
-    """Wyświetlenie pobranych do tej pory recenzji"""
+    """Wyświetlenie pobranych do tej pory produktów"""
+    repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
+    products_to_show = repo_prod.list()
+
+    return render_template("products/index.html", products=products_to_show)
+
+
+@bp.route("/<int:product_id>", methods=["GET"])
+@login_required
+@confirmed_user_required
+def single_product_view(product_id):
+    """Wyświetlenie konkretnego pobranego do tej pory produktu"""
+
     tab = None
     repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
-    products_to_show = repo_prod.get_by_id(53)
+    products_to_show = repo_prod.get_by_id(product_id)
 
     if request.args.get("tab") == "1" and products_to_show:
         tab = 1
         return render_template(
-            "products/index.html",
+            "products/single_product.html",
             product=products_to_show,
             tab=tab,
             reviews=products_to_show.children,
         )
-    return render_template("products/index.html", product=products_to_show, tab=tab)
+    return render_template(
+        "products/single_product.html", product=products_to_show, tab=tab
+    )

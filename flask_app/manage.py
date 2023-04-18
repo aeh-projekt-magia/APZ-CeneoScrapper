@@ -4,6 +4,10 @@ from app import create_app, db
 from app.models.models import User
 from config import DevelopmentConfig, ProductionConfig, TestingConfig
 
+
+from app.repositories import ProductsRepository, ReviewsRepository
+from app.models.models import Products, Reviews
+
 # app = create_app()
 cli = FlaskGroup(create_app=create_app)
 
@@ -25,6 +29,67 @@ def show_users():
         print(
             f"User: {user.id}: {user.email}, is_confirmed: {user.is_confirmed}, is_admin: {user.is_admin}"
         )
+
+@cli.command("towar")
+def towar():
+    """Add some towar to database"""
+    repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
+    new_product = Products(
+        name="Iphone 15 pro max ultra giga mega",
+        category="Smartphone",
+        price="90000 zł",
+        available_shops_count="Available in 50 shops",
+        reviews_count="12 reviews",
+        description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
+    )
+    
+
+    repo_rev = ReviewsRepository.SqlAlchemyRepository(db.session)
+
+    new_review = Reviews(
+        name="jakub",
+        stars="5",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
+    )
+    new_review2 = Reviews(
+        name="robert",
+        stars="4",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
+    )
+    new_review3 = Reviews(
+        name="jakub",
+        stars="5",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
+    )
+    new_review4 = Reviews(
+        name="robert",
+        stars="4",
+        description="Fajny no fajny polecam każdemu",
+        zalety=["dobry", "fajny", "szybki"],
+        wady=["drogi", "śliski"],
+        recommendation="Polecam",
+        date=[],
+        parent=new_product,
+    )
+
+    repo_rev.add_all([new_review, new_review2, new_review3, new_review4])
+    repo_prod.add(new_product)
+    db.session.commit()
 
 
 @cli.command("test")

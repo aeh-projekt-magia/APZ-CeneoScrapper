@@ -85,3 +85,25 @@ def confirm_account():
             flash("The confirmation link is invalid or has expired.", "danger")
 
     return render_template("accounts/confirm_account.html", form=form)
+
+
+@bp.route("/resend", methods=["GET", "POST"])
+@login_required
+def resend_token():
+    """Get current user email crom current_user.email global variable attached to user session,
+    and send token again"""
+    if current_user.email:
+        token = generate_token(email=current_user.email)
+        try:
+            EmailSender.send_email(
+                message=f"Token: {token}",
+                subject="Your token",
+                recipient=current_user.email,
+            )
+            flash(f"Token has been sent on {current_user.email}", "success")
+        except:
+            flash(f"Couldn't generate email token")
+        flash(f"token: {token}")
+        return redirect(url_for("accounts.confirm_account"))
+
+    return redirect(url_for("accounts.confirm_account"))
