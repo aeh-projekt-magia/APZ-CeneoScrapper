@@ -7,7 +7,7 @@ from app.extensions import db, bcrypt
 
 
 @dataclass
-class User(UserMixin, db.Model):
+class User(db.Model, UserMixin) :
     __tablename__ = "users"
 
     id: int
@@ -25,7 +25,9 @@ class User(UserMixin, db.Model):
 
     def __init__(self, email, password, is_admin=False, is_confirmed=False):
         self.email = email
-        self.password = bcrypt.generate_password_hash(password)
+        # Important thing, to decode bytes to string before pushing to psql
+        # Or, we can also change column type to bytes/binary
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
         self.created_on = datetime.now()
         self.is_admin = is_admin
         self.is_confirmed = is_confirmed
@@ -38,7 +40,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Text)
     name = db.Column(db.Text)
-    review = db.relationship('Review', backref='product')
+    # review = db.relationship('Review', backref='product')
 
     def __repr__(self):
         return f'{self.id} {self.product_id} {self.name} {self.review}'
@@ -46,20 +48,20 @@ class Product(db.Model):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.Text)
-    recommendation = db.Column(db.Text)
-    stars = db.Column(db.Text)
-    content = db.Column(db.Text)
-    publish_date = db.Column(db.Text)
-    purchase_date = db.Column(db.Text)
-    useful = db.Column(db.Text)
-    useless = db.Column(db.Text)
-    pros = db.Column(db.Text)
-    cons = db.Column(db.Text)
-    review_id = db.Column(db.Text)
+    # author = db.Column(db.Text)
+    # recommendation = db.Column(db.Text)
+    # stars = db.Column(db.Text)
+    # content = db.Column(db.Text)
+    # publish_date = db.Column(db.Text)
+    # purchase_date = db.Column(db.Text)
+    # useful = db.Column(db.Text)
+    # useless = db.Column(db.Text)
+    # pros = db.Column(db.Text)
+    # cons = db.Column(db.Text)
+    # review_id = db.Column(db.Text)
 
-    product_id = db.Column(db.Text, db.ForeignKey('product.id'))
+    # product_id = db.Column(db.Text, db.ForeignKey('product.id'))
 
-    def __repr__(self):
-        return f'<Review no {self.review_id}: {self.author} - {self.content}>'
+    # def __repr__(self):
+    #     return f'<Review no {self.review_id}: {self.author} - {self.content}>'
 

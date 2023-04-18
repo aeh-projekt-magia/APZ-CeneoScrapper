@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 from app.extensions import db, bcrypt, migrate, login_manager
 
-from config import DevelopmentConfig
+from config import DevelopmentConfig, Config
 
 
 def create_app(config_class=DevelopmentConfig):
@@ -34,7 +34,7 @@ def create_app(config_class=DevelopmentConfig):
     from app.controllers.products import bp as products_bp
     app.register_blueprint(products_bp, url_prefix='/products')
 
-    # app.shell_context_processor({'app': app, 'db': db})
+    app.shell_context_processor({'app': app, 'db': db})
 
 
     """No use, since every page is user login required"""

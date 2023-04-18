@@ -33,7 +33,7 @@ class TestingConfig(Config):
     DEBUG = True
     DEBUG_TB_ENABLED = True
     DEVELOPMENT = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test_app.db')
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test_app.db')
     """Min 4 rounds, max 31"""
     BCRYPT_LOG_ROUNDS = 4
     WTF_CSRF_ENABLED = False
