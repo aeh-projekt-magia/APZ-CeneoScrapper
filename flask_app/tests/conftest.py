@@ -7,7 +7,6 @@ from app.models.models import User
 @pytest.fixture()
 def app():
     app = create_app()
-    
     yield app
 
 
