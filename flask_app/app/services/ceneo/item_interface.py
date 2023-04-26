@@ -24,12 +24,12 @@ class ItemInterface(ABC):
         ...
 
     @abstractmethod
-    def find_id_by_item_name(self, item_name: str) -> str:
+    def find_id_by_item_name(self, item_name: str) -> dict:
         """
         Args:
             item_name: human-readable name of the item
 
         Returns:
-            webservice id of the item
+            dict containing item id, the searched name, actual name.
         """
         ...
