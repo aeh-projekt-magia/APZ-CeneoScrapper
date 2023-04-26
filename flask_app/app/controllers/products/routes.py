@@ -1,14 +1,14 @@
-from flask import jsonify, render_template, request, current_app
-from flask_login import login_required
+from flask import jsonify, render_template, request, current_app, flash, redirect
+from flask_login import login_required, current_user
 from app import db
 from app.controllers.products import bp
 
 # from app.extensions import db
-from app.models.models import Reviews, Products
+from app.models.models import Reviews, Products, User
 from app.services.decorators import confirmed_user_required
 from app.services.scrapper import QueryReviews
 from app.repositories import ProductsRepository, ReviewsRepository
-
+from app.services.forms import SubscribeProductForm
 from markupsafe import escape
 
 
@@ -102,24 +102,36 @@ def index():
     return render_template("products/index.html", products=products_to_show)
 
 
-@bp.route("/<int:product_id>", methods=["GET"])
+@bp.route("/<int:product_id>", methods=["GET", "POST"])
 @login_required
 @confirmed_user_required
 def single_product_view(product_id):
     """Wyświetlenie konkretnego pobranego do tej pory produktu"""
-
+    form = SubscribeProductForm(request.form)
     tab = None
     repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
-    products_to_show = repo_prod.get_by_id(product_id)
+    product_to_show = repo_prod.get_by_id(product_id)
 
-    if request.args.get("tab") == "1" and products_to_show:
+    if form.validate_on_submit():
+        if form.subscribe_button.data:
+            flash('Product subscribed', 'success')
+            flash(f'{current_user.id}')
+
+            user = db.session.query(User).where(User.id == current_user.id).first()
+            product = db.session.query(Products).where(Products.id == product_id).first()
+            
+            user.subscriptions.append(product)
+            db.session.commit()
+            return render_template("products/single_product.html", product=product_to_show, tab=tab, form=form)
+            
+
+    if request.args.get("tab") == "1" and product_to_show:
         tab = 1
         return render_template(
             "products/single_product.html",
-            product=products_to_show,
+            product=product_to_show,
             tab=tab,
-            reviews=products_to_show.children,
+            reviews=product_to_show.children,
+            form=form
         )
-    return render_template(
-        "products/single_product.html", product=products_to_show, tab=tab
-    )
+    return render_template("products/single_product.html", product=product_to_show, tab=tab, form=form)

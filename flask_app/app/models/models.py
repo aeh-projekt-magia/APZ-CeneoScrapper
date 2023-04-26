@@ -1,21 +1,18 @@
 from dataclasses import dataclass
 from datetime import datetime
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship, mapped_column
 from flask_login import UserMixin
 
 from app.extensions import db, bcrypt
 
+user_product_subscription = db.Table('user_product_subscription',
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('product_id', Integer, ForeignKey('products_table.id'))
+)
 
-@dataclass
 class User(db.Model, UserMixin) :
     __tablename__ = "users"
-
-    id: int
-    email: str
-    password: str
-    created_on: datetime
-    is_admin: bool
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, unique=True, nullable=False)
@@ -23,6 +20,8 @@ class User(db.Model, UserMixin) :
     created_on = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     is_confirmed = db.Column(db.Boolean, nullable=False, default=False)
+
+    subscriptions = relationship('Products', secondary=user_product_subscription, back_populates='subscribers')
 
     def __init__(self, email, password, is_admin=False, is_confirmed=False):
         self.email = email
@@ -34,7 +33,7 @@ class User(db.Model, UserMixin) :
         self.is_confirmed = is_confirmed
 
     def __repr__(self):
-        return f"<email {self.email}>"
+        return f"<id {self.id}> <email {self.email}> <subscriptions {self.subscriptions}>"
 
 
 class Products(db.Model):
@@ -50,8 +49,20 @@ class Products(db.Model):
 
     children = relationship('Reviews', back_populates='parent')
 
+    subscribers = relationship('User', secondary=user_product_subscription, back_populates='subscriptions')
+
     def __repr__(self):
-        return f'{self.id} {self.name} {self.name}'
+        return f'<id {self.id}> <name {self.name}> <subscribers {self.name}>'
+
+
+
+
+# class UserSubscription(db.Model):
+#     __tablename__ = "users_subscriptions"
+#     id = Column(Integer, primary_key=True)
+#     user_id = Column(Integer, ForeignKey('users.id'))
+#     product_id = Column(Integer, ForeignKey('products_table.id'))
+
 
 class Reviews(db.Model):
     __tablename__ = "reviews_table"    
@@ -67,10 +78,23 @@ class Reviews(db.Model):
     parent_id = mapped_column(ForeignKey('products_table.id'))
     parent = relationship('Products', back_populates='children')
 
+    def __init__(self,name,stars, description, zalety : list, wady :list, recommendation, date, parent_id = None, parent = None) -> None:
+        self.name = name
+        self.stars = stars
+        self.description = description
+        self.zalety = ';'.join(zalety)
+        self.wady = ';'.join(wady)
+        self.reccomendation = recommendation
+        self.date = date
+        self.parent_id = parent_id
+        self.parent = parent
+
     def __repr__(self):
         return f'{self.id} {self.name} {self.stars}'
 
-# class 
+
+
+
 
 
 class Review(db.Model):

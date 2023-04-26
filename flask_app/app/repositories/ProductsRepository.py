@@ -24,6 +24,9 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def get_by_id(self, id):
         return self.session.query(Products).where(Products.id == id).first()
+
+    def get_by_id_list(self, id):
+        return self.session.query(Products).where(Products.id == id).all()
     
     def get_by_name(self, name):
         return self.session.query(Products).where(Products.name == name).first()

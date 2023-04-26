@@ -31,8 +31,11 @@ def create_app(config_class=DevelopmentConfig):
     from app.controllers.accounts.routes import bp as accounts_bp
     app.register_blueprint(accounts_bp)
 
-    from app.controllers.products import bp as products_bp
+    from app.controllers.products.routes import bp as products_bp
     app.register_blueprint(products_bp, url_prefix='/products')
+
+    from app.controllers.subscriptions import bp as subscriptions_bp
+    app.register_blueprint(subscriptions_bp, url_prefix='/subscriptions')
 
     app.shell_context_processor({'app': app, 'db': db})
 

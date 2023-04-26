@@ -53,7 +53,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
     new_review2 = Reviews(
@@ -63,7 +63,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
     new_review3 = Reviews(
@@ -73,7 +73,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
     new_review4 = Reviews(
@@ -83,7 +83,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
 
@@ -113,7 +113,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
     new_review2 = Reviews(
@@ -123,7 +123,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
     new_review3 = Reviews(
@@ -133,7 +133,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
     new_review4 = Reviews(
@@ -143,7 +143,7 @@ def towar():
         zalety=["dobry", "fajny", "szybki"],
         wady=["drogi", "śliski"],
         recommendation="Polecam",
-        date=[],
+        date=None,
         parent=new_product,
     )
 

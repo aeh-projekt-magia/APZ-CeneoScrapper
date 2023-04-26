@@ -1,9 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, StringField
+from wtforms import EmailField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from app.models.models import User
 
+
+class SubscribeProductForm(FlaskForm):
+    subscribe_button = SubmitField()
 
 class ConfirmEmailForm(FlaskForm):
     token = StringField('token', validators=[DataRequired()])
