@@ -7,6 +7,9 @@ from app.models.models import User
 
 class SubscribeProductForm(FlaskForm):
     subscribe_button = SubmitField()
+    unsubscribe_button = SubmitField()
+
+
 
 class ConfirmEmailForm(FlaskForm):
     token = StringField('token', validators=[DataRequired()])

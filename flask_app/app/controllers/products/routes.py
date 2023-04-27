@@ -10,7 +10,7 @@ from app.services.scrapper import QueryReviews
 from app.repositories import ProductsRepository, ReviewsRepository
 from app.services.forms import SubscribeProductForm
 from markupsafe import escape
-
+from app.services.product_subscriber import ProductSubscription
 
 # @bp.route("/<int:productid>", methods=["GET"])
 # @login_required
@@ -107,24 +107,27 @@ def index():
 @confirmed_user_required
 def single_product_view(product_id):
     """Wyświetlenie konkretnego pobranego do tej pory produktu"""
-    form = SubscribeProductForm(request.form)
     tab = None
-    repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
-    product_to_show = repo_prod.get_by_id(product_id)
 
+    product_to_show = db.session.query(Products).where(Products.id == product_id).first()
+    
+    is_already_subscribed = ProductSubscription.get(user_id=current_user.id, product_id=product_id)
+
+
+    """Subscribe or unsubscribe request handling"""
+    form = SubscribeProductForm(request.form)
     if form.validate_on_submit():
-        if form.subscribe_button.data:
-            flash('Product subscribed', 'success')
-            flash(f'{current_user.id}')
+        if form.subscribe_button.data:            
+            ProductSubscription.add(user_id=current_user.id, product_id=product_id)
+            is_already_subscribed=True            
+            flash('Product subscribed', 'success')                    
+        elif form.unsubscribe_button.data:
+            ProductSubscription.remove(user_id=current_user.id, product_id=product_id)
+            is_already_subscribed=False
+            flash('Product unsubscribed', 'success')            
+        return render_template("products/single_product.html", product=product_to_show, tab=tab, form=form, is_already_subscribed=is_already_subscribed)
 
-            user = db.session.query(User).where(User.id == current_user.id).first()
-            product = db.session.query(Products).where(Products.id == product_id).first()
-            
-            user.subscriptions.append(product)
-            db.session.commit()
-            return render_template("products/single_product.html", product=product_to_show, tab=tab, form=form)
-            
-
+    """Tabs switching comments/shops"""
     if request.args.get("tab") == "1" and product_to_show:
         tab = 1
         return render_template(
@@ -134,4 +137,4 @@ def single_product_view(product_id):
             reviews=product_to_show.children,
             form=form
         )
-    return render_template("products/single_product.html", product=product_to_show, tab=tab, form=form)
+    return render_template("products/single_product.html", product=product_to_show, tab=tab, form=form, is_already_subscribed=is_already_subscribed)

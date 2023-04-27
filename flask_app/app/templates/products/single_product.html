@@ -58,10 +58,19 @@
                     <form role="form" method="post" action="" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6
                     focus:outline-none hover:bg-indigo-600 rounded">
                         {{ form.csrf_token }}
-
                         {{ form.hidden_tag() }}
+
+                        {% if is_already_subscribed == False %}
+
                         {{ form.subscribe_button(value="Subscribe product", class="text-white bg-indigo-500
                         border-0 focus:outline-none hover:bg-indigo-600") }}
+
+                        {% elif is_already_subscribed == True %}
+
+                        {{ form.unsubscribe_button(value="Unsubscribe product", class="text-white bg-indigo-500
+                        border-0 focus:outline-none hover:bg-indigo-600") }}
+
+                        {% endif %}
                     </form>
 
                     <button
