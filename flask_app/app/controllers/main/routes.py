@@ -8,4 +8,3 @@ from app.controllers.main import bp
 @login_required
 def home():
     return render_template("index.html")
-

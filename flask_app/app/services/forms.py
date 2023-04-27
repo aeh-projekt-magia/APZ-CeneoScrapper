@@ -10,9 +10,8 @@ class SubscribeProductForm(FlaskForm):
     unsubscribe_button = SubmitField()
 
 
-
 class ConfirmEmailForm(FlaskForm):
-    token = StringField('token', validators=[DataRequired()])
+    token = StringField("token", validators=[DataRequired()])
 
 
 class LoginForm(FlaskForm):
@@ -22,6 +21,7 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     """Do zrobienia te walidatory!"""
+
     email = EmailField(
         "Email", validators=[DataRequired(), Email(message=None), Length(min=6, max=40)]
     )

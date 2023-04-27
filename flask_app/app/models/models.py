@@ -37,7 +37,7 @@
 
 
 # class Products(db.Model):
-#     __tablename__ = "products_table"    
+#     __tablename__ = "products_table"
 #     id = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String)
 #     category = Column(String)
@@ -55,8 +55,6 @@
 #         return f'<id {self.id}> <name {self.name}> <subscribers {self.name}>'
 
 
-
-
 # # class UserSubscription(db.Model):
 # #     __tablename__ = "users_subscriptions"
 # #     id = Column(Integer, primary_key=True)
@@ -65,7 +63,7 @@
 
 
 # # class Reviews(db.Model):
-# #     __tablename__ = "reviews_table"    
+# #     __tablename__ = "reviews_table"
 # #     id = db.Column(db.Integer, primary_key=True)
 # #     name = db.Column(db.String)
 # #     stars = Column(String)

@@ -1,6 +1,6 @@
 # import abc
-# from app.models.models import Products 
-# from sqlalchemy.orm import query
+# from app.models.ProductModel import Products
+
 
 # class AbstractRepository(abc.ABC):
 #     @abc.abstractmethod
@@ -10,7 +10,7 @@
 #     @abc.abstractmethod
 #     def get(self, reference) -> Products:
 #         raise NotImplementedError
-    
+
 
 # class SqlAlchemyRepository(AbstractRepository):
 #     def __init__(self, session):
@@ -27,7 +27,7 @@
 
 #     def get_by_id_list(self, id):
 #         return self.session.query(Products).where(Products.id == id).all()
-    
+
 #     def get_by_name(self, name):
 #         return self.session.query(Products).where(Products.name == name).first()
 

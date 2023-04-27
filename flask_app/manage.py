@@ -3,13 +3,8 @@ import pytest
 from app import create_app, db
 from app.models.UserModel import User
 from app.models.ItemModel import Item
-from app.models.PriceHistoryModel import PriceHistory
-from app.models.SubscriptionModel import Subscription
-from app.models.UserModel import User
-from config import DevelopmentConfig, ProductionConfig, TestingConfig
 
 
-# from app.repositories import ProductRepository, ReviewRepository
 # from app.models.models import Products, Reviews
 # from app.models.
 
@@ -35,126 +30,83 @@ def show_users():
             f"User: {user.id}: {user.email}, is_confirmed: {user.is_confirmed}, is_admin: {user.is_admin}"
         )
 
-# @cli.command("towar")
-# def towar():
-#     """Add some towar to database"""
-#     repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
-#     new_product = Products(
-#         name="Iphone 14",
-#         category="Smartphone",
-#         price="90000 zł",
-#         available_shops_count="Available in 50 shops",
-#         reviews_count="12 reviews",
-#         description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
-#         image_url = "https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg"
-#     )    
 
-#     repo_rev = ReviewsRepository.SqlAlchemyRepository(db.session)
+@cli.command("towar")
+def towar():
+    """Add some towar to database"""
 
-#     new_review = Reviews(
-#         name="jakub",
-#         stars="5",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
-#     new_review2 = Reviews(
-#         name="robert",
-#         stars="4",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
-#     new_review3 = Reviews(
-#         name="jakub",
-#         stars="5",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
-#     new_review4 = Reviews(
-#         name="robert",
-#         stars="4",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
+    new_product = Item(
+        name="Iphone 14",
+        category="Smartphone",
+        price="90000 zł",
+        available_shops_count="Available in 50 shops",
+        reviews_count="12 reviews",
+        description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
+        image_url="https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg",
+    )
+    try:
+        db.session.add(new_product)
+        db.session.commit()
+    except:
+        db.session.rollback()
 
-#     repo_rev.add_all([new_review, new_review2, new_review3, new_review4])
-#     repo_prod.add(new_product)
-#     db.session.commit()
+    # repo_prod = ProductRepository.SqlAlchemyRepository(db.session)
+    # new_product = Products(
+    #     name="Iphone 14",
+    #     category="Smartphone",
+    #     price="90000 zł",
+    #     available_shops_count="Available in 50 shops",
+    #     reviews_count="12 reviews",
+    #     description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
+    #     image_url="https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg",
+    # )
 
+    # repo_rev = ReviewRepository.SqlAlchemyRepository(db.session)
 
+    # new_review = Review(
+    #     name="jakub",
+    #     stars="5",
+    #     description="Fajny no fajny polecam każdemu",
+    #     zalety=["dobry", "fajny", "szybki"],
+    #     wady=["drogi", "śliski"],
+    #     recommendation="Polecam",
+    #     date=None,
+    #     parent=new_product,
+    # )
+    # new_review2 = Review(
+    #     name="robert",
+    #     stars="4",
+    #     description="Fajny no fajny polecam każdemu",
+    #     zalety=["dobry", "fajny", "szybki"],
+    #     wady=["drogi", "śliski"],
+    #     recommendation="Polecam",
+    #     date=None,
+    #     parent=new_product,
+    # )
+    # new_review3 = Review(
+    #     name="jakub",
+    #     stars="5",
+    #     description="Fajny no fajny polecam każdemu",
+    #     zalety=["dobry", "fajny", "szybki"],
+    #     wady=["drogi", "śliski"],
+    #     recommendation="Polecam",
+    #     date=None,
+    #     parent=new_product,
+    # )
+    # new_review4 = Review(
+    #     name="robert",
+    #     stars="4",
+    #     description="Fajny no fajny polecam każdemu",
+    #     zalety=["dobry", "fajny", "szybki"],
+    #     wady=["drogi", "śliski"],
+    #     recommendation="Polecam",
+    #     date=None,
+    #     parent=new_product,
+    # )
 
-#     repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
-#     new_product = Products(
-#         name="Iphone 13",
-#         category="Smartphone",
-#         price="95000 zł",
-#         available_shops_count="Available in 50 shops",
-#         reviews_count="12 reviews",
-#         description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
-#         image_url = "https://image.ceneostatic.pl/data/products/115151293/i-apple-iphone-13-128gb-niebieski.jpg"
-#     )    
-
-#     repo_rev = ReviewsRepository.SqlAlchemyRepository(db.session)
-
-#     new_review = Reviews(
-#         name="jakub",
-#         stars="5",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
-#     new_review2 = Reviews(
-#         name="robert",
-#         stars="4",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
-#     new_review3 = Reviews(
-#         name="jakub",
-#         stars="5",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
-#     new_review4 = Reviews(
-#         name="robert",
-#         stars="4",
-#         description="Fajny no fajny polecam każdemu",
-#         zalety=["dobry", "fajny", "szybki"],
-#         wady=["drogi", "śliski"],
-#         recommendation="Polecam",
-#         date=None,
-#         parent=new_product,
-#     )
-
-#     repo_rev.add_all([new_review, new_review2, new_review3, new_review4])
-#     repo_prod.add(new_product)
-#     db.session.commit()
+    # repo_rev.add_all([new_review, new_review2, new_review3, new_review4])
+    # repo_prod.add(new_product)
+    # db.session.commit()
 
 
 @cli.command("test")
@@ -162,12 +114,13 @@ def test():
     """Run tests
     --verbose - shows folders
     -rP - shows printouts from tests #can be deleted later#"""
-    pytest.main(["-rP", "--verbose","--rootdir", "."])
+    pytest.main(["-rP", "--verbose", "--rootdir", "."])
+
 
 @cli.command("coverage")
 def coverage():
     """Run pytest coverage test"""
-    pytest.main(['--cov'])
+    pytest.main(["--cov"])
 
 
 @cli.command("test_clean")
@@ -195,58 +148,65 @@ def create_admin():
     except Exception as e:
         print(f"Failed to create admin acccount! {e}")
 
-@cli.command('add_Item')
+
+@cli.command("add_Item")
 def add_Item():
     itemId = input("Podaj Id itemu:")
     from app.repository.ItemRepository import addItem
-    addItem(db,itemId, 'test', True, 9.99, "www.google.com")
+
+    addItem(db, itemId, "test", True, 9.99, "www.google.com")
 
 
-@cli.command('get_Item')
+@cli.command("get_Item")
 def get_Item():
     from app.repository.ItemRepository import getItem
-    getItem('1234')
+
+    getItem("1234")
 
 
-@cli.command('get_AllItems')
+@cli.command("get_AllItems")
 def get_AllItems():
     from app.repository.ItemRepository import getAllItems
+
     getAllItems()
 
-@cli.command('del_Item')
+
+@cli.command("del_Item")
 def del_Item():
     from app.repository.ItemRepository import deleteItem
+
     itemId = input("Podaj Id itemu:")
     deleteItem(itemId)
 
-@cli.command('del_AllItems')
+
+@cli.command("del_AllItems")
 def del_AllItems():
     from app.repository.ItemRepository import deleteAllItems
+
     deleteAllItems()
 
-@cli.command('update_Item')
+
+@cli.command("update_Item")
 def update_Item():
     from app.repository.ItemRepository import updateItem
-    itemId = input("Podaj Id itemu:")
-    updateItem(itemId,True,9.5)
 
-@cli.command('add_User')
+    itemId = input("Podaj Id itemu:")
+    updateItem(itemId, True, 9.5)
+
+
+@cli.command("add_User")
 def add_User():
     email = input("Podaj email:")
     from app.repository.UserRepository import addUser
-    addUser(email,'empty',False)
 
-@cli.command('get_AllUsers')
+    addUser(email, "empty", False)
+
+
+@cli.command("get_AllUsers")
 def get_AllUsers():
     from app.repository.UserRepository import getAllUsers
-    getAllUsers()
 
-@cli.command("test")
-def test():
-    """Run tests
-    --verbose - shows folders
-    -rP - shows printouts from tests #can be deleted later#"""
-    pytest.main(['-rP','--verbose', '--rootdir', '.'])
+    getAllUsers()
 
 
 if __name__ == "__main__":

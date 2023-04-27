@@ -7,6 +7,7 @@ class WebdriverProviderMeta(type):
     """
     Singleton metaclass. Thread unsafe, do not use for multithreading.
     """
+
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
@@ -20,8 +21,11 @@ class WebdriverProvider(metaclass=WebdriverProviderMeta):
     """
     Singleton class that assures only one webdriver instance is used in the application.
     """
+
     def __init__(self):
-        self._driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self._driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install())
+        )
 
     @property
     def driver(self):

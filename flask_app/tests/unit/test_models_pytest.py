@@ -1,6 +1,7 @@
 import pytest
 
-from app.models.models import User
+from app.models.UserModel import User
+
 
 @pytest.mark.parametrize(
     "test_user", [{"email": "test_user01@yahoo.com", "password": "123456"}]

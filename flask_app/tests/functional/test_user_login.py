@@ -1,4 +1,4 @@
-from app.models.models import User
+from app.models.UserModel import User
 from app import db
 
 
@@ -11,7 +11,11 @@ def test_login(client, test_user_data):
 
     client.get("/logout", follow_redirects=True)
 
-    response = client.post("/login", data=dict({"email": "test_user01@yahoo.com", "password": "123456"}), follow_redirects=True)
+    response = client.post(
+        "/login",
+        data=dict({"email": "test_user01@yahoo.com", "password": "123456"}),
+        follow_redirects=True,
+    )
 
     assert b"You have logged in successfully" in response.data
 

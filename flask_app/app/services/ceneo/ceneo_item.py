@@ -12,13 +12,13 @@ class CeneoItem(ItemInterface):
     def fetch_lowest_price(self, item_id: str) -> dict:
         offer_data = ItemOperations(self.driver).find_cheapest_offer(item_id).as_dict()
         lowest_price = dict(
-            item_id=offer_data['item_id'],
-            item_name=offer_data['item_name'],
-            price=offer_data['price'],
-            offer=offer_data['offer_url'],
+            item_id=offer_data["item_id"],
+            item_name=offer_data["item_name"],
+            price=offer_data["price"],
+            offer=offer_data["offer_url"],
             timestamp=datetime.now(),
         )
         return lowest_price
 
     def find_id_by_item_name(self, item_name: str) -> str:
-        return ''
+        return ""

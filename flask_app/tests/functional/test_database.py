@@ -1,10 +1,7 @@
 import pytest
 from sqlalchemy.exc import IntegrityError
-
-from app.models.models import User
-from app import create_app, db
-from config import TestingConfig
-from flask import current_app
+from app.models.UserModel import User
+from app import db
 
 
 def test_user(app, test_user_data):
@@ -17,7 +14,7 @@ def test_user(app, test_user_data):
     assert user.password != test_user_data["password"]
     assert user.is_admin is False
     assert user.is_confirmed is False
-    
+
 
 @pytest.mark.xfail(raises=IntegrityError)
 def test_user_duplicated_email(app, test_user_data):

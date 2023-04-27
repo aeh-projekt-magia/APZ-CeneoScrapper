@@ -1,13 +1,14 @@
 from app.models.UserModel import User
 
-def test_home_page(client, test_user_data):
+
+def test_home_page(client):
     """Check if home page works"""
     response = client.get("/", follow_redirects=True)
     assert response.status_code == 200
-    assert test_user_data["password"] == "123456"
 
 
-def test_register(app,database,client, test_user_data):
+
+def test_register(client, test_user_data):
     """Check if user can register using correct data"""
     client.get("/logout", follow_redirects=True)
     response = client.post(

@@ -2,13 +2,12 @@ from services.ceneo.web_scrapper.data_objects.ceneo_data_object import CeneoData
 
 
 class ItemData(CeneoDataObject):
-    def __init__(self, item_id: str = '', item_name: str = ''):
-        self.item_id = item_id,
+    def __init__(self, item_id: str = "", item_name: str = ""):
+        self.item_id = (item_id,)
         self.item_name = item_name
 
     def as_string(self):
-        return f"item name = {self.item_name}\n" \
-               f"item id = {self.item_id}\n"
+        return f"item name = {self.item_name}\n" f"item id = {self.item_id}\n"
 
     def as_dict(self):
         return dict(

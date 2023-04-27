@@ -6,9 +6,9 @@ class CeneoPage(ABC):
     @abstractmethod
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
-        self.base_url = 'https://www.ceneo.pl/'
+        self.base_url = "https://www.ceneo.pl/"
 
-        self.url = ''  # override in subclasses
+        self.url = ""  # override in subclasses
 
     @abstractmethod
     def init_web_elements(self):
@@ -26,4 +26,3 @@ class CeneoPage(ABC):
         self.driver.get(full_url)
         self.driver.maximize_window()
         self.init_web_elements()
-

@@ -31,14 +31,19 @@ class SortingOptions(Enum):
         Returns:
             XPATH Locator of the given sorting option
         """
-        return By.XPATH, f"//div[contains(@class, 'dropdown-menu')]/a[text() = '{sorting_option.value}']"
+        return (
+            By.XPATH,
+            f"//div[contains(@class, 'dropdown-menu')]/a[text() = '{sorting_option.value}']",
+        )
 
 
 class ItemPage(CeneoPage):
-
     # selenium locators
-    l_sort_dropdown = (By.XPATH, "//body/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]"
-                                 "/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/a[1]")
+    l_sort_dropdown = (
+        By.XPATH,
+        "//body/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]"
+        "/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/a[1]",
+    )
     l_offers = (By.CSS_SELECTOR, ".product-offer__container")
     l_item_name = (By.XPATH, "//div[contains(@class, 'product-top__title')]/h1")
 
@@ -83,20 +88,20 @@ class ItemPage(CeneoPage):
         wait = WebDriverWait(self.driver, 3)
         wait.until(EC.presence_of_all_elements_located(self.l_offers))
         self.offers = [
-            self._web_element_to_offer(element) for element
-            in self.driver.find_elements(*self.l_offers)
+            self._web_element_to_offer(element)
+            for element in self.driver.find_elements(*self.l_offers)
         ]
 
     def _web_element_to_offer(self, web_element: WebElement) -> OfferData:
         l_offer_url = (By.XPATH, "//a[contains(@class, 'go-to-shop')]")
 
         item_name = self.item_name.text
-        item_id = web_element.get_attribute('data-productid')
-        price = float(web_element.get_attribute('data-price'))
-        shop_url = web_element.get_attribute('data-shopurl')
+        item_id = web_element.get_attribute("data-productid")
+        price = float(web_element.get_attribute("data-price"))
+        shop_url = web_element.get_attribute("data-shopurl")
 
         offer_url_web_element = web_element.find_element(*l_offer_url)
-        offer_url = offer_url_web_element.get_attribute('href')
+        offer_url = offer_url_web_element.get_attribute("href")
 
         return OfferData(
             item_name=item_name,
@@ -105,5 +110,3 @@ class ItemPage(CeneoPage):
             shop_url=shop_url,
             offer_url=offer_url,
         )
-
-
