@@ -1,8 +1,7 @@
-from app.extensions import db
+from app.extensions import db, bcrypt
 import datetime
 from dataclasses import dataclass
 from flask_login import UserMixin
-from app.extensions import db, bcrypt
 from sqlalchemy import Integer
 from sqlalchemy.orm import relationship
 

@@ -6,7 +6,8 @@ from flask_login import current_user
 def logout_required(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        """Check if user is currently logged in. If yes, return flash object with info, else continue"""
+        """Check if user is currently logged in.
+        If yes, return flash object with info, else continue"""
         if current_user.is_authenticated:
             flash("You are already logged in.", "info")
             return redirect(url_for("main.home"))

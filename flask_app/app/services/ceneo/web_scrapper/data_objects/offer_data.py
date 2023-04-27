@@ -1,5 +1,3 @@
-from selenium.webdriver.remote.webelement import WebElement
-
 from services.ceneo.web_scrapper.data_objects.ceneo_data_object import CeneoDataObject
 
 

@@ -24,3 +24,4 @@ try:
     db.session.commit()
 except:
     db.session.rollback()
+    
