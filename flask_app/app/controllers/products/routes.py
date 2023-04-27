@@ -3,47 +3,17 @@ from flask_login import login_required, current_user
 from app import db
 from app.controllers.products import bp
 
-# from app.extensions import db
-from app.models.models import Reviews, Products, User
+# from app.models.models import Reviews, Products, User
+from app.models.UserModel import User
+from app.models.ItemReviewModel import Review
+from app.models.ProductModel import Products
+
+
 from app.services.decorators import confirmed_user_required
-from app.services.scrapper import QueryReviews
-from app.repositories import ProductsRepository, ReviewsRepository
+from app.repositories import ProductRepository, ReviewRepository
 from app.services.forms import SubscribeProductForm
-from markupsafe import escape
+
 from app.services.product_subscriber import ProductSubscription
-
-# @bp.route("/<int:productid>", methods=["GET"])
-# @login_required
-# @confirmed_user_required
-# def show_reviews_by_id(productid):
-#     """Pobranie recenzji o danym produkcie, zapisanie ich do bazy danych i wyświetlenie"""
-#     reviews = QueryReviews(productid).get_reviews()
-
-#     new_product = Product.query.filter_by(product_id=productid).first()
-#     if not new_product:
-#         new_product = Product(product_id=productid, name="Nieznana")
-#         db.session.add(new_product)
-#         db.session.commit()
-
-#     for review in reviews:
-#         new_review = Review(
-#             product_id=productid,
-#             author=review["author"],
-#             recommendation=review["recommendation"],
-#             stars=review["stars"],
-#             content=review["content"],
-#             publish_date=review["publish_date"],
-#             purchase_date=review["purchase_date"],
-#             useful=review["useful"],
-#             useless=review["useless"],
-#             pros="".join(str(x) for x in review["pros"]),
-#             cons="".join(str(x) for x in review["cons"]),
-#             review_id=1,
-#         )
-#         db.session.add(new_review)
-#         db.session.commit()
-
-#     return render_template("products/index.html", reviews=reviews, productid=productid)
 
 
 @bp.route("/add", methods=["GET", "POST"])
@@ -51,7 +21,7 @@ from app.services.product_subscriber import ProductSubscription
 @confirmed_user_required
 def add():
     tab = None
-    repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
+    repo_prod = ProductRepository.SqlAlchemyRepository(db.session)
     new_product = Products(
         name="aa",
         category="Smartphone",
@@ -61,9 +31,9 @@ def add():
         description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
     )
 
-    repo_rev = ReviewsRepository.SqlAlchemyRepository(db.session)
+    repo_rev = ReviewRepository.SqlAlchemyRepository(db.session)
 
-    new_review = Reviews(
+    new_review = Review(
         name="jakub",
         stars="5",
         description="Fajny no fajny polecam każdemu",
@@ -73,7 +43,7 @@ def add():
         date=[],
         parent=new_product,
     )
-    new_review2 = Reviews(
+    new_review2 = Review(
         name="robert",
         stars="4",
         description="Fajny no fajny polecam każdemu",
@@ -96,7 +66,7 @@ def add():
 @confirmed_user_required
 def index():
     """Wyświetlenie pobranych do tej pory produktów"""
-    repo_prod = ProductsRepository.SqlAlchemyRepository(db.session)
+    repo_prod = ProductRepository.SqlAlchemyRepository(db.session)
     products_to_show = repo_prod.list()
 
     return render_template("products/index.html", products=products_to_show)

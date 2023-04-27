@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 from app.extensions import db, bcrypt, migrate, login_manager
 
-from config import DevelopmentConfig, Config
+from config import DevelopmentConfig
 
 
 def create_app(config_class=DevelopmentConfig):
@@ -15,10 +15,10 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.login_view = "accounts.login"
     login_manager.login_message_category = "danger"
 
-    from app.models.models import User
+    from app.models.UserModel import User
     @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.filter(User.id == int(user_id)).first()
+    def load_user(userId):
+        return User.query.filter(User.id == int(userId)).first()
 
     bcrypt.init_app(app)
 

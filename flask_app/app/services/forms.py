@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-from app.models.models import User
+from app.models.UserModel import User
 
 
 class SubscribeProductForm(FlaskForm):

@@ -1,5 +1,8 @@
 import pytest
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
+from config import Config,DevelopmentConfig, ProductionConfig, TestingConfig
 from app import create_app, db
 from app.models.models import User
 from config import TestingConfig

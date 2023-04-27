@@ -1,5 +1,7 @@
 from app import db
-from app.models.models import User, Products
+
+from app.models.UserModel import User
+from app.models.ProductModel import Products
 
 
 class ProductSubscription:

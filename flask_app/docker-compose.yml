@@ -7,8 +7,12 @@ services:
       - '.:/usr/src/app'
     ports:
       - '5001:5000'
+    env_file:
+      - ./.env.dev
     networks:
       - appnetwork
+    depends_on:
+      - db
     environment:
       - FLASK_DEBUG=1
       - FLASK_APP=app
@@ -50,3 +54,4 @@ volumes:
 networks:
   appnetwork:
     driver: bridge
+

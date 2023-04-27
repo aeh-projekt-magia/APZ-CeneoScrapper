@@ -1,5 +1,5 @@
 import abc
-from app.models.models import Review 
+from app.models.ItemReviewModel import Review
 
 
 class AbstractRepository(abc.ABC):
