@@ -17,14 +17,13 @@ def recipient():
 
 @pytest.fixture
 def from_email_address():
-    return 'testceneoscrapper@gmail.com'
+    return "testceneoscrapper@gmail.com"
 
 
 @pytest.fixture
 def mocked_email_address(mocker, from_email_address):
     mocker.patch(
-        'app.services.emails.email_sender.EmailSender.email_address',
-        from_email_address
+        "app.services.emails.email_sender.EmailSender.email_address", from_email_address
     )
 
 
@@ -36,8 +35,7 @@ def test_resources_path():
 @pytest.fixture
 def mocked_password(mocker):
     mocker.patch(
-        'app.services.emails.email_sender.EmailSender.password',
-        'fake_password123'
+        "app.services.emails.email_sender.EmailSender.password", "fake_password123"
     )
 
 
@@ -45,15 +43,14 @@ def mocked_password(mocker):
 def mocked__send_email(mocker):
     mock__send_email = mocker.stub(name="on__send_email_stub")
     mocker.patch(
-        'app.services.emails.email_sender.EmailSender._send_email',
-        mock__send_email
+        "app.services.emails.email_sender.EmailSender._send_email", mock__send_email
     )
     return mock__send_email
 
 
 @pytest.fixture
 def plain_message(test_resources_path):
-    plain_message_path = test_resources_path / 'plain_message.txt'
+    plain_message_path = test_resources_path / "plain_message.txt"
     with plain_message_path.open() as html_template:
         message = html_template.read()
     return message
@@ -76,7 +73,7 @@ def expected_message_plain(expected_message, plain_message):
 
 @pytest.fixture
 def expected_message_html(expected_message, test_resources_path):
-    html_expected_path = test_resources_path / 'email_body_expected.html'
+    html_expected_path = test_resources_path / "email_body_expected.html"
     with html_expected_path.open() as html_template:
         message = html_template.read()
     expected_message.attach(MIMEText(message, "html"))

@@ -3,7 +3,6 @@ from typing import List, Tuple
 
 from selenium import webdriver
 from selenium.common import NoSuchElementException
-from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
@@ -33,14 +32,19 @@ class SortingOptions(Enum):
         Returns:
             XPATH Locator of the given sorting option
         """
-        return By.XPATH, f"//div[contains(@class, 'dropdown-menu')]/a[text() = '{sorting_option.value}']"
+        return (
+            By.XPATH,
+            f"//div[contains(@class, 'dropdown-menu')]/a[text() = '{sorting_option.value}']",
+        )
 
 
 class ItemPage(CeneoPage):
-
     # selenium locators
-    l_sort_dropdown = (By.XPATH, "//body/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]"
-                                 "/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/a[1]")
+    l_sort_dropdown = (
+        By.XPATH,
+        "//body/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]"
+        "/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/a[1]",
+    )
     l_offers = (By.CSS_SELECTOR, ".product-offer__container")
     l_item_name = (By.XPATH, "//div[contains(@class, 'product-top__title')]/h1")
 
@@ -89,33 +93,40 @@ class ItemPage(CeneoPage):
         wait = WebDriverWait(self.driver, 3)
         wait.until(EC.presence_of_all_elements_located(self.l_offers))
         self.offers = [
-            self._web_element_to_offer(element) for element
-            in self.driver.find_elements(*self.l_offers)
+            self._web_element_to_offer(element)
+            for element in self.driver.find_elements(*self.l_offers)
         ]
 
     def _web_element_to_offer(self, web_element: WebElement) -> OfferData:
         l_offer_url = (By.XPATH, ".//a[contains(@class, 'go-to-shop')]")
-        l_buy_now_button = (By.XPATH, ".//button[contains(@class, 'add-to-basket-no-popup')]")
+        l_buy_now_button = (
+            By.XPATH,
+            ".//button[contains(@class, 'add-to-basket-no-popup')]",
+        )
         l_data_and_opinions = (
             By.XPATH,
-            "./parent::node()//ul[contains(@class, 'product-offer__details__toolbar__links')]/li[1]/a[1]"
+            "./parent::node()//ul[contains(@class, 'product-offer__details__toolbar__links')]/li[1]/a[1]",
         )
 
         item_name = self.item_name.text
-        shop_name = web_element.find_element(
-            *l_data_and_opinions).get_attribute('textContent').replace('Dane i opinie o ', '').strip()
+        shop_name = (
+            web_element.find_element(*l_data_and_opinions)
+            .get_attribute("textContent")
+            .replace("Dane i opinie o ", "")
+            .strip()
+        )
 
         try:
             # handle offers with go-to-shop layout
             offer_url_web_element = web_element.find_element(*l_offer_url)
-            item_id = web_element.get_attribute('data-productid')
-            price = float(web_element.get_attribute('data-price'))
-            offer_url = offer_url_web_element.get_attribute('href')
+            item_id = web_element.get_attribute("data-productid")
+            price = float(web_element.get_attribute("data-price"))
+            offer_url = offer_url_web_element.get_attribute("href")
         except (TypeError, NoSuchElementException):
             # handle offers with add-to-cart layout
             buy_now_button = web_element.find_element(*l_buy_now_button)
-            item_id = buy_now_button.get_attribute('data-product')
-            price = float(buy_now_button.get_attribute('data-price'))
+            item_id = buy_now_button.get_attribute("data-product")
+            price = float(buy_now_button.get_attribute("data-price"))
             offer_url = f'ceneo.pl{web_element.get_attribute("data-click-url")}'
 
         return OfferData(
@@ -125,5 +136,3 @@ class ItemPage(CeneoPage):
             shop_name=shop_name,
             offer_url=offer_url,
         )
-
-

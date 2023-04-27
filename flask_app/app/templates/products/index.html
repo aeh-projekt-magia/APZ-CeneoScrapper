@@ -2,42 +2,68 @@
 
 {% block content %}
 
+
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-6 mx-auto">
+        <div class="flex flex-col text-center w-full mb-12">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Your product search list
+            </h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Below you can find all your previously searched
+                products.</p>
+        </div>
+        <div
+            class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+            <div class="relative flex-grow w-full">
+                <label class="leading-7 text-sm text-gray-600">Product name</label>
+                <input type="text"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            <div class="relative flex-grow w-full">
+                <label f class="leading-7 text-sm text-gray-600">Product ID</label>
+                <input type="text"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            <button
+                class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Search</button>
+        </div>
+    </div>
+</section>
+
+
+
 <section class="text-gray-600 body-font overflow-hidden">
-    <div class="container px-5 py-24 mx-auto">
 
-        <!--        <h1>Opinie dla produktu {{productid}} </h1>-->
-        <!--        <br>-->
+    {% for product in products %}
 
+    <div class="container px-5 py-12 mx-auto">
         <div class="-my-8 divide-y-2 divide-gray-100">
-            {% for product in products %}
             <div class="py-8 flex flex-wrap md:flex-nowrap">
                 <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                    <span class="font-semibold title-font text-gray-700">{{product.product_id}}</span>
-                    <span class="mt-1 text-gray-500 text-sm">{{product.name}}</span>
+                    <!-- CATEGORY SECTION -->
+                    <span class="font-semibold title-font text-gray-700">{{product.category}}</span>
+                    <!-- DATE SECTION -->
+                    <span class="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
                 </div>
-
                 <div class="md:flex-grow">
-                    <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">aa</h2>
-                    <p class="leading-relaxed">{{product.name}}</p>
-                    <a class="text-indigo-500 inline-flex items-center mt-4">Stars: {{product.name}}
+                    <!-- NAME SECTION -->
+                    <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">{{product.name}}</h2>
+                    <!-- DESCRIPTION SECTION -->
+                    <p class="leading-relaxed">{{product.description}}</p>
+                    <!-- HYPERLINK SECTION -->
+                    <a class="text-indigo-500 inline-flex items-center mt-4"
+                        href="{{ url_for('products.single_product_view', product_id=product.id) }}">Check product
+                        descripton
                         <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
-                             stroke-linecap="round" stroke-linejoin="round">
+                            stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14"></path>
                             <path d="M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
-                {% for xx in products.review%}
-
-                {%endfor%}
-                aa
-                {% endfor %}
-
             </div>
-
         </div>
-
     </div>
 </section>
 
+{% endfor %}
 {% endblock %}

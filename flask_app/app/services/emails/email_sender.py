@@ -46,9 +46,9 @@ class EmailSender:
             with smtplib.SMTP(EmailSender.smtp_server, EmailSender.port) as server:
                 server.starttls(context=context)
                 server.login(EmailSender.email_address, EmailSender.password)
-                server.sendmail(EmailSender.email_address,
-                                message["To"],
-                                message.as_string())
+                server.sendmail(
+                    EmailSender.email_address, message["To"], message.as_string()
+                )
         except smtplib.SMTPException as exception:
             # TODO: use logging
             print(exception)

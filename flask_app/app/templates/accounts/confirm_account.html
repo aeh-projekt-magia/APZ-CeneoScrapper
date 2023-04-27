@@ -16,7 +16,7 @@
 
             <form method="POST" action="">
                 <div class="flex w-full justify-center items-end">
-                    <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4 md:w-full text-left">
+                    <div class="relative mr-4 lg:w-full md:w-full text-left">
 
                         {{form.csrf_token}}
 
@@ -33,6 +33,11 @@
                     </button>
                 </div>
             </form>
+            <a href="{{ url_for('accounts.resend_token')}}"
+            class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6
+            focus:outline-none hover:bg-indigo-600 rounded text-lg">
+        Resend token
+        </a>
         </div>
     </div>
 </section>

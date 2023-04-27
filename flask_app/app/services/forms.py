@@ -1,12 +1,17 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, StringField
+from wtforms import EmailField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-from app.models.models import User
+from app.models.UserModel import User
+
+
+class SubscribeProductForm(FlaskForm):
+    subscribe_button = SubmitField()
+    unsubscribe_button = SubmitField()
 
 
 class ConfirmEmailForm(FlaskForm):
-    token = StringField('token', validators=[DataRequired()])
+    token = StringField("token", validators=[DataRequired()])
 
 
 class LoginForm(FlaskForm):
@@ -16,6 +21,7 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     """Do zrobienia te walidatory!"""
+
     email = EmailField(
         "Email", validators=[DataRequired(), Email(message=None), Length(min=6, max=40)]
     )

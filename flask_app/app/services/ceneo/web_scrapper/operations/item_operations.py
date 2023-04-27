@@ -1,7 +1,10 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 from app.services.ceneo.web_scrapper.data_objects.offer_data import OfferData
-from app.services.ceneo.web_scrapper.page_objects.item_page import ItemPage, SortingOptions
+from app.services.ceneo.web_scrapper.page_objects.item_page import (
+    ItemPage,
+    SortingOptions,
+)
 
 
 class ItemOperations:

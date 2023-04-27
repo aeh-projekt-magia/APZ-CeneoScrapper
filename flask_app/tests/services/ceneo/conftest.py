@@ -3,8 +3,10 @@ from app.services.ceneo.ceneo_item import CeneoItem
 from app.services.ceneo.web_scrapper.data_objects.offer_data import OfferData
 from app.services.ceneo.web_scrapper.operations.item_operations import ItemOperations
 
-from services.ceneo.web_scrapper.data_objects.item_data import ItemData
-from services.ceneo.web_scrapper.operations.item_search_operations import ItemSearchOperations
+from app.services.ceneo.web_scrapper.data_objects.item_data import ItemData
+from app.services.ceneo.web_scrapper.operations.item_search_operations import (
+    ItemSearchOperations,
+)
 
 
 @pytest.fixture
@@ -13,11 +15,7 @@ def mocked_webdriver_provider(mocker):
         def __init__(self):
             self.driver = None
 
-    mocker.patch.object(
-        CeneoItem,
-        'provider',
-        MockWebDriverProvider
-    )
+    mocker.patch.object(CeneoItem, "provider", MockWebDriverProvider)
 
 
 @pytest.fixture
@@ -30,11 +28,7 @@ def mocked_item_operations(mocker, offer_data, item_id_):
             if item_id == item_id_:
                 return offer_data
 
-    mocker.patch.object(
-        CeneoItem,
-        'item_operations',
-        MockedItemOperations
-    )
+    mocker.patch.object(CeneoItem, "item_operations", MockedItemOperations)
 
 
 @pytest.fixture
@@ -47,19 +41,15 @@ def mocked_item_search_operations(mocker, item_data, item_name_):
             if item_name == item_name_:
                 return item_data
 
-    mocker.patch.object(
-        CeneoItem,
-        'item_search_operations',
-        MockedItemSearchOperations
-    )
+    mocker.patch.object(CeneoItem, "item_search_operations", MockedItemSearchOperations)
 
 
 @pytest.fixture
 def item_data_params(item_id_):
     return {
-        'item_id': item_id_,
-        'item_name': 'test_item_name',
-        'item_search_name': 'test_item_search_name'
+        "item_id": item_id_,
+        "item_name": "test_item_name",
+        "item_search_name": "test_item_search_name",
     }
 
 
@@ -68,14 +58,15 @@ def item_data(item_data_params):
     item_data = ItemData(**item_data_params)
     return item_data
 
+
 @pytest.fixture
 def offer_data_params(item_id_):
     return {
-        'item_name': 'test_item_name',
-        'item_id': item_id_,
-        'price': 1000.00,
-        'shop_name': 'test_shop_name.com',
-        'offer_url': 'https://test_shop_name.com/offers/abc12'
+        "item_name": "test_item_name",
+        "item_id": item_id_,
+        "price": 1000.00,
+        "shop_name": "test_shop_name.com",
+        "offer_url": "https://test_shop_name.com/offers/abc12",
     }
 
 
@@ -87,16 +78,17 @@ def offer_data(offer_data_params):
 
 @pytest.fixture
 def item_id_():
-    return '97863463'
+    return "97863463"
+
 
 @pytest.fixture
 def item_name_():
-    return 'Apple iPhone 13'
+    return "Apple iPhone 13"
 
 
 @pytest.fixture
-def ceneo_item_mocks(mocked_webdriver_provider,
-                     mocked_item_operations,
-                     mocked_item_search_operations):
+def ceneo_item_mocks(
+    mocked_webdriver_provider, mocked_item_operations, mocked_item_search_operations
+):
     # mock all dependencies using fixtures
     ...

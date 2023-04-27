@@ -1,7 +1,9 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 
-from services.ceneo.web_scrapper.data_objects.item_data import ItemData
-from services.ceneo.web_scrapper.page_objects.items_search_page import ItemsSearchPage
+from app.services.ceneo.web_scrapper.data_objects.item_data import ItemData
+from app.services.ceneo.web_scrapper.page_objects.items_search_page import (
+    ItemsSearchPage,
+)
 
 
 class ItemSearchOperations:
