@@ -26,9 +26,7 @@ def show_users():
     users = User.query.all()
 
     for user in users:
-        print(
-            f"User: {user.id}: {user.email}, is_confirmed: {user.is_confirmed}, is_admin: {user.is_admin}"
-        )
+        print(f"{user.id=}, {user.email=}, {user.is_confirmed=}, {user.is_admin=}")
 
 
 @cli.command("towar")
@@ -41,72 +39,19 @@ def towar():
         price="90000 zł",
         available_shops_count="Available in 50 shops",
         reviews_count="12 reviews",
-        description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
+        description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED.\
+             Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
         image_url="https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg",
     )
+
     try:
         db.session.add(new_product)
         db.session.commit()
-    except:
+    except Exception:
         db.session.rollback()
-
-    # repo_prod = ProductRepository.SqlAlchemyRepository(db.session)
-    # new_product = Products(
-    #     name="Iphone 14",
-    #     category="Smartphone",
-    #     price="90000 zł",
-    #     available_shops_count="Available in 50 shops",
-    #     reviews_count="12 reviews",
-    #     description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED. Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
-    #     image_url="https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg",
-    # )
-
-    # repo_rev = ReviewRepository.SqlAlchemyRepository(db.session)
-
-    # new_review = Review(
-    #     name="jakub",
-    #     stars="5",
-    #     description="Fajny no fajny polecam każdemu",
-    #     zalety=["dobry", "fajny", "szybki"],
-    #     wady=["drogi", "śliski"],
-    #     recommendation="Polecam",
-    #     date=None,
-    #     parent=new_product,
-    # )
-    # new_review2 = Review(
-    #     name="robert",
-    #     stars="4",
-    #     description="Fajny no fajny polecam każdemu",
-    #     zalety=["dobry", "fajny", "szybki"],
-    #     wady=["drogi", "śliski"],
-    #     recommendation="Polecam",
-    #     date=None,
-    #     parent=new_product,
-    # )
-    # new_review3 = Review(
-    #     name="jakub",
-    #     stars="5",
-    #     description="Fajny no fajny polecam każdemu",
-    #     zalety=["dobry", "fajny", "szybki"],
-    #     wady=["drogi", "śliski"],
-    #     recommendation="Polecam",
-    #     date=None,
-    #     parent=new_product,
-    # )
-    # new_review4 = Review(
-    #     name="robert",
-    #     stars="4",
-    #     description="Fajny no fajny polecam każdemu",
-    #     zalety=["dobry", "fajny", "szybki"],
-    #     wady=["drogi", "śliski"],
-    #     recommendation="Polecam",
-    #     date=None,
-    #     parent=new_product,
-    # )
-
-    # repo_rev.add_all([new_review, new_review2, new_review3, new_review4])
-    # repo_prod.add(new_product)
-    # db.session.commit()
+    user = User.query.first()
+    user.subscriptions.append(new_product)
+    db.session.commit()
 
 
 @cli.command("test")

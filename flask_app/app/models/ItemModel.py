@@ -4,7 +4,11 @@ from dataclasses import dataclass
 
 from sqlalchemy import Integer
 from sqlalchemy.orm import relationship
-from app.models.relations import user_product_subscription
+from app.models.SubscriptionModel import Subscription
+
+
+"""This table has to be created first"""
+Subscription.__tablename__
 
 
 @dataclass
@@ -29,8 +33,12 @@ class Item(db.Model):
     last_updated = db.Column(db.DateTime, default=datetime.datetime.now)
 
     """Relations"""
+    # subscribers = relationship(
+    #     "User", secondary=user_product_subscription, back_populates="subscriptions"
+    # )
+
     subscribers = relationship(
-        "User", secondary=user_product_subscription, back_populates="subscriptions"
+        "User", secondary="subscriptions_table", back_populates="subscriptions"
     )
 
     def __repr__(self):

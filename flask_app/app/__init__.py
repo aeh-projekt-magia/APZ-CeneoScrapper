@@ -14,6 +14,8 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.init_app(app)
     login_manager.login_view = "accounts.login"
     login_manager.login_message_category = "danger"
+    # TODO: Zabezpieczenia! + może dodać fresh_login
+    # login_manager.session_protection = "strong" lub None lub 'basic'
 
     from app.models.UserModel import User
 

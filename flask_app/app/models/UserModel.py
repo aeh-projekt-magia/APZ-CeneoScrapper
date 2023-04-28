@@ -5,7 +5,10 @@ from flask_login import UserMixin
 from sqlalchemy import Integer
 from sqlalchemy.orm import relationship
 
-from app.models.relations import user_product_subscription
+from app.models.SubscriptionModel import Subscription
+
+"""This table has to be created first"""
+Subscription.__tablename__
 
 
 @dataclass
@@ -25,9 +28,13 @@ class User(UserMixin, db.Model):
     is_confirmed = db.Column(db.Boolean, nullable=False, default=False)
     created_on = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
 
-    """Relations"""
+    # """Relations"""
+    # subscriptions = relationship(
+    #     "Item", secondary=user_product_subscription, back_populates="subscribers"
+    # )
+
     subscriptions = relationship(
-        "Item", secondary=user_product_subscription, back_populates="subscribers"
+        "Item", secondary="subscriptions_table", back_populates="subscribers"
     )
 
     def __init__(self, email, password, is_admin=False, is_confirmed=False):
