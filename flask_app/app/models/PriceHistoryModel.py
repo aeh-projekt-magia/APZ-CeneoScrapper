@@ -1,6 +1,7 @@
 from app.extensions import db
 import datetime
 from dataclasses import dataclass
+from sqlalchemy.orm import relationship
 
 
 @dataclass
@@ -13,14 +14,12 @@ class PriceHistory(db.Model):
     date: datetime
 
     price_id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey("items.id"))
     price = db.Column(db.Numeric(10, 2), default=0.00)
     date = db.Column(db.DateTime, default=datetime.datetime.now)
 
-    def __init__(self, itemId, price, date=None):
-        self.item_id = itemId
-        self.price = price
-        self.date = date
+    """Relationships"""
+    item_id = db.Column(db.Integer, db.ForeignKey("items.id"))
+    item = relationship("Item", back_populates="price_history")
 
     def __repr__(self):
         (

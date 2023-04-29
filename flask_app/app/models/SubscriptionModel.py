@@ -23,6 +23,8 @@ class Subscription(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     item_id = db.Column(db.Integer, db.ForeignKey("items.id"))
 
+    # TODO: PROBLEM! WIELKI PROBLEM! Trzeba dodać prosty \
+    # sposob na utworzenie subscription(user, item)
     def __init__(
         self,
         itemId,

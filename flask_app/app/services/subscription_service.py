@@ -2,6 +2,7 @@ from app import db
 
 from app.models.UserModel import User
 from app.models.ItemModel import Item
+from app.models.SubscriptionModel import Subscription
 
 
 class SubscriptionService:
@@ -30,7 +31,7 @@ class SubscriptionService:
         db.session.commit()
 
     @staticmethod
-    def get(user_id, product_id) -> bool:
+    def check_if_subscribed(user_id, product_id) -> bool:
         user, product = SubscriptionService.__get_objects__(user_id, product_id)
 
         return any(subscription.id == product.id for subscription in user.subscriptions)
@@ -40,3 +41,7 @@ class SubscriptionService:
         user = User.query.where(User.id == user_id).first()
         user.subscriptions = user.subscriptions
         return user.subscriptions
+
+    @staticmethod
+    def get_subscription_details(user_id, product_id):
+        return Subscription.query.filter_by(user_id=user_id, item_id=product_id)

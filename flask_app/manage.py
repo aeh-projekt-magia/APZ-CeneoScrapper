@@ -3,6 +3,11 @@ import pytest
 from app import create_app, db
 from app.models.UserModel import User
 from app.models.ItemModel import Item
+from app.models.PriceHistoryModel import PriceHistory
+
+import datetime
+
+# app=create_app();app.app_context().push()
 
 
 # from app.models.models import Products, Reviews
@@ -33,10 +38,12 @@ def show_users():
 def towar():
     """Add some towar to database"""
 
+    user = User.query.filter_by(id=1).first()
+
     new_product = Item(
-        name="Iphone 14",
+        name="Iphone 17",
         category="Smartphone",
-        price="90000 zł",
+        price="5000 zł",
         available_shops_count="Available in 50 shops",
         reviews_count="12 reviews",
         description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED.\
@@ -44,14 +51,25 @@ def towar():
         image_url="https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg",
     )
 
+    new_price_history = []
+    for index, x in enumerate(range(25)):
+        new_price_history.append(
+            PriceHistory(
+                item=new_product,
+                price=6000 - index * 200,
+                date=datetime.datetime.now() - datetime.timedelta(days=index),
+            )
+        )
+
+    # Subscription()
+
+    user.subscriptions.append(new_product)
     try:
         db.session.add(new_product)
+        db.session.add_all(new_price_history)
         db.session.commit()
     except Exception:
         db.session.rollback()
-    user = User.query.first()
-    user.subscriptions.append(new_product)
-    db.session.commit()
 
 
 @cli.command("test")
@@ -66,18 +84,6 @@ def test():
 def coverage():
     """Run pytest coverage test"""
     pytest.main(["--cov"])
-
-
-@cli.command("test_clean")
-def test_clean():
-    """Run tests with no extra flags"""
-    pytest.main(["--rootdir", "."])
-
-
-@cli.command("test_extra")
-def test_extra():
-    """Run tests with --setup-show (fixtures)"""
-    pytest.main(["-rP", "--verbose", "--setup-show", "--rootdir", "."])
 
 
 @cli.command("create_admin")

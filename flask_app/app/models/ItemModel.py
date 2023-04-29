@@ -36,6 +36,7 @@ class Item(db.Model):
     subscribers = relationship(
         "User", secondary="subscriptions_table", back_populates="subscriptions"
     )
+    price_history = relationship("PriceHistory", back_populates="item")
 
     def __repr__(self):
         return f"{self.id=}\

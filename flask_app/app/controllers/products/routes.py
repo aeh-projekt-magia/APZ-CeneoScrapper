@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from app.controllers.products import bp
 from app.services.decorators import confirmed_user_required
 from app.services.forms import SubscribeProductForm
+
 from app.services.subscription_service import SubscriptionService
 from app.services.product_service import ProductService
 
@@ -27,7 +28,7 @@ def single_product_view(product_id):
     # TODO: products/routes - Dodać obsługę repozytorium
     tab = None
     product_to_show = ProductService.get_product_to_show_by_id(product_id)
-    is_already_subscribed = SubscriptionService.get(
+    is_already_subscribed = SubscriptionService.check_if_subscribed(
         user_id=current_user.id, product_id=product_id
     )
 
