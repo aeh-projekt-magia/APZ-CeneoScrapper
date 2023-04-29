@@ -18,7 +18,8 @@ class SubscriptionService:
             user_id, product_id
         )
 
-        user.subscriptions.append(product_to_subscribe)
+        # user.subscriptions.append(product_to_subscribe)  # LUB!
+        db.session.add(Subscription(item_id=product_id, user_id=user_id))
         db.session.commit()
 
     @staticmethod
@@ -27,7 +28,8 @@ class SubscriptionService:
             user_id, product_id
         )
 
-        user.subscriptions.remove(product_to_subscribe)
+        sub = Subscription.query.filter_by(user_id=user_id, item_id=product_id).first()
+        db.session.delete(sub)
         db.session.commit()
 
     @staticmethod

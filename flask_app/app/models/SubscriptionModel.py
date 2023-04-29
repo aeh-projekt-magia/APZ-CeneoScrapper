@@ -27,16 +27,16 @@ class Subscription(db.Model):
     # sposob na utworzenie subscription(user, item)
     def __init__(
         self,
-        itemId,
-        userId,
-        notificationFreq,
-        notifyOnPriceChange,
+        item_id,
+        user_id,
+        notification_frequency=0,
+        notify_on_price_change=False,
         send_notification=False,
     ):
-        self.item_id = itemId
-        self.user_id = userId
-        self.notification_frequency = notificationFreq
-        self.notify_on_price_change = notifyOnPriceChange
+        self.item_id = item_id
+        self.user_id = user_id
+        self.notification_frequency = notification_frequency
+        self.notify_on_price_change = notify_on_price_change
         self.send_notification = send_notification
 
     def __repr__(self):
