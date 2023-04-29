@@ -13,6 +13,8 @@ from app.repository.SubscriptionRepository import (
 from app import db
 
 
+# TODO: Nie działają testy pod postgresem
+
 test_subscription = {
     "itemId": 12345,
     "userId": 333,
@@ -43,9 +45,7 @@ def test_subscription_model_add(app):
         test_subscription["notifyOnPriceChange"],
     )
 
-    sub = db.session.execute(
-        db.select(Subscription).filter_by(subscription_id=1)
-    ).scalar_one()
+    sub = db.session.execute(db.select(Subscription).filter_by(id=1)).scalar_one()
 
     assert test_subscription["itemId"] == sub.item_id
     assert test_subscription["userId"] == sub.user_id
@@ -105,9 +105,7 @@ def test_subscription_model_update(app):
     )
     updateSubscriber(1, 0, True, True)
 
-    sub = db.session.execute(
-        db.select(Subscription).filter_by(subscription_id=1)
-    ).scalar_one()
+    sub = db.session.execute(db.select(Subscription).filter_by(id=1)).scalar_one()
 
     assert test_subscription["notificationFreq"] != sub.notification_frequency
     assert test_subscription["notifyOnPriceChange"] != sub.notify_on_price_change
@@ -124,9 +122,7 @@ def test_subscription_model_delete_one(app):
     deleteSubscriber(1)
 
     with pytest.raises(sqlalchemy.exc.NoResultFound):
-        db.session.execute(
-            db.select(Subscription).filter_by(subscription_id=1)
-        ).scalar_one()
+        db.session.execute(db.select(Subscription).filter_by(id=1)).scalar_one()
 
 
 def test_subscription_model_delete_all(app, capfd):

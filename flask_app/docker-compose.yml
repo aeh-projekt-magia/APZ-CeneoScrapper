@@ -12,8 +12,7 @@ services:
       - ./.env.dev
     networks:
       - appnetwork
-    depends_on:
-      - db
+
     environment:
       - FLASK_DEBUG=1
       - FLASK_APP=app

@@ -17,9 +17,10 @@ class PriceHistory(db.Model):
     price = db.Column(db.Numeric(10, 2), default=0.00)
     date = db.Column(db.DateTime, default=datetime.datetime.now)
 
-    def __init__(self, itemId, price):
+    def __init__(self, itemId, price, date=None):
         self.item_id = itemId
         self.price = price
+        self.date = date
 
     def __repr__(self):
         (

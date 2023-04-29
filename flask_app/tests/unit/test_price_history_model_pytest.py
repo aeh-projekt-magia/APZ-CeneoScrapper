@@ -11,6 +11,9 @@ from app.repository.PriceHistoryRepository import (
 )
 from app import db
 
+
+# TODO: Nie działają testy pod postgresem
+
 test_price_history = {
     "itemId": 12345,
     "price": 9.99,

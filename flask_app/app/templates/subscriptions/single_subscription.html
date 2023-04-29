@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="text-3xl lg:text-sm text-gray-600 body-font overflow-hidden">
+    <div class="container px-5 pt-12 pb-6 mx-auto">
+        <div class="lg:w-4/5 mx-auto flex flex-wrap">
+            <!-- PRODUCT IMAGE SECTION -->
+            <img alt="image" class="lg:w-1/3 w-full lg:h-auto h-64 object-contain object-center rounded"
+                src={{product.image_url}}>
+
+            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                <!-- PRODUCT CATEGORY SECTION -->
+                <h2 class="text-sm title-font text-gray-500 tracking-widest">{{product.category}}</h2>
+                <!-- PRODUCT NAME SECTION -->
+                <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{product.name}}</h1>
+                <div class="flex mb-4">
+                    <!-- STARS -->
+                    <span class="flex items-center">
+                        <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        <!-- REVIEWS SECTION -->
+                        <span class="text-gray-600 ml-3">{{product.reviews_count}}</span>
+                    </span>
+
+                </div>
+                <!-- PRODUCT DESCRIPTION SECTION -->
+                <p class="leading-relaxed text-gray-900 md:text-xl ">{{product.description}}</p>
+            </div>
+        </div>
+
+
+        <div class="lg:w-4/5 w-full my-3 py-3 mx-auto flex flex-wrap">
+            <h1 class="text-gray-900 text-3xl  text-left title-font font-medium mb-3">Price History</h1>
+            <table class="table-auto w-full text-left whitespace-no-wrap">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                            Price</th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Date</th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            column-tbd</th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            column-tbd</th>
+                    </tr>
+                </thead>
+                {% for single_price_history in price_history %}
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-3">{{single_price_history.price}} zł</td>
+                        <td class="px-4 py-3">{{single_price_history.date}} zł</td>
+                        <td class="px-4 py-3">tbd</td>
+                        <td class="px-4 py-3">tbd</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            <div class="flex flex-row justify-between lg:w-4/5 w-full my-3">
+                <span class="flex title-font font-medium text-2xl md:text-xl text-gray-900">Current price: 50 zł</span>
+                <button
+                    class="flex my-auto text-2xl lg:text-xl text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Edit
+                    button tbd</button>
+            </div>
+        </div>
+
+
+        <!-- SECOND ROW -->
+        <div class="lg:w-4/5 w-full my-3 py-3 mx-auto flex flex-wrap">
+            <div class="lg:w-4/5 w-full ">
+                <h1 class="text-gray-900 text-3xl title-font text-left font-medium mb-4">
+                    Subscription details
+                </h1>
+                <!-- NOTIFICATION FREQUENCY -->
+                <div class="flex border-t border-gray-200 py-2">
+                    <span class="text-gray-500 text-2xl lg:text-base">Notification frequency</span>
+                    <span class="ml-auto text-gray-900">{{subscription.notification_frequency}}</span>
+                </div>
+                <!-- NOTIFY ON PRICE CHANGE -->
+                <div class="flex border-t border-gray-200 py-2">
+                    <span class="text-gray-500 text-2xl lg:text-base">Notify on price change</span>
+                    <span class="ml-auto text-gray-900">
+                        {% if subscription.notify_on_price_change == True%} Yes {%
+                        else%} No {% endif%}
+                    </span>
+                </div>
+                <!-- SEND NOTIFICATION -->
+                <div class="flex border-t border-b mb-3 border-gray-200 py-2">
+                    <span class="text-gray-500 text-2xl lg:text-base">Send notification?</span>
+                    <span class="ml-auto text-gray-900">
+                        {% if subscription.send_notification == True%} Yes {%
+                        else%} No {% endif%}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+{% endblock %}

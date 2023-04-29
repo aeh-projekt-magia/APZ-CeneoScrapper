@@ -33,10 +33,6 @@ class Item(db.Model):
     last_updated = db.Column(db.DateTime, default=datetime.datetime.now)
 
     """Relations"""
-    # subscribers = relationship(
-    #     "User", secondary=user_product_subscription, back_populates="subscriptions"
-    # )
-
     subscribers = relationship(
         "User", secondary="subscriptions_table", back_populates="subscriptions"
     )

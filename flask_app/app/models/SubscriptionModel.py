@@ -16,17 +16,26 @@ class Subscription(db.Model):
     send_notification: bool
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    item_id = db.Column(db.Integer, db.ForeignKey("items.id"))
     notification_frequency = db.Column(db.Integer, default=0)
     notify_on_price_change = db.Column(db.Boolean, default=False)
     send_notification = db.Column(db.Boolean, default=False)
+    """Relationships"""
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    item_id = db.Column(db.Integer, db.ForeignKey("items.id"))
 
-    def __init__(self, itemId, userId, notificationFreq, notifyOnPriceChange):
+    def __init__(
+        self,
+        itemId,
+        userId,
+        notificationFreq,
+        notifyOnPriceChange,
+        send_notification=False,
+    ):
         self.item_id = itemId
         self.user_id = userId
         self.notification_frequency = notificationFreq
         self.notify_on_price_change = notifyOnPriceChange
+        self.send_notification = send_notification
 
     def __repr__(self):
         return f"{self.id=}\

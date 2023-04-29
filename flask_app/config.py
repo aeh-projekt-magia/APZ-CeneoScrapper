@@ -9,7 +9,7 @@ class Config:
     CSRF_ENABLED = True
     SECRET_KEY = os.environ.get("SECRET_KEY", default="zgadnij")
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DATABASE_URL"
+        "DATABASE_URI"
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     BCRYPT_LOG_ROUNDS = 4

@@ -28,18 +28,14 @@ class User(UserMixin, db.Model):
     is_confirmed = db.Column(db.Boolean, nullable=False, default=False)
     created_on = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
 
-    # """Relations"""
-    # subscriptions = relationship(
-    #     "Item", secondary=user_product_subscription, back_populates="subscribers"
-    # )
-
+    """Relations"""
     subscriptions = relationship(
         "Item", secondary="subscriptions_table", back_populates="subscribers"
     )
 
     def __init__(self, email, password, is_admin=False, is_confirmed=False):
         self.email = email
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = bcrypt.generate_password_hash(password).decode("utf-8")
         self.is_admin = is_admin
         self.is_confirmed = is_confirmed
 

@@ -10,7 +10,7 @@ def addSubscriber(itemId, userId, notificationFreq, notifyOnPriceChange):
 
 def getSubscriber(subscriptionId):
     subscriber = db.session.execute(
-        db.select(Subscription).filter_by(subscription_id=subscriptionId)
+        db.select(Subscription).filter_by(id=subscriptionId)
     ).scalar_one()
     print(subscriber)
 
@@ -23,7 +23,7 @@ def getAllSubscribers():
 
 def deleteSubscriber(subscriptionId):
     subscriber = db.session.execute(
-        db.select(Subscription).filter_by(subscription_id=subscriptionId)
+        db.select(Subscription).filter_by(id=subscriptionId)
     ).scalar_one()
     db.session.delete(subscriber)
     db.session.commit()
@@ -38,7 +38,7 @@ def updateSubscriber(
     subscriptionId, notificationFreq, notifyOnPriceChange, sendNotification
 ):
     subscriber = db.session.execute(
-        db.select(Subscription).filter_by(subscription_id=subscriptionId)
+        db.select(Subscription).filter_by(id=subscriptionId)
     ).scalar_one()
 
     subscriber.notification_frequency = notificationFreq
