@@ -41,3 +41,9 @@ def test_admin_data():
         "is_admin": True,
         "is_confirmed": True,
     }
+
+
+def pytest_configure(config):
+    # register an additional marker
+    config.addinivalue_line("markers", "unit_test: unit test")
+    config.addinivalue_line("markers", "e2e: e2e test")

@@ -3,7 +3,7 @@ from app.extensions import db
 
 
 def addPriceHistoryRecord(itemId, price):
-    newRecord = PriceHistory(itemId, price)
+    newRecord = PriceHistory(item_id=itemId, price=price)
     db.session.add(newRecord)
     db.session.commit()
 
