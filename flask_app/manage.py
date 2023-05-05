@@ -1,4 +1,5 @@
 from flask.cli import FlaskGroup
+import click
 import pytest
 from app import create_app, db
 from app.models.UserModel import User
@@ -35,10 +36,12 @@ def show_users():
 
 
 @cli.command("towar")
-def towar():
+@click.option('-q', default =1, help="How many records")
+@click.option('-r', default=True, help="Make random choice")
+def towar(q, r):
     """Add some towar to database"""
     from db_seed import towar
-    towar()
+    towar(quantity=q, random=r)
 
 
 @cli.command("test")

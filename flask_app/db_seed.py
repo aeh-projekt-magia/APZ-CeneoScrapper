@@ -1,10 +1,8 @@
-from flask.cli import FlaskGroup
-import pytest
-from app import create_app, db
+from app import db
 from app.models.UserModel import User
 from app.models.ItemModel import Item
 from app.models.PriceHistoryModel import PriceHistory
-
+from random import sample
 import datetime
 
 import csv
@@ -23,12 +21,16 @@ def get_example_data():
                 line_count+=1
         return result
 
-def towar():
+def towar(quantity: int , random : bool):
     """Add some towar to database"""
     new_data = get_example_data()
 
+    data_range = sample(range(0,len(new_data)), quantity) if random else range(0,len(new_data))
+
+
     new_product_list = list()  
-    for item in new_data:
+    for index in data_range:
+        item = new_data[index]
         new_product = Item(
             name=item["name"],
             category="Smartphone",
