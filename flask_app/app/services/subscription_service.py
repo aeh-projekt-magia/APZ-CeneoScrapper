@@ -46,4 +46,15 @@ class SubscriptionService:
 
     @staticmethod
     def get_subscription_details(user_id, product_id):
-        return Subscription.query.filter_by(user_id=user_id, item_id=product_id)
+        return Subscription.query.filter_by(user_id=user_id, item_id=product_id).first()
+
+    @staticmethod
+    def update_subscription(subscription:Subscription, update :dict):
+        try:
+            subscription.notification_frequency = int(update['notification_frequency'])
+            subscription.notify_on_price_change = True if update["notify_on_price_change"] == "Yes" else False
+            subscription.send_notification = True if update["send_notification"] == "Yes" else False
+        except Exception as e:
+            db.session.rollback()
+        else:
+            db.session.commit()

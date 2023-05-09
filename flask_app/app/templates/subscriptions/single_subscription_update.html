@@ -95,32 +95,40 @@
                 <h1 class="text-gray-900 text-3xl title-font text-left font-medium mb-4">
                     Subscription details
                 </h1>
-                <!-- NOTIFICATION FREQUENCY -->
-                <div class="flex border-t border-gray-200 py-2">
-                    <span class="text-gray-500 text-2xl lg:text-base">Notification frequency</span>
-                    <span class="ml-auto text-gray-900">{{subscription.notification_frequency}}</span>
-                </div>
-                <!-- NOTIFY ON PRICE CHANGE -->
-                <div class="flex border-t border-gray-200 py-2">
-                    <span class="text-gray-500 text-2xl lg:text-base">Notify on price change</span>
-                    <span class="ml-auto text-gray-900">
-                        {% if subscription.notify_on_price_change == True%} Yes {%
-                        else%} No {% endif%}
-                    </span>
-                </div>
-                <!-- SEND NOTIFICATION -->
-                <div class="flex border-t border-b mb-3 border-gray-200 py-2">
-                    <span class="text-gray-500 text-2xl lg:text-base">Send notification?</span>
-                    <span class="ml-auto text-gray-900">
-                        {% if subscription.send_notification == True%} Yes {%
-                        else%} No {% endif%}
-                    </span>
-                </div>
-                <div class="flex justify-end">
-                    <a class="flex my-auto text-2xl lg:text-xl text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-                        href="{{ url_for('subscriptions.single_subscription_update', product_id=product.id)}}"> Edit
-                        subscription</a>
-                </div>
+                <form method="POST">
+                    {{ form.csrf_token }}
+                    {{ form.hidden_tag() }}
+
+
+                    <!-- NOTIFICATION FREQUENCY -->
+                    <div class="flex border-t border-gray-200 py-2">
+                        <span class="text-gray-500 text-2xl lg:text-base">Notification frequency</span>
+                        <span class="ml-auto text-gray-900">{{form.notification_frequency(class="text-right")}}</span>
+                    </div>
+
+                    <!-- NOTIFY ON PRICE CHANGE -->
+                    <div class="flex border-t border-gray-200 py-2">
+                        <span class="text-gray-500 text-2xl lg:text-base">Notify on price change</span>
+                        <span class="ml-auto text-gray-900">
+                            {{form.notify_on_price_change}}</span>
+                    </div>
+
+                    <!-- SEND NOTIFICATION -->
+                    <div class="flex border-t border-b mb-3 border-gray-200 py-2">
+                        <span class="text-gray-500 text-2xl lg:text-base">Send notification?</span>
+                        <span class="ml-auto text-gray-900">
+                            {{form.send_notification}}</span>
+                    </div>
+
+                    <div class="flex flex-row justify-between">
+                        <button
+                            class="flex my-auto text-2xl lg:text-xl text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                            type="submit">Update
+                            subscription</button>
+                        <a class="flex my-auto text-2xl lg:text-xl text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                            href="{{ url_for('subscriptions.single_subscription_view', product_id=product.id)}}">Cancel</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

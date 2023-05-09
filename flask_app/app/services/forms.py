@@ -1,9 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, StringField, SubmitField
+from wtforms import EmailField, PasswordField, StringField, SubmitField, BooleanField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from app.models.UserModel import User
 
+
+class SubscriptionUpdate(FlaskForm):
+    notification_frequency = IntegerField()
+    notify_on_price_change = SelectField("Test", choices=[("Yes"), ("No")])
+    send_notification = SelectField("Test", choices=[("Yes"), ("No")])
 
 class SubscribeProductForm(FlaskForm):
     subscribe_button = SubmitField()
