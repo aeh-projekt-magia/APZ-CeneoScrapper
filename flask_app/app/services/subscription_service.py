@@ -41,8 +41,12 @@ class SubscriptionService:
     @staticmethod
     def get_user_subscriptions(user_id):
         user = User.query.where(User.id == user_id).first()
-        user.subscriptions = user.subscriptions
         return user.subscriptions
+
+    @staticmethod
+    def get_user_subscriptions_paginate(user_id, page, pages: int):
+        user = User.query.where(User.id == user_id).first()
+        return user.subscriptions.paginate(page=page, per_page=pages)
 
     @staticmethod
     def get_subscription_details(user_id, product_id):

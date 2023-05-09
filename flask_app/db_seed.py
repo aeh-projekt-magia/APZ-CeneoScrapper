@@ -51,7 +51,7 @@ def towar(quantity: int , random : bool):
     new_product = Item(
         name="Iphone 17",
         category="Smartphone",
-        price="5000 zł",
+        price="5000",
         available_shops_count="Available in 50 shops",
         reviews_count="12 reviews",
         description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED.\
@@ -73,8 +73,8 @@ def towar(quantity: int , random : bool):
 
     try:
         db.session.add(new_product)
-        db.session.add_all(new_price_history)
         db.session.add_all(new_product_list)
+        db.session.add_all(new_price_history)
         db.session.commit()
     except Exception:
         db.session.rollback()

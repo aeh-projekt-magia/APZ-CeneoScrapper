@@ -29,7 +29,47 @@
     </div>
 </section>
 
+<!-- PAGINATION -->
+<nav>
+    <ul class="flex flex-row container px-5 py-6 mx-auto">
+        <li>
+            {% if products.has_prev %}
+            <a href="{{ url_for('products.index', page=products.prev_num) }}"
+                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                {{"Prev"}} </a>
+            {% endif %}
+        </li>
 
+        {% for page in products.iter_pages(left_edge=1, right_edge=1,left_current=2, right_current=2) %}
+        {%if page%}
+        <li>
+            {%if products.page != page%}
+            <a href="{{ url_for('products.index', page=page) }}"
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                {{page}}</a>
+
+            {%else%}
+
+            <a href="#" aria-current="page"
+                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-100 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
+                {{page}}</a>
+            {%endif%}
+
+        </li>
+        {% endif %}
+        {%endfor%}
+        <li>
+            {% if products.has_next %}
+            <a href="{{ url_for('products.index', page=products.next_num) }}"
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+
+
+                {{"Next"}}</a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+</section>
 
 <section class="text-gray-600 body-font overflow-hidden">
 
@@ -38,13 +78,6 @@
     <div class="container px-5 py-12 mx-auto">
         <div class="-my-8 divide-y-2 divide-gray-100">
             <div class="py-8 flex flex-wrap md:flex-nowrap">
-                <!-- FIRST COLUMN -->
-                <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                    <!-- CATEGORY SECTION -->
-                    <span class="font-semibold title-font text-gray-700">{{product.category}}</span>
-                    <!-- DATE SECTION -->
-                    <span class="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
-                </div>
                 <!-- SECOND COLUMN -->
                 <div class="md:flex-grow">
                     <!-- NAME SECTION -->

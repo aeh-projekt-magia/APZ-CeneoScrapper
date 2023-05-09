@@ -13,9 +13,12 @@ from app.services.product_service import ProductService
 def index():
     """Wyświetlenie zasubskrybowanych produktów"""
     # TODO:subscriptions/routes - Dodać repozytorium
-    products_to_show = SubscriptionService.get_user_subscriptions(
-        user_id=current_user.id
-    )
+    page = request.args.get("page", 1, type=int)
+    
+    products_to_show = SubscriptionService.get_user_subscriptions_paginate(
+        user_id=current_user.id, page=page, pages=15)
+
+            
     return render_template("subscriptions/index.html", products=products_to_show)
 
 

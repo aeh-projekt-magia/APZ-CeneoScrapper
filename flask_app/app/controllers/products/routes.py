@@ -15,7 +15,11 @@ def index():
     """Wyświetlenie pobranych do tej pory produktów"""
     # TODO: products/routes - Dodać obsługę repozytorium
 
-    products_to_show = ProductService.get_all_products_to_show()
+    page = request.args.get("page", 1, type=int)
+
+    products_to_show = ProductService.get_all_products_to_show_paginate(
+        page=page, pages=10
+    )
 
     return render_template("products/index.html", products=products_to_show)
 
