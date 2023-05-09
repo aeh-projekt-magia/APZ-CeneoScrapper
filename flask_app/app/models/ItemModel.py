@@ -7,18 +7,16 @@ from sqlalchemy.orm import relationship
 from app.models.SubscriptionModel import Subscription
 
 
-"""This table has to be created first"""
-Subscription.__tablename__
+f"""This table has to be created first 
+{Subscription.__tablename__}"""
+
 
 
 @dataclass
 class Item(db.Model):
     __tablename__ = "items"
 
-    name = str
-    is_available = str
-
-    id = db.Column(Integer, primary_key=True)
+    id = db.Column(Integer, primary_key=True, autoincrement=False)
     name = db.Column(db.String, default="")
     category = db.Column(db.String)
     price = db.Column(db.String)
@@ -37,6 +35,21 @@ class Item(db.Model):
         "User", secondary="subscriptions_table", back_populates="subscriptions"
     )
     price_history = relationship("PriceHistory", back_populates="item")
+
+    def __init__(self, item_id=None, name=None, lowest_price=None,
+                 available_shops_count=None, reviews_count=None,
+                 description=None, image_url=None, category=None,
+                 is_available=None, offer_url=None):
+        self.id = item_id
+        self.name = name
+        self.lowest_price = lowest_price
+        self.available_shops_count = available_shops_count
+        self.reviews_count = reviews_count
+        self.description = description
+        self.image_url = image_url
+        self.category = category
+        self.offer_url = offer_url
+        self.is_available = is_available
 
     def __repr__(self):
         return f"{self.id=}\

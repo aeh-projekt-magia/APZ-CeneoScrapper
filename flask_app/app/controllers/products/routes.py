@@ -1,21 +1,24 @@
 from flask import flash, render_template, request
 from flask_login import current_user, login_required
+from injector import Inject
+
 from app.controllers.products import bp
 from app.services.decorators import confirmed_user_required
 from app.services.forms import SubscribeProductForm
 
-from app.services.subscription_service import SubscriptionService
-from app.services.product_service import ProductService
+from services.subscription.subscription_service import SubscriptionService
+from services.item.product_service import ItemService
 
 
 @bp.route("/", methods=["GET", "POST"])
 @login_required
 @confirmed_user_required
-def index():
+@Inject
+def index(product_service: ItemService):
     """Wyświetlenie pobranych do tej pory produktów"""
     # TODO: products/routes - Dodać obsługę repozytorium
 
-    products_to_show = ProductService.get_all_products_to_show()
+    products_to_show = product_service.get_all_products_to_show()
 
     return render_template("products/index.html", products=products_to_show)
 
@@ -23,11 +26,12 @@ def index():
 @bp.route("/<int:product_id>", methods=["GET", "POST"])
 @login_required
 @confirmed_user_required
-def single_product_view(product_id):
+@Inject
+def single_product_view(product_id, product_service: ItemService):
     """Wyświetlenie konkretnego pobranego do tej pory produktu"""
     # TODO: products/routes - Dodać obsługę repozytorium
     tab = None
-    product_to_show = ProductService.get_product_to_show_by_id(product_id)
+    product_to_show = product_service.get_product_to_show_by_id(product_id)
     is_already_subscribed = SubscriptionService.check_if_subscribed(
         user_id=current_user.id, product_id=product_id
     )

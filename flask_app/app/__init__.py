@@ -1,5 +1,7 @@
 from flask import Flask, render_template
+from flask_injector import FlaskInjector
 
+import config
 from app.extensions import db, bcrypt, migrate, login_manager
 
 from config import DevelopmentConfig
@@ -44,6 +46,9 @@ def create_app(config_class=DevelopmentConfig):
     app.register_blueprint(subscriptions_bp, url_prefix="/subscriptions")
 
     app.shell_context_processor({"app": app, "db": db})
+
+    # dependency injection configuration
+    FlaskInjector(app=app, modules=[config.Dependencies.configure])
 
     """No use, since every page is user login required"""
     # @app.errorhandler(401)

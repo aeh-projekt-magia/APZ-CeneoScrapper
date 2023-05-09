@@ -1,5 +1,15 @@
 import os
 
+from repository.item.impl_item_repository import ImplItemRepository
+from repository.item.item_repository import ItemRepository
+from repository.price_history.impl_price_history_repository import ImplPriceHistoryRepository
+from repository.price_history.price_history_repository import PriceHistoryRepository
+from repository.user.impl_user_repository import ImplUserRepository
+from repository.user.user_repository import UserRepository
+from services.ceneo.ceneo_item import CeneoItem
+from services.ceneo.item_interface import ItemInterface
+from injector import singleton
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -49,3 +59,12 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     DEBUG_TB_ENABLED = False
+
+
+class Dependencies:
+    @staticmethod
+    def configure(binder):
+        binder.bind(ItemInterface, to=CeneoItem, scope=singleton)
+        binder.bind(ItemRepository, to=ImplItemRepository, scope=singleton)
+        binder.bind(UserRepository, to=ImplUserRepository, scope=singleton)
+        binder.bind(PriceHistoryRepository, to=ImplPriceHistoryRepository, scope=singleton)

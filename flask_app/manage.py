@@ -4,6 +4,7 @@ from app import create_app, db
 from app.models.UserModel import User
 from app.models.ItemModel import Item
 from app.models.PriceHistoryModel import PriceHistory
+from app.repository.item.impl_item_repo import ImplItemRepository
 
 import datetime
 
@@ -14,8 +15,11 @@ import datetime
 # from app.models.
 
 # app = create_app()
-cli = FlaskGroup(create_app=create_app)
+from repository.user.impl_user_repository import ImplUserRepository
 
+cli = FlaskGroup(create_app=create_app)
+item_repo = ImplItemRepository()
+user_repo = ImplUserRepository()
 
 @cli.command("recreate_db")
 def recreate_db():
@@ -102,62 +106,65 @@ def create_admin():
 
 @cli.command("add_Item")
 def add_Item():
-    itemId = input("Podaj Id itemu:")
-    from app.repository.ItemRepository import addItem
+    item_id = input("Podaj Id itemu:")
+    item = Item(
+        item_id=item_id,
+        name="test",
+        is_available=True,
+        lowest_price=9.99,
+        offer_url="www.google.com"
+    )
 
-    addItem(db, itemId, "test", True, 9.99, "www.google.com")
+    item_repo.add_item(item)
 
 
 @cli.command("get_Item")
 def get_Item():
-    from app.repository.ItemRepository import getItem
-
-    getItem("1234")
+    item_repo.get_item_by_id("1234")
 
 
 @cli.command("get_AllItems")
 def get_AllItems():
-    from app.repository.ItemRepository import getAllItems
-
-    getAllItems()
+    item_repo.get_all_items()
 
 
 @cli.command("del_Item")
 def del_Item():
-    from app.repository.ItemRepository import deleteItem
-
-    itemId = input("Podaj Id itemu:")
-    deleteItem(itemId)
+    item_id = input("Podaj Id itemu:")
+    item_repo.delete_item_by_id(item_id)
 
 
 @cli.command("del_AllItems")
 def del_AllItems():
-    from app.repository.ItemRepository import deleteAllItems
-
-    deleteAllItems()
+    item_repo.delete_all_items()
 
 
 @cli.command("update_Item")
 def update_Item():
-    from app.repository.ItemRepository import updateItem
-
-    itemId = input("Podaj Id itemu:")
-    updateItem(itemId, True, 9.5)
+    item_id = input("Podaj Id itemu:")
+    new_item = Item(
+        item_id=item_id,
+        is_available=True,
+        lowest_price=9.5
+    )
+    item_repo.update_item(new_item)
 
 
 @cli.command("add_User")
 def add_User():
     email = input("Podaj email:")
-    from app.repository.UserRepository import addUser
+    user = User(
+        email=email,
+        password="empty",
+        is_admin=False
+    )
 
-    addUser(email, "empty", False)
+    user_repo.add_user(user)
 
 
 @cli.command("get_AllUsers")
 def get_AllUsers():
-    from app.repository.UserRepository import getAllUsers
-
-    getAllUsers()
+    user_repo.get_all_users()
 
 
 if __name__ == "__main__":

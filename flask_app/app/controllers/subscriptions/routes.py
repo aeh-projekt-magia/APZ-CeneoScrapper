@@ -1,10 +1,10 @@
 from flask import render_template
 from flask_login import login_required, current_user
 from app.controllers.subscriptions import bp
-from app.services.subscription_service import SubscriptionService
+from services.subscription.subscription_service import SubscriptionService
 from app.services.decorators import confirmed_user_required
 
-from app.services.product_service import ProductService
+from services.item.product_service import ItemService
 
 
 @bp.route("/", methods=["GET", "POST"])
@@ -30,7 +30,7 @@ def single_subscription_view(product_id):
     ):
         return render_template("errors/404.html")
 
-    product = ProductService.get_product_to_show_by_id(id=product_id)
+    product = ItemService.get_product_to_show_by_id(id=product_id)
     product_price_history = product.price_history
     subscription = SubscriptionService.get_subscription_details(
         user_id=current_user.id, product_id=product_id
