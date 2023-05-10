@@ -17,9 +17,16 @@ def index():
 
     page = request.args.get("page", 1, type=int)
 
-    products_to_show = ProductService.get_all_products_to_show_paginate(
-        page=page, pages=10
+    query_name = request.args.get("query_name") 
+
+    if query_name is None or "":
+        products_to_show = ProductService.get_all_products_to_show_paginate(
+        page=page, pages=25
     )
+    else:
+        products_to_show = ProductService.get_all_products_to_show_by_name(
+            product_name=query_name).paginate(
+                page=page ,per_page=25)   
 
     return render_template("products/index.html", products=products_to_show)
 

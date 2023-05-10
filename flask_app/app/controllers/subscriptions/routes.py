@@ -17,15 +17,14 @@ def index():
     page = request.args.get("page", 1, type=int)
 
     query_name = request.args.get("query_name") 
-    print(f"{query_name=}")
     if query_name is None or "":
         products_to_show = SubscriptionService.get_user_subscriptions(
             user_id=current_user.id
-        ).paginate(page=page, per_page=2)
+        ).paginate(page=page, per_page=25)
     else:
         products_to_show = SubscriptionService.get_user_subscriptions_by_name(
             user_id=current_user.id, product_name=query_name
-        ).paginate(page=page, per_page=5)
+        ).paginate(page=page, per_page=25)
 
     return render_template("subscriptions/index.html", products=products_to_show)
 
