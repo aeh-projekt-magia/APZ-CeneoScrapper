@@ -4,7 +4,8 @@ from app import create_app, db
 from app.models.UserModel import User
 from app.models.ItemModel import Item
 from app.models.PriceHistoryModel import PriceHistory
-from app.repository.item.impl_item_repo import ImplItemRepository
+from app.repository.item.impl_item_repository import ImplItemRepository
+from app.repository.user.impl_user_repository import ImplUserRepository
 
 import datetime
 
@@ -15,7 +16,7 @@ import datetime
 # from app.models.
 
 # app = create_app()
-from repository.user.impl_user_repository import ImplUserRepository
+
 
 cli = FlaskGroup(create_app=create_app)
 item_repo = ImplItemRepository()

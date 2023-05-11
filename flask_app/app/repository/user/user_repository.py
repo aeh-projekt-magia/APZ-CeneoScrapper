@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from models.UserModel import User
-from repository.base_repository import BaseRepository
+from app.models.UserModel import User
+from app.repository.base_repository import BaseRepository
 
 
 class UserRepository(BaseRepository, ABC):

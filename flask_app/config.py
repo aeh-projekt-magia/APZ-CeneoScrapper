@@ -1,13 +1,13 @@
 import os
 
-from repository.item.impl_item_repository import ImplItemRepository
-from repository.item.item_repository import ItemRepository
-from repository.price_history.impl_price_history_repository import ImplPriceHistoryRepository
-from repository.price_history.price_history_repository import PriceHistoryRepository
-from repository.user.impl_user_repository import ImplUserRepository
-from repository.user.user_repository import UserRepository
-from services.ceneo.ceneo_item import CeneoItem
-from services.ceneo.item_interface import ItemInterface
+from app.repository.item.impl_item_repository import ImplItemRepository
+from app.repository.item.item_repository import ItemRepository
+from app.repository.price_history.impl_price_history_repository import ImplPriceHistoryRepository
+from app.repository.price_history.price_history_repository import PriceHistoryRepository
+from app.repository.user.impl_user_repository import ImplUserRepository
+from app.repository.user.user_repository import UserRepository
+from app.services.ceneo.ceneo_item import CeneoItem
+from app.services.ceneo.item_interface import ItemInterface
 from injector import singleton
 
 basedir = os.path.abspath(os.path.dirname(__file__))

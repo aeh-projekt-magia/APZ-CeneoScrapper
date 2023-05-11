@@ -3,17 +3,16 @@ import datetime
 from injector import Inject
 
 from app.models.ItemModel import Item
-from models.PriceHistoryModel import PriceHistory
-from repository.item.item_repository import ItemRepository
-from repository.price_history.price_history_repository import PriceHistoryRepository
-from services.ceneo.item_interface import ItemInterface
+from app.models.PriceHistoryModel import PriceHistory
+from app.repository.item.item_repository import ItemRepository
+from app.repository.price_history.price_history_repository import PriceHistoryRepository
+from app.services.ceneo.item_interface import ItemInterface
 
 
 class ItemService:
-    @Inject
-    def __init__(self, ceneo_item_interface: ItemInterface,
-                 item_repository: ItemRepository,
-                 price_history_repository: PriceHistoryRepository):
+    def __init__(self, ceneo_item_interface: Inject[ItemInterface],
+                 item_repository: Inject[ItemRepository],
+                 price_history_repository: Inject[PriceHistoryRepository]):
         self.ceneo_item = ceneo_item_interface
         self.item_repository = item_repository
         self.price_history_repository = price_history_repository

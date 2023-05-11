@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from models.ItemModel import Item
-from repository.base_repository import BaseRepository
+from app.models.ItemModel import Item
+from app.repository.base_repository import BaseRepository
 
 
 class ItemRepository(BaseRepository, ABC):

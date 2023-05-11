@@ -1,10 +1,10 @@
 from flask import render_template
 from flask_login import login_required, current_user
 from app.controllers.subscriptions import bp
-from services.subscription.subscription_service import SubscriptionService
+from app.services.subscription.subscription_service import SubscriptionService
 from app.services.decorators import confirmed_user_required
 
-from services.item.product_service import ItemService
+from app.services.item.product_service import ItemService
 
 
 @bp.route("/", methods=["GET", "POST"])

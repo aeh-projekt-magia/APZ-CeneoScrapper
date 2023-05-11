@@ -3,8 +3,8 @@ from typing import List
 from app.models.PriceHistoryModel import PriceHistory
 from app.extensions import db
 from sqlalchemy import select
-from models import PriceHistoryModel
-from repository.price_history.price_history_repository import PriceHistoryRepository
+from app.models import PriceHistoryModel
+from app.repository.price_history.price_history_repository import PriceHistoryRepository
 
 
 class ImplPriceHistoryRepository(PriceHistoryRepository):

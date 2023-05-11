@@ -6,15 +6,14 @@ from app.controllers.products import bp
 from app.services.decorators import confirmed_user_required
 from app.services.forms import SubscribeProductForm
 
-from services.subscription.subscription_service import SubscriptionService
-from services.item.product_service import ItemService
+from app.services.subscription.subscription_service import SubscriptionService
+from app.services.item.product_service import ItemService
 
 
 @bp.route("/", methods=["GET", "POST"])
 @login_required
 @confirmed_user_required
-@Inject
-def index(product_service: ItemService):
+def index(product_service: Inject[ItemService]):
     """Wyświetlenie pobranych do tej pory produktów"""
     # TODO: products/routes - Dodać obsługę repozytorium
 
@@ -26,8 +25,7 @@ def index(product_service: ItemService):
 @bp.route("/<int:product_id>", methods=["GET", "POST"])
 @login_required
 @confirmed_user_required
-@Inject
-def single_product_view(product_id, product_service: ItemService):
+def single_product_view(product_id, product_service: Inject[ItemService]):
     """Wyświetlenie konkretnego pobranego do tej pory produktu"""
     # TODO: products/routes - Dodać obsługę repozytorium
     tab = None

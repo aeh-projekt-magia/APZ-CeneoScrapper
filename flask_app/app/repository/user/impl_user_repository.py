@@ -2,7 +2,7 @@ from typing import List
 
 from app.models.UserModel import User
 from app.extensions import db
-from repository.user.user_repository import UserRepository
+from app.repository.user.user_repository import UserRepository
 
 
 class ImplUserRepository(UserRepository):

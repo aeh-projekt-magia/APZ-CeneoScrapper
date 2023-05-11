@@ -2,7 +2,7 @@ from app.models.ItemModel import Item
 from app.extensions import db
 import datetime
 
-from repository.item.item_repository import ItemRepository
+from app.repository.item.item_repository import ItemRepository
 
 
 class ImplItemRepository(ItemRepository):
