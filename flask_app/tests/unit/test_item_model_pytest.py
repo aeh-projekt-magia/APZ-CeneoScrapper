@@ -2,7 +2,7 @@ import pytest
 import sqlalchemy
 
 from app.models.ItemModel import Item
-from app.repository.ItemRepository import (
+from repository.item.ItemRepository import (
     addItem,
     getItem_by_name,
     getAllItems,

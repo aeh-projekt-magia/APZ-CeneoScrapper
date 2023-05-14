@@ -21,6 +21,11 @@ class PriceHistory(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey("items.id"))
     item = relationship("Item", back_populates="price_history")
 
+    def __init__(self, price, date, item_id):
+        self.price = price
+        self.date = date
+        self.item_id = item_id
+
     def __repr__(self):
         (
             str(self.price_id)

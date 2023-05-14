@@ -1,10 +1,12 @@
+from dependency_injector.wiring import Provide, inject
 from flask import render_template, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.controllers.subscriptions import bp
-from app.services.subscription_service import SubscriptionService
+from app.services.subscription.subscription_service import SubscriptionService
 from app.services.decorators import confirmed_user_required
 from app.services.forms import SubscriptionUpdate
-from app.services.product_service import ProductService
+from app.services.item.item_service import ItemService
+from app.containers import Container
 
 
 @bp.route("/", methods=["GET"])
@@ -17,7 +19,7 @@ def index():
     page = request.args.get("page", 1, type=int)
 
     query_name = request.args.get("query_name") 
-    if query_name is None or "":
+    if query_name is None or query_name == "":
         products_to_show = SubscriptionService.get_user_subscriptions(
             user_id=current_user.id
         ).paginate(page=page, per_page=25)
@@ -32,7 +34,11 @@ def index():
 @bp.route("/<int:product_id>", methods=["GET"])
 @login_required
 @confirmed_user_required
-def single_subscription_view(product_id):
+@inject
+def single_subscription_view(
+        product_id,
+        item_service: ItemService = Provide[Container.item_service]
+):
     """Wyświetlenie konkretnego zasubskrybowanego do tej pory produktu"""
 
     if not SubscriptionService.check_if_subscribed(
@@ -40,7 +46,7 @@ def single_subscription_view(product_id):
     ):
         return render_template("errors/404.html")
 
-    product = ProductService.get_product_to_show_by_id(id=product_id)
+    product = item_service.get_product_to_show_by_id(item_id=product_id)
     product_price_history = product.price_history
     subscription = SubscriptionService.get_subscription_details(
         user_id=current_user.id, product_id=product_id
@@ -57,13 +63,17 @@ def single_subscription_view(product_id):
 @bp.route("/<int:product_id>/update", methods=["GET", "POST"])
 @login_required
 @confirmed_user_required
-def single_subscription_update(product_id):
+@inject
+def single_subscription_update(
+        product_id,
+        item_service: ItemService = Provide[Container.item_service]
+):
     if not SubscriptionService.check_if_subscribed(
         user_id=current_user.id, product_id=product_id
     ):
         return render_template("errors/404.html")
 
-    product = ProductService.get_product_to_show_by_id(id=product_id)
+    product = item_service.get_product_to_show_by_id(item_id=product_id)
     product_price_history = product.price_history
     subscription = SubscriptionService.get_subscription_details(
         user_id=current_user.id, product_id=product_id
