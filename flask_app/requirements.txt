@@ -48,6 +48,7 @@ typing_extensions
 urllib3
 pytest-cov
 dependency-injector
+APScheduler
 
 
 

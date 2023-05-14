@@ -7,6 +7,7 @@ from app.repository.price_history.price_history_repository import PriceHistoryRe
 from app.services.ceneo import ceneo_item_interface
 import app.services.item.item_service
 from app.services.ceneo.ceneo_item import CeneoItem
+from services.subscription.subscription_service import SubscriptionService
 
 
 class Container(containers.DeclarativeContainer):
@@ -35,3 +36,6 @@ class Container(containers.DeclarativeContainer):
         price_history_repository=price_hist_repository
     )
 
+    subscription_service: SubscriptionService = providers.Singleton(
+        SubscriptionService,
+    )
