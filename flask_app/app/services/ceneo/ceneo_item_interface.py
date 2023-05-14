@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class ItemInterface(ABC):
+class CeneoItemInterface(ABC):
     @abstractmethod
     def fetch_lowest_price(self, item_id: str) -> dict:
         """

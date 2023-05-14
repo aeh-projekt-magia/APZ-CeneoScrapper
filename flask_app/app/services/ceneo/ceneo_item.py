@@ -1,4 +1,4 @@
-from app.services.ceneo.item_interface import ItemInterface
+from app.services.ceneo.ceneo_item_interface import CeneoItemInterface
 
 from app.services.ceneo.web_scrapper.webdriver_provider import WebdriverProvider
 from app.services.ceneo.web_scrapper.operations.item_operations import ItemOperations
@@ -9,7 +9,7 @@ from app.services.ceneo.web_scrapper.operations.item_search_operations import (
 )
 
 
-class CeneoItem(ItemInterface):
+class CeneoItem(CeneoItemInterface):
     provider = WebdriverProvider
     item_operations = ItemOperations
     item_search_operations = ItemSearchOperations

@@ -2,7 +2,7 @@ import pytest
 import sqlalchemy
 
 from app.models.UserModel import User
-from app.repository.UserRepository import (
+from repository.user.UserRepository import (
     addUser,
     getUser,
     getAllUsers,

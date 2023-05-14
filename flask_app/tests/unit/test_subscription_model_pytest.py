@@ -4,7 +4,7 @@ import sqlalchemy
 from app.models.SubscriptionModel import Subscription
 from app.models.ItemModel import Item
 from app.models.UserModel import User
-from app.repository.SubscriptionRepository import (
+from repository.subscription.SubscriptionRepository import (
     addSubscriber,
     getSubscriber,
     getAllSubscribers,
