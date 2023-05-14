@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_injector import FlaskInjector
+import app.containers
 
 import config
 from app.extensions import db, bcrypt, migrate, login_manager
@@ -8,8 +8,13 @@ from config import DevelopmentConfig
 
 
 def create_app(config_class=DevelopmentConfig):
+    container = containers.Container()
+    container.init_resources()
+    # container.wire(modules=[__name__])
+
     app = Flask(__name__)
     app.config.from_object(config_class)
+    app.container = container
 
     db.init_app(app)
 
@@ -47,13 +52,7 @@ def create_app(config_class=DevelopmentConfig):
 
     app.shell_context_processor({"app": app, "db": db})
 
-    # dependency injection configuration
-    FlaskInjector(app=app, modules=[config.Dependencies.configure])
-
     """No use, since every page is user login required"""
-    # @app.errorhandler(401)
-    # def unauthorized_page(error):
-    #     return render_template("errors/401.html"), 401
 
     @app.errorhandler(404)
     def page_not_found(error):

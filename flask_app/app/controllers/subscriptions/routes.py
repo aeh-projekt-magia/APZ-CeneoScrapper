@@ -4,7 +4,7 @@ from app.controllers.subscriptions import bp
 from app.services.subscription.subscription_service import SubscriptionService
 from app.services.decorators import confirmed_user_required
 
-from app.services.item.product_service import ItemService
+from app.services.item.item_service import ItemService
 
 
 @bp.route("/", methods=["GET", "POST"])
