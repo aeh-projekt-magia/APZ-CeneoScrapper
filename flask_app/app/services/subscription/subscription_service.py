@@ -41,9 +41,40 @@ class SubscriptionService:
     @staticmethod
     def get_user_subscriptions(user_id):
         user = User.query.where(User.id == user_id).first()
-        user.subscriptions = user.subscriptions
         return user.subscriptions
 
     @staticmethod
+    def get_user_subscriptions_by_name(user_id, product_name: str):
+        user = User.query.where(User.id == user_id).first()
+        items = (
+            Item.query.where(User.id == user.id)
+            .where(Subscription.user_id == user.id)
+            .where(Subscription.item_id == Item.id)
+            .filter(Item.name.like(f"%{product_name}%"))
+        )
+        return items
+
+    # Zbędne
+    # @staticmethod
+    # def get_user_subscriptions_paginate(user_id, page, pages: int):
+    #     user = User.query.where(User.id == user_id).first()
+    #     return user.subscriptions.paginate(page=page, per_page=pages)
+
+    @staticmethod
     def get_subscription_details(user_id, product_id):
-        return Subscription.query.filter_by(user_id=user_id, item_id=product_id)
+        return Subscription.query.filter_by(user_id=user_id, item_id=product_id).first()
+
+    @staticmethod
+    def update_subscription(subscription: Subscription, update: dict):
+        try:
+            subscription.notification_frequency = int(update["notification_frequency"])
+            subscription.notify_on_price_change = (
+                True if update["notify_on_price_change"] == "Yes" else False
+            )
+            subscription.send_notification = (
+                True if update["send_notification"] == "Yes" else False
+            )
+        except Exception as e:
+            db.session.rollback()
+        else:
+            db.session.commit()

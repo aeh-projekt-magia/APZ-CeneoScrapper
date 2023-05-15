@@ -10,7 +10,6 @@ from config import DevelopmentConfig
 def create_app(config_class=DevelopmentConfig):
     container = containers.Container()
     container.init_resources()
-    # container.wire(modules=[__name__])
 
     app = Flask(__name__)
     app.config.from_object(config_class)

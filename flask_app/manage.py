@@ -1,4 +1,5 @@
 from flask.cli import FlaskGroup
+import click
 import pytest
 from app import create_app, db
 from app.models.UserModel import User
@@ -40,41 +41,12 @@ def show_users():
 
 
 @cli.command("towar")
-def towar():
+@click.option('-q', default =1, help="How many records")
+@click.option('-r', default=True, help="Make random choice")
+def towar(q, r):
     """Add some towar to database"""
-
-    user = User.query.filter_by(id=1).first()
-
-    new_product = Item(
-        name="Iphone 17",
-        category="Smartphone",
-        price="5000 zł",
-        available_shops_count="Available in 50 shops",
-        reviews_count="12 reviews",
-        description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED.\
-             Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
-        image_url="https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg",
-    )
-
-    new_price_history = []
-    for index, x in enumerate(range(25)):
-        new_price_history.append(
-            PriceHistory(
-                item=new_product,
-                price=6000 - index * 200,
-                date=datetime.datetime.now() - datetime.timedelta(days=index),
-            )
-        )
-
-    # Subscription()
-
-    user.subscriptions.append(new_product)
-    try:
-        db.session.add(new_product)
-        db.session.add_all(new_price_history)
-        db.session.commit()
-    except Exception:
-        db.session.rollback()
+    from db_seed import towar
+    towar(quantity=q, random=r)
 
 
 @cli.command("test")

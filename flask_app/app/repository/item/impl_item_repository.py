@@ -1,3 +1,5 @@
+from typing import List
+
 from app.models.ItemModel import Item
 from app.extensions import db
 import datetime
@@ -25,6 +27,13 @@ class ImplItemRepository(ItemRepository):
             db.select(Item).filter_by(name=name)
         ).scalar_one_or_none()
         return item
+
+    def get_items_by_name_contains(self, name: str) -> List[Item]:
+        q = Item.query.filter(Item.name.like(f"%{name}%"))
+        return q
+
+    def get_all_items_paginate(self, page, pages: int):
+        return Item.query.paginate(page=page, per_page=pages)
 
     def get_all_items(self):
         items = db.session.execute(db.select(Item)).all()

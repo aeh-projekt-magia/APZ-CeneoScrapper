@@ -13,6 +13,7 @@ class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
         modules=[
             "app.controllers.products.routes",
+            "app.controllers.subscription.routes",
         ]
     )
 

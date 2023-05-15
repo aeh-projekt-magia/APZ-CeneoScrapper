@@ -19,6 +19,14 @@ class ItemRepository(BaseRepository, ABC):
         ...
 
     @abstractmethod
+    def get_items_by_name_contains(self, name: str) -> List[Item]:
+        ...
+
+    @abstractmethod
+    def get_all_items_paginate(self, page, pages: int):
+        ...
+
+    @abstractmethod
     def get_all_items(self) -> List[Item]:
         ...
 
