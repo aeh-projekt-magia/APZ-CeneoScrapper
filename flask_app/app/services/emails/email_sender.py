@@ -50,6 +50,5 @@ class EmailSender:
                     EmailSender.email_address, message["To"], message.as_string()
                 )
         except smtplib.SMTPException as exception:
-            # TODO: use logging
             print(exception)
             raise EmailException(f"Could not send the email to {message['To']}")

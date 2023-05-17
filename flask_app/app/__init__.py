@@ -1,13 +1,18 @@
+from dependency_injector.wiring import Provide, inject
 from flask import Flask, render_template
-import app.containers
 
-import config
+from app import containers
+
 from app.extensions import db, bcrypt, migrate, login_manager
+from app.services.scheduler.task_scheduler import TaskScheduler
 
 from config import DevelopmentConfig
 
 
-def create_app(config_class=DevelopmentConfig):
+@inject
+def create_app(
+        config_class=DevelopmentConfig,
+):
     container = containers.Container()
     container.init_resources()
     # container.wire(modules=[__name__])

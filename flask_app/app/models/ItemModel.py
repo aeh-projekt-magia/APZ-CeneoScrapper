@@ -16,7 +16,7 @@ f"""This table has to be created first
 class Item(db.Model):
     __tablename__ = "items"
 
-    id = db.Column(Integer, primary_key=True, autoincrement=False)
+    id = db.Column(db.String, primary_key=True, autoincrement=False)
     name = db.Column(db.String, default="")
     category = db.Column(db.String)
     price = db.Column(db.String)

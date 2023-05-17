@@ -1,4 +1,6 @@
-from app import db
+from typing import List
+
+from app.extensions import db
 
 from app.models.UserModel import User
 from app.models.ItemModel import Item
@@ -41,9 +43,14 @@ class SubscriptionService:
     @staticmethod
     def get_user_subscriptions(user_id):
         user = User.query.where(User.id == user_id).first()
-        user.subscriptions = user.subscriptions
         return user.subscriptions
 
     @staticmethod
     def get_subscription_details(user_id, product_id):
         return Subscription.query.filter_by(user_id=user_id, item_id=product_id)
+
+    def get_all_subscriptions(self) -> List[Subscription]:
+        ...
+
+    def should_be_updated(self, subscription: Subscription) -> bool:
+        ...
