@@ -11,4 +11,4 @@ flask_app/app.db
 test.py
 flask_app/app.db
 flask_app/scratch.py
-locust_reports
+
