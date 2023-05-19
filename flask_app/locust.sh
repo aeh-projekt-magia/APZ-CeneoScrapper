@@ -1,4 +1,5 @@
 #!/bin/bash
+ulimit -n 100000
 for xx in 1200
 do
     trap "echo Exited!; exit;" SIGINT SIGTERM
