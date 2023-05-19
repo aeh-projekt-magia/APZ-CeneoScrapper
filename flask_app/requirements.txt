@@ -49,4 +49,5 @@ urllib3
 pytest-cov
 
 
+gunicorn
 
