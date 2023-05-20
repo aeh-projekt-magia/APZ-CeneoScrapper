@@ -15,15 +15,15 @@
 - Testowa strona Flaska jest dostępna pod adresem localhost:80 lub 127.0.0.1:80 wystawiona przy pomocy NGINXa 
     - Usunięcie tabeli i utworzenie: 
         ```
-        - docker exec $(docker ps -f name=flask_app-app -q) python manage.py recreate_db
+        - docker exec $(docker ps -f name=flask_app-app -q -n 1) python manage.py recreate_db
         ```
     - Dodanie admin usera:
         ```
-        - docker exec $(docker ps -f name=flask_app-app -q) python manage.py create_admin
+        - docker exec $(docker ps -f name=flask_app-app -q -n 1) python manage.py create_admin
         ```
     - Dodanie przykładowych danych:
         ```
-        - docker exec $(docker ps -f name=flask_app-app -q) python manage.py towar -q 5000 -r True
+        - docker exec $(docker ps -f name=flask_app-app -q -n 1) python manage.py towar -q 5000 -r True
         ```
 
 
