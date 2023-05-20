@@ -3,7 +3,7 @@ import sqlalchemy
 
 from app.models.PriceHistoryModel import PriceHistory
 from app.models.ItemModel import Item
-from app.repository.PriceHistoryRepository import (
+from repository.price_history.PriceHistoryRepository import (
     addPriceHistoryRecord,
     getPriceHistoryRecord,
     getAllPriceHistoryRecords,

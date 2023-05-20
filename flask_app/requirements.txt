@@ -1,8 +1,8 @@
-selenium
+selenium~=4.8.3
 webdriver-manager
 
 #Flask
-Flask
+Flask~=2.2.3
 Flask-Bcrypt
 Flask-Login
 Flask-Migrate
@@ -10,15 +10,15 @@ Flask-SQLAlchemy
 Flask-Testing
 Flask-WTF
 Werkzeug
-Jinja2
+Jinja2~=3.1.2
 email-validator
 beautifulsoup4
 bs4
-WTForms
+WTForms~=3.0.1
 requests
 
 #Python testing
-pytest
+pytest~=7.2.2
 pytest-mock
 
 #Utils
@@ -32,7 +32,7 @@ dnspython
 greenlet
 idna
 iniconfig
-itsdangerous
+itsdangerous~=2.1.2
 jsonify
 Mako
 Markdown
@@ -43,10 +43,11 @@ psycopg2-binary
 python-decouple
 python-dotenv
 soupsieve
-SQLAlchemy
+SQLAlchemy~=2.0.7
 typing_extensions
 urllib3
 pytest-cov
+dependency-injector
 
 
 gunicorn

@@ -32,5 +32,5 @@ COPY . /usr/src/app
 #COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
 
 # start server
-# CMD python manage.py run --host=0.0.0.0
 CMD gunicorn --bind 0.0.0.0:5000 "manage:create_app()"
+
