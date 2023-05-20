@@ -8,7 +8,7 @@ from app.services.ceneo import ceneo_item_interface
 import app.services.item.item_service
 from app.services.ceneo.ceneo_item import CeneoItem
 from app.services.emails.email_sender import EmailSender
-from app.services.scheduler import tasks
+from app.services.scheduler.tasks import Tasks
 from app.services.scheduler.task_scheduler import TaskScheduler
 from app.services.subscription.subscription_service import SubscriptionService
 
@@ -17,9 +17,7 @@ class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
         modules=[
             "app.controllers.products.routes",
-            "app.services.scheduler.tasks",
-            # "app.__init__",
-            # "app"
+            "app.controllers.scheduler.routes",
         ]
     )
 
@@ -52,8 +50,8 @@ class Container(containers.DeclarativeContainer):
         SubscriptionService,
     )
 
-    task = providers.Callable(
-        tasks.update_subscribers,
+    tasks = providers.Singleton(
+        Tasks,
         item_service=item_service,
         subscription_service=subscription_service,
         email_service=email_service,
@@ -61,7 +59,7 @@ class Container(containers.DeclarativeContainer):
 
     task_scheduler: TaskScheduler = providers.Singleton(
         TaskScheduler,
-        task=task,
+        tasks=tasks,
         day=config.task_scheduler.day,
         hour=config.task_scheduler.hour,
         minute=config.task_scheduler.minute,

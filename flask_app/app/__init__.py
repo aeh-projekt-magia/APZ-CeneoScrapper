@@ -1,21 +1,14 @@
-from dependency_injector.wiring import Provide, inject
 from flask import Flask, render_template
-
 from app import containers
-
 from app.extensions import db, bcrypt, migrate, login_manager
-from app.services.scheduler.task_scheduler import TaskScheduler
-
 from config import DevelopmentConfig
 
 
-@inject
 def create_app(
         config_class=DevelopmentConfig,
 ):
     container = containers.Container()
     container.init_resources()
-    # container.wire(modules=[__name__])
 
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -54,6 +47,10 @@ def create_app(
     from app.controllers.subscriptions import bp as subscriptions_bp
 
     app.register_blueprint(subscriptions_bp, url_prefix="/subscriptions")
+
+    from app.controllers.scheduler import bp as scheduler_bp
+
+    app.register_blueprint(scheduler_bp, url_prefix="/scheduler")
 
     app.shell_context_processor({"app": app, "db": db})
 
