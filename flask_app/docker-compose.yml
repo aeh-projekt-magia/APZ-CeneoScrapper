@@ -28,7 +28,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        max_attempts: 5
+        max_attempts: 1
 
   db:
     container_name: db
