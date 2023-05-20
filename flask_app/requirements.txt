@@ -50,4 +50,5 @@ pytest-cov
 dependency-injector
 
 
+gunicorn
 
