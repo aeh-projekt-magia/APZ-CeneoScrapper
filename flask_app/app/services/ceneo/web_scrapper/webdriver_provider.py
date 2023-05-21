@@ -1,6 +1,3 @@
-from selenium.webdriver import DesiredCapabilities
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 
 
@@ -24,14 +21,12 @@ class WebdriverProvider(metaclass=WebdriverProviderMeta):
     """
 
     def __init__(self):
-        # self._driver = webdriver.Chrome(
-        #     service=Service(ChromeDriverManager().install())
-        # )
         options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
+        options.add_argument('--disable-popup-blocking')
+        options.add_argument('--disable-infobars')
+        options.add_argument('--start-maximized')
         self._driver = webdriver.Remote(
             "http://selenium:4444/wd/hub",
-            DesiredCapabilities.CHROME,
             options=options
         )
 
