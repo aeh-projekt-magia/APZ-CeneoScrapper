@@ -43,7 +43,7 @@ class Tasks:
         subs_to_update = []
         price_change_summary = {}
         print("task is working")
-
+        #
         # all_subscriptions = self.subscription_service.get_all_subscriptions()
         #
         # if len(all_subscriptions) == 0:

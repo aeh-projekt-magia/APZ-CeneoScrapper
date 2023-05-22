@@ -1,8 +1,6 @@
-from typing import Callable, List
-
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from services.scheduler.tasks import Tasks
+from app.services.scheduler.tasks import Tasks
 
 
 class TaskScheduler:
@@ -38,7 +36,7 @@ class TaskScheduler:
         self.scheduler.pause()
 
     def describe_tasks(self) -> str:
-        tasks = "\n" + "=" * 10
+        tasks = "=" * 10 + "\n"
         for task in self.scheduler.get_jobs():
             tasks += f"ID: {task.id}\t" \
                      f"NAME: {task.name}\t" \

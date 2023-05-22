@@ -25,7 +25,7 @@ def start_scheduler(scheduler: TaskScheduler = Provide[Container.task_scheduler]
 def stop_scheduler(scheduler: TaskScheduler = Provide[Container.task_scheduler]):
     try:
         scheduler.stop_scheduler()
-        "SCHEDULER STOPPED\n\n" + scheduler.describe_tasks()
+        return "SCHEDULER STOPPED\n\n" + scheduler.describe_tasks()
     except Exception:
         return f"SCHEDULER NOT STOPPED\n\n" \
                f"{traceback.format_exc()}\n\n" \
