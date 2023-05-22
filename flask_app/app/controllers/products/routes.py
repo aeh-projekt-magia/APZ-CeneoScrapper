@@ -3,7 +3,7 @@ from flask import flash, render_template, request, redirect, url_for
 from flask_login import current_user, login_required
 
 from app.controllers.products import bp
-from app.services.decorators import confirmed_user_required
+from app.services.decorators import confirmed_user_required, admin_user_required
 from app.services.forms import SubscribeProductForm
 
 from app.services.subscription.subscription_service import SubscriptionService
@@ -15,6 +15,7 @@ from app.services.ceneo.ceneo_item import CeneoItem
 @bp.route("/", methods=["GET"])
 @login_required
 @confirmed_user_required
+@admin_user_required
 @inject
 def index(item_service: ItemService = Provide[Container.item_service]):
     """Wyświetlenie pobranych do tej pory produktów"""
