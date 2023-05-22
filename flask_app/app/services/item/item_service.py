@@ -43,9 +43,9 @@ class ItemService:
             return new_item
         return item
 
-    def update_price(self, item: Item):
-        lowest_price_dict = self.ceneo_item.fetch_lowest_price(item.id)
-        updated_item = self.item_repository.get_item_by_id(item.id)
+    def update_price(self, item_id: str):
+        lowest_price_dict = self.ceneo_item.fetch_lowest_price(item_id)
+        updated_item = self.item_repository.get_item_by_id(item_id)
         updated_item.price = lowest_price_dict["price"]
         updated_item.offer_url = lowest_price_dict["offer_url"]
         updated_item.is_available = True

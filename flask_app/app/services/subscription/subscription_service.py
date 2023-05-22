@@ -1,4 +1,6 @@
-from app import db
+from typing import List
+
+from app.extensions import db
 
 from app.models.UserModel import User
 from app.models.ItemModel import Item
@@ -64,6 +66,12 @@ class SubscriptionService:
     def get_subscription_details(user_id, product_id):
         return Subscription.query.filter_by(user_id=user_id, item_id=product_id).first()
 
+    def get_all_subscriptions(self) -> List[Subscription]:
+        ...
+
+    def should_be_updated(self, subscription: Subscription) -> bool:
+        ...
+        
     @staticmethod
     def update_subscription(subscription: Subscription, update: dict):
         try:
@@ -78,3 +86,4 @@ class SubscriptionService:
             db.session.rollback()
         else:
             db.session.commit()
+

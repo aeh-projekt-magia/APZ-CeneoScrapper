@@ -1,13 +1,12 @@
 from flask import Flask, render_template
-import app.containers
-
-import config
+from app import containers
 from app.extensions import db, bcrypt, migrate, login_manager
-
 from config import DevelopmentConfig
 
 
-def create_app(config_class=DevelopmentConfig):
+def create_app(
+        config_class=DevelopmentConfig,
+):
     container = containers.Container()
     container.init_resources()
 
@@ -48,6 +47,10 @@ def create_app(config_class=DevelopmentConfig):
     from app.controllers.subscriptions import bp as subscriptions_bp
 
     app.register_blueprint(subscriptions_bp, url_prefix="/subscriptions")
+
+    from app.controllers.scheduler import bp as scheduler_bp
+
+    app.register_blueprint(scheduler_bp, url_prefix="/scheduler")
 
     app.shell_context_processor({"app": app, "db": db})
 
