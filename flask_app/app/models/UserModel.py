@@ -3,7 +3,6 @@ import datetime
 from dataclasses import dataclass
 from flask_login import UserMixin
 from sqlalchemy import Integer
-from sqlalchemy.orm import relationship
 
 from app.models.SubscriptionModel import Subscription
 
@@ -29,8 +28,11 @@ class User(UserMixin, db.Model):
     created_on = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
 
     """Relations"""
-    subscriptions = relationship(
-        "Item", secondary="subscriptions_table", back_populates="subscribers"
+    subscriptions = db.relationship(
+        "Item",
+        secondary="subscriptions_table",
+        back_populates="subscribers",
+        lazy="dynamic",
     )
 
     def __init__(self, email, password, is_admin=False, is_confirmed=False):

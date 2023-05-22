@@ -11,15 +11,20 @@ services:
       - appnetwork
     environment:
       - VNC_NO_PASSWORD= 1
+      - SE_NODE_MAX_SESSIONS=5
+      - SE_NODE_SESSION_TIMEOUT=57868143
+      # - SE_NODE_MAX_INSTANCES=5
+      # - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      # - SE_NODE_OVERRIDE_MAX_INSTANCES=true
+      # - JAVA_OPTS=-XX:ActiveProcessorCount=5
   app:
-    container_name: app
     build:
       context: "."
       dockerfile: "Dockerfile-dev"
     volumes:
       - '.:/usr/src/app'
     ports:
-      - '5001:5000'
+      - '5000'
     env_file:
       - ./.env.dev
     networks:
@@ -31,7 +36,7 @@ services:
       - FLASK_ENV=development
       - EMAIL_ADDRESS=ceneowebscrapper@gmail.com
       # DELETE PASSWORD BEFORE COMMITING!
-      - EMAIL_PASSWORD=ghokitchlqtrnpfc
+      - EMAIL_PASSWORD=...
       - SECURITY_PASSWORD_SALT=fkslkfsdlkfnsdfnsfd
       - DATABASE_URI=postgresql://hello:hello@db:5432/database_development
       - DATABASE_TEST_URI=postgresql://hello:hello@db:5432/database_testing
@@ -41,7 +46,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        max_attempts: 5
+        max_attempts: 1
 
   db:
     container_name: db
@@ -61,6 +66,16 @@ services:
       timeout: 3s
       retries: 5
 
+  nginx:
+    image: nginx:1.13.0
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - appnetwork
 volumes:
   postgres_data:
 

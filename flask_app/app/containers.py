@@ -18,6 +18,7 @@ class Container(containers.DeclarativeContainer):
         modules=[
             "app.controllers.products.routes",
             "app.controllers.scheduler.routes",
+            "app.controllers.subscriptions.routes",
         ]
     )
 

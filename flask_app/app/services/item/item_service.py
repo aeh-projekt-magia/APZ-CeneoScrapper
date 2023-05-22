@@ -58,3 +58,9 @@ class ItemService:
         )
         self.price_history_repository.add_price_history(price_hist)
 
+    def get_all_products_to_show_paginate(self, page, pages: int):
+        return self.item_repository.get_all_items_paginate(page, pages)
+
+    def get_all_products_to_show_by_name(self, item_name: str):
+        return self.item_repository.get_items_by_name_contains(item_name)
+

@@ -1,27 +1,43 @@
+
+
 # APZ-CeneoScrapper
 
 ## 1. Start kontenera 
 
 - ./APZ-CeneoScrapper/flask_app>
-    - docker-compose build
-    - docker-compose up
+    ```
+    - docker-compose up --build -d
+    ```
     - lub
-    - docker-compose up --build (mozna dodać też parametr -d (detach), żeby odpiąć kontener od aktywnego terminala)
-- Testowa strona Flaska jest dostępna pod adresem localhost:5001 lub 127.0.0.1:5001
-    - Usunięcie tabeli i utworzenie:
-        - 'docker-compose exec app python manage.py recreate_db'
-    - Dostępne są też inne komendy, wszystkie docelowo będą w pliku manage.py.
-     podejrzeć je można uruchamiając 'docker-compose exec app python manage.py'
+    ```
+    - docker-compose up --scale app=5 --build -d
+    ```
+- Testowa strona Flaska jest dostępna pod adresem localhost:80 lub 127.0.0.1:80 wystawiona przy pomocy NGINXa 
+    - Usunięcie tabeli i utworzenie: 
+        ```
+        - docker exec $(docker ps -f name=flask_app-app -q -n 1) python manage.py recreate_db
+        ```
+    - Dodanie admin usera:
+        ```
+        - docker exec $(docker ps -f name=flask_app-app -q -n 1) python manage.py create_admin
+        ```
+    - Dodanie przykładowych danych:
+        ```
+        - docker exec $(docker ps -f name=flask_app-app -q -n 1) python manage.py towar -q 5000 -r True
+        ```
 
 
 ## 2. Endpointy
-- http://localhost:5001/ - no wiadomo;
-- http://localhost:5001/login - panel logowania. Dostępny jedynie gdy użytkownik pozostaje niezalogowany;
-- http://localhost:5001/register - panel rejestracji. Dostępny jedynie gdy użytkownik pozostaje niezalogowany; 
-- http://localhost:5001/confirm/ - potwierdzenie konta po rejestracji;
-- http://localhost:5001/products/ - wyświetla przykładowy produkt
-- http://localhost:5001/products/?tab=1 - wyświetla opinie nt. wyświetlanego produktu
-- http://localhost:5001/products/?tab=2 - docelowo ma wyświetlać również sklepy oferujące konkretny produkt
+- http://localhost/ - strona główna;
+- http://localhost/login - panel logowania. Dostępny jedynie gdy użytkownik pozostaje niezalogowany;
+- http://localhost/register - panel rejestracji. Dostępny jedynie gdy użytkownik pozostaje niezalogowany; 
+- http://localhost/confirm/ - potwierdzenie konta po rejestracji;
+- http://localhost/products/ - wyświetla listę produktów;
+- http://localhost/products/<product_number> - wyświetla konkretny produkt;
+- http://localhost/subscriptions/ - wyświetla listę subskrybcji;
+- http://localhost/subscriptions/<subscription_number> - wyświetla konkretną subskrybcję;
+- http://localhost/subscriptions/<subscription_number>/update - aktualizuje konkretną subskrybcję;
+
 
 ## 2. Wymagania na zaliczenie:
 

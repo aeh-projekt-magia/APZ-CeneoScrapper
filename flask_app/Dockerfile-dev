@@ -4,20 +4,8 @@ RUN apt-get update --force-yes
 RUN apt-get install --force-yes --assume-yes --no-install-recommends netcat
 RUN apt-get -q clean
 
-# install google chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub > linux_signing_key.pub
-RUN install -D -o root -g root -m 644 linux_signing_key.pub /etc/apt/keyrings/linux_signing_key.pub
-RUN sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/linux_signing_key.pub] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
-RUN apt update
-RUN apt install --force-yes --assume-yes google-chrome-stable
-
-
-
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-
-
 
 # python libs install
 COPY ./requirements.txt /usr/src/app/requirements.txt
@@ -27,9 +15,5 @@ RUN pip install -r requirements.txt
 # copy files
 COPY . /usr/src/app
 
-#CMD flask run -h 0.0.0.0
-# copy entrypoint
-#COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
-
 # start server
-CMD python manage.py run --host=0.0.0.0
+CMD gunicorn --bind 0.0.0.0:5000 "manage:create_app()"

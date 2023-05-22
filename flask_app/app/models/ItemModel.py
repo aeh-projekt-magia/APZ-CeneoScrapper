@@ -3,7 +3,6 @@ import datetime
 from dataclasses import dataclass
 
 from sqlalchemy import Integer
-from sqlalchemy.orm import relationship
 from app.models.SubscriptionModel import Subscription
 
 
@@ -31,10 +30,13 @@ class Item(db.Model):
     last_updated = db.Column(db.DateTime, default=datetime.datetime.now)
 
     """Relations"""
-    subscribers = relationship(
-        "User", secondary="subscriptions_table", back_populates="subscriptions"
+    subscribers = db.relationship(
+        "User",
+        secondary="subscriptions_table",
+        back_populates="subscriptions",
+        lazy="dynamic",
     )
-    price_history = relationship("PriceHistory", back_populates="item")
+    price_history = db.relationship("PriceHistory", back_populates="item", lazy="dynamic")
 
     def __init__(self, item_id=None, name=None, lowest_price=None,
                  available_shops_count=None, reviews_count=None,
