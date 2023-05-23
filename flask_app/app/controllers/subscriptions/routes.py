@@ -18,7 +18,7 @@ def index():
 
     page = request.args.get("page", 1, type=int)
 
-    query_name = request.args.get("query_name") 
+    query_name = request.args.get("query_name")
     if query_name is None or query_name == "":
         products_to_show = SubscriptionService.get_user_subscriptions(
             user_id=current_user.id
@@ -36,8 +36,7 @@ def index():
 @confirmed_user_required
 @inject
 def single_subscription_view(
-        product_id,
-        item_service: ItemService = Provide[Container.item_service]
+    product_id, item_service: ItemService = Provide[Container.item_service]
 ):
     """Wyświetlenie konkretnego zasubskrybowanego do tej pory produktu"""
 
@@ -65,8 +64,7 @@ def single_subscription_view(
 @confirmed_user_required
 @inject
 def single_subscription_update(
-        product_id,
-        item_service: ItemService = Provide[Container.item_service]
+    product_id, item_service: ItemService = Provide[Container.item_service]
 ):
     if not SubscriptionService.check_if_subscribed(
         user_id=current_user.id, product_id=product_id

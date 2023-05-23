@@ -10,7 +10,6 @@ f"""This table has to be created first
 {Subscription.__tablename__}"""
 
 
-
 @dataclass
 class Item(db.Model):
     __tablename__ = "items"
@@ -36,12 +35,23 @@ class Item(db.Model):
         back_populates="subscriptions",
         lazy="dynamic",
     )
-    price_history = db.relationship("PriceHistory", back_populates="item", lazy="dynamic")
+    price_history = db.relationship(
+        "PriceHistory", back_populates="item", lazy="dynamic"
+    )
 
-    def __init__(self, item_id=None, name=None, lowest_price=None,
-                 available_shops_count=None, reviews_count=None,
-                 description=None, image_url=None, category=None,
-                 is_available=None, offer_url=None):
+    def __init__(
+        self,
+        item_id=None,
+        name=None,
+        lowest_price=None,
+        available_shops_count=None,
+        reviews_count=None,
+        description=None,
+        image_url=None,
+        category=None,
+        is_available=None,
+        offer_url=None,
+    ):
         self.id = item_id
         self.name = name
         self.lowest_price = lowest_price

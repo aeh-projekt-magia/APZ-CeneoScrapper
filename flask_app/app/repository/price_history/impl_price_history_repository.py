@@ -8,7 +8,6 @@ from app.repository.price_history.price_history_repository import PriceHistoryRe
 
 
 class ImplPriceHistoryRepository(PriceHistoryRepository):
-
     def add_price_history(self, price_history: PriceHistoryModel):
         db.session.add(price_history)
         db.session.commit()
@@ -19,9 +18,14 @@ class ImplPriceHistoryRepository(PriceHistoryRepository):
         ).scalar_one()
         return price_hist
 
-    def get_n_latest_price_history_records(self, item_id: str, n: int) -> List[PriceHistory]:
+    def get_n_latest_price_history_records(
+        self, item_id: str, n: int
+    ) -> List[PriceHistory]:
         price_hist_list = db.session.execute(
-            select(PriceHistory).filter_by(item_id=item_id).order_by(PriceHistory.date).limit(n)
+            select(PriceHistory)
+            .filter_by(item_id=item_id)
+            .order_by(PriceHistory.date)
+            .limit(n)
         )
         return price_hist_list
 
@@ -39,4 +43,3 @@ class ImplPriceHistoryRepository(PriceHistoryRepository):
     def delete_all_price_history(self):
         db.session.query(PriceHistory).delete()
         db.session.commit()
-

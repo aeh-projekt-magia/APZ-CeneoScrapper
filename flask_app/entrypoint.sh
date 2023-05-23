@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Waiting for postgres to start..."
-
+#TBD postgres healthcheck
 #while ! nc -z users-db 5432; do
 #  sleep 0.1
 #done

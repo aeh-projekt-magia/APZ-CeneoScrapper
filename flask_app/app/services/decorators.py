@@ -27,3 +27,15 @@ def confirmed_user_required(func):
         return func(*args, **kwargs)
 
     return decorated_function
+
+
+def admin_user_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        """Check if user is admin"""
+        if current_user.is_admin is False:
+            flash("You are not admin!", "warning")
+            return redirect(url_for("main.home"))
+        return func(*args, **kwargs)
+
+    return decorated_function

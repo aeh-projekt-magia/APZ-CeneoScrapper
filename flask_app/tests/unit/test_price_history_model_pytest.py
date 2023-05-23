@@ -23,9 +23,11 @@ test_price_history = {
 
 def test_price_history_model():
     """Checks if the price history model works properly"""
-    priceHis = PriceHistory(item_id=test_price_history['itemId'], price=test_price_history["price"])
+    priceHis = PriceHistory(
+        item_id=test_price_history["itemId"], price=test_price_history["price"]
+    )
 
-    assert test_price_history['itemId'] is priceHis.item_id
+    assert test_price_history["itemId"] is priceHis.item_id
     assert test_price_history["price"] is priceHis.price
 
 

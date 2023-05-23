@@ -15,9 +15,9 @@ class PriceHistoryRepository(BaseRepository, ABC):
         ...
 
     @abstractmethod
-    def get_n_latest_price_history_records(self,
-                                           item_id: str,
-                                           n: int) -> List[PriceHistory]:
+    def get_n_latest_price_history_records(
+        self, item_id: str, n: int
+    ) -> List[PriceHistory]:
         ...
 
     @abstractmethod

@@ -71,7 +71,7 @@ class SubscriptionService:
 
     def should_be_updated(self, subscription: Subscription) -> bool:
         ...
-        
+
     @staticmethod
     def update_subscription(subscription: Subscription, update: dict):
         try:
@@ -86,4 +86,3 @@ class SubscriptionService:
             db.session.rollback()
         else:
             db.session.commit()
-

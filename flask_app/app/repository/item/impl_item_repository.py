@@ -8,7 +8,6 @@ from app.repository.item.item_repository import ItemRepository
 
 
 class ImplItemRepository(ItemRepository):
-
     def add_item(self, item: Item):
         if item.last_updated is None:
             item.last_updated = datetime.datetime.now()
@@ -17,9 +16,7 @@ class ImplItemRepository(ItemRepository):
         return item
 
     def get_item_by_id(self, item_id: str):
-        item = db.session.execute(
-            db.select(Item).filter_by(id=item_id)
-        ).scalar_one()
+        item = db.session.execute(db.select(Item).filter_by(id=item_id)).scalar_one()
         return item
 
     def get_item_by_name(self, name: str):
@@ -40,9 +37,7 @@ class ImplItemRepository(ItemRepository):
         return items
 
     def delete_item_by_id(self, item_id: str):
-        item = db.session.execute(
-            db.select(Item).filter_by(id=item_id)
-        ).scalar_one()
+        item = db.session.execute(db.select(Item).filter_by(id=item_id)).scalar_one()
         db.session.delete(item)
         db.session.commit()
 

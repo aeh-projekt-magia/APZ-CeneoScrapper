@@ -6,15 +6,12 @@ from app.repository.user.user_repository import UserRepository
 
 
 class ImplUserRepository(UserRepository):
-
     def add_user(self, user):
         db.session.add(user)
         db.session.commit()
 
     def get_user_by_id(self, user_id) -> User:
-        user = db.session.execute(
-            db.select(User).filter_by(id=user_id)
-        ).scalar_one()
+        user = db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one()
         return user
 
     def get_user_by_email(self, email_address) -> User:
@@ -35,9 +32,7 @@ class ImplUserRepository(UserRepository):
         db.session.commit()
 
     def delete_user_by_id(self, user_id):
-        user = db.session.execute(
-            db.select(User).filter_by(id=user_id)
-        ).scalar_one()
+        user = db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one()
         db.session.delete(user)
         db.session.commit()
 

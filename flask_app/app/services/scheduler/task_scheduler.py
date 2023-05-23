@@ -7,11 +7,8 @@ class TaskScheduler:
     """
     Class responsible for scheduling the repetitive tasks
     """
-    def __init__(
-            self,
-            tasks,
-            **trigger_args
-    ):
+
+    def __init__(self, tasks, **trigger_args):
         """
         Args:
             tasks: Class defining tasks to be scheduled
@@ -25,8 +22,8 @@ class TaskScheduler:
                 id=str(len(self.scheduler.get_jobs()) + 1),
                 name=task.__name__,
                 func=task,
-                trigger='cron',
-                **self.trigger_args
+                trigger="cron",
+                **self.trigger_args,
             )
 
     def start_scheduler(self):
@@ -38,9 +35,11 @@ class TaskScheduler:
     def describe_tasks(self) -> str:
         tasks = "=" * 10 + "\n"
         for task in self.scheduler.get_jobs():
-            tasks += f"ID: {task.id}\t" \
-                     f"NAME: {task.name}\t" \
-                     f"NEXT RUN TIME: {task.next_run_time}\t" \
-                     f"\n"
+            tasks += (
+                f"ID: {task.id}\t"
+                f"NAME: {task.name}\t"
+                f"NEXT RUN TIME: {task.next_run_time}\t"
+                f"\n"
+            )
         self.scheduler.print_jobs()
         return tasks

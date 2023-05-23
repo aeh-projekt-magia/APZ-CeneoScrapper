@@ -52,7 +52,7 @@ class SubscriptionsTestUser(HttpUser):
         self.client.post(
             "/subscriptions/1/update",
             {
-                "notification_frequency": random.choice(range(1,100)),
+                "notification_frequency": random.choice(range(1, 100)),
                 "notify_on_price_change": random.choice(["Yes", "No"]),
                 "send_notification": random.choice(["Yes", "No"]),
             },
