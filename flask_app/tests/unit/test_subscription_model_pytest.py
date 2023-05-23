@@ -184,7 +184,6 @@ def test_subscription_model_delete_all(app, capfd):
     db.session.add(test_user)
     db.session.commit()
 
-
     test_item_2 = Item(name="test_item2")
     db.session.add(test_item)
     db.session.commit()

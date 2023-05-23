@@ -6,29 +6,33 @@ from random import sample
 import datetime
 
 import csv
+
+
 def get_example_data():
-    with open("electronics_dataset.csv", 'r', encoding='utf-8') as file:
-        csv_reader = csv.DictReader(file, delimiter=',')
+    with open("electronics_dataset.csv", "r", encoding="utf-8") as file:
+        csv_reader = csv.DictReader(file, delimiter=",")
         line_count = 0
-        
-        result =[]
+
+        result = []
 
         for row in csv_reader:
             if line_count == 0:
-                line_count +=1
+                line_count += 1
             else:
                 result.append(row)
-                line_count+=1
+                line_count += 1
         return result
 
-def towar(quantity: int , random : bool):
+
+def towar(quantity: int, random: bool):
     """Add some towar to database"""
     new_data = get_example_data()
 
-    data_range = sample(range(0,len(new_data)), quantity) if random else range(0,len(new_data))
+    data_range = (
+        sample(range(0, len(new_data)), quantity) if random else range(0, len(new_data))
+    )
 
-
-    new_product_list = list()  
+    new_product_list = list()
     for index in data_range:
         item = new_data[index]
         new_product = Item(
@@ -36,16 +40,15 @@ def towar(quantity: int , random : bool):
             category="Smartphone",
             # price= float(item["actual_price"][1:]
             #     .replace(',','')),
-            price = (lambda x: float(x.replace(",", "")) if x != "" else float(0))(item["actual_price"][1:]),
+            price=(lambda x: float(x.replace(",", "")) if x != "" else float(0))(
+                item["actual_price"][1:]
+            ),
             available_shops_count="Available in 50 shops",
             reviews_count=item["no_of_ratings"],
             description="Description...",
             image_url=item["image"],
         )
         new_product_list.append(new_product)
-
-
-
 
     user = User.query.filter_by(id=1).first()
     new_product = Item(

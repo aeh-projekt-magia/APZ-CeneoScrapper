@@ -13,9 +13,13 @@ class Tasks:
     Defines the repetitive, possible to schedule
     tasks executed by the application.
     """
-    def __init__(self, item_service: ItemService,
-                 subscription_service: SubscriptionService,
-                 email_service: EmailSender):
+
+    def __init__(
+        self,
+        item_service: ItemService,
+        subscription_service: SubscriptionService,
+        email_service: EmailSender,
+    ):
         self.item_service = item_service
         self.subscription_service = subscription_service
         self.email_service = email_service

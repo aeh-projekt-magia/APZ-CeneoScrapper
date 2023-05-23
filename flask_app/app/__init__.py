@@ -5,7 +5,7 @@ from config import DevelopmentConfig
 
 
 def create_app(
-        config_class=DevelopmentConfig,
+    config_class=DevelopmentConfig,
 ):
     container = containers.Container()
     container.init_resources()

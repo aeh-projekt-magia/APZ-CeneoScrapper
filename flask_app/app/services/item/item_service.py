@@ -7,10 +7,10 @@ from app.services.ceneo.ceneo_item_interface import CeneoItemInterface
 
 class ItemService:
     def __init__(
-            self,
-            ceneo_item_interface: CeneoItemInterface,
-            item_repository: ItemRepository,
-            price_history_repository: PriceHistoryRepository
+        self,
+        ceneo_item_interface: CeneoItemInterface,
+        item_repository: ItemRepository,
+        price_history_repository: PriceHistoryRepository,
     ):
         self.ceneo_item = ceneo_item_interface
         self.item_repository = item_repository
@@ -49,12 +49,12 @@ class ItemService:
         updated_item.price = lowest_price_dict["price"]
         updated_item.offer_url = lowest_price_dict["offer_url"]
         updated_item.is_available = True
-        updated_item.last_updated = lowest_price_dict['timestamp']
+        updated_item.last_updated = lowest_price_dict["timestamp"]
         self.item_repository.update_item(updated_item)
         price_hist = PriceHistory(
             price=lowest_price_dict["price"],
-            date=lowest_price_dict['timestamp'],
-            item_id=updated_item.id
+            date=lowest_price_dict["timestamp"],
+            item_id=updated_item.id,
         )
         self.price_history_repository.add_price_history(price_hist)
 
@@ -63,4 +63,3 @@ class ItemService:
 
     def get_all_products_to_show_by_name(self, item_name: str):
         return self.item_repository.get_items_by_name_contains(item_name)
-

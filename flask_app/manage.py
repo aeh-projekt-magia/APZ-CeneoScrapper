@@ -23,6 +23,7 @@ cli = FlaskGroup(create_app=create_app)
 item_repo = ImplItemRepository()
 user_repo = ImplUserRepository()
 
+
 @cli.command("recreate_db")
 def recreate_db():
     """Migrate database"""
@@ -41,11 +42,12 @@ def show_users():
 
 
 @cli.command("towar")
-@click.option('-q', default =1, help="How many records")
-@click.option('-r', default=True, help="Make random choice")
+@click.option("-q", default=1, help="How many records")
+@click.option("-r", default=True, help="Make random choice")
 def towar(q, r):
     """Add some towar to database"""
     from db_seed import towar
+
     towar(quantity=q, random=r)
 
 
@@ -85,7 +87,7 @@ def add_Item():
         name="test",
         is_available=True,
         lowest_price=9.99,
-        offer_url="www.google.com"
+        offer_url="www.google.com",
     )
 
     item_repo.add_item(item)
@@ -115,22 +117,14 @@ def del_AllItems():
 @cli.command("update_Item")
 def update_Item():
     item_id = input("Podaj Id itemu:")
-    new_item = Item(
-        item_id=item_id,
-        is_available=True,
-        lowest_price=9.5
-    )
+    new_item = Item(item_id=item_id, is_available=True, lowest_price=9.5)
     item_repo.update_item(new_item)
 
 
 @cli.command("add_User")
 def add_User():
     email = input("Podaj email:")
-    user = User(
-        email=email,
-        password="empty",
-        is_admin=False
-    )
+    user = User(email=email, password="empty", is_admin=False)
 
     user_repo.add_user(user)
 

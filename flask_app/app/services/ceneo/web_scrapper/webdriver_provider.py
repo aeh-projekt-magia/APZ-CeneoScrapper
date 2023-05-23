@@ -25,13 +25,10 @@ class WebdriverProvider(metaclass=WebdriverProviderMeta):
 
     def __init__(self):
         options = webdriver.ChromeOptions()
-        options.add_argument('--disable-popup-blocking')
-        options.add_argument('--disable-infobars')
-        options.add_argument('--start-maximized')
-        self._driver = webdriver.Remote(
-            "http://selenium:4444/wd/hub",
-            options=options
-        )
+        options.add_argument("--disable-popup-blocking")
+        options.add_argument("--disable-infobars")
+        options.add_argument("--start-maximized")
+        self._driver = webdriver.Remote("http://selenium:4444/wd/hub", options=options)
 
     @property
     def driver(self):
