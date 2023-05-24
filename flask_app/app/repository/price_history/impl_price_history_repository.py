@@ -26,7 +26,7 @@ class ImplPriceHistoryRepository(PriceHistoryRepository):
             .filter_by(item_id=item_id)
             .order_by(PriceHistory.date)
             .limit(n)
-        )
+        ).scalars()
         return price_hist_list
 
     def get_all_price_history(self):

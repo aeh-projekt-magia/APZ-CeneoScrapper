@@ -31,13 +31,11 @@ class Subscription(db.Model):
         user_id,
         notification_frequency=0,
         notify_on_price_change=False,
-        last_notification=datetime.datetime.now,
     ):
         self.item_id = item_id
         self.user_id = user_id
         self.notification_frequency = notification_frequency
         self.notify_on_price_change = notify_on_price_change
-        self.last_notification = last_notification
 
     def __repr__(self):
         return f"{self.id=}\

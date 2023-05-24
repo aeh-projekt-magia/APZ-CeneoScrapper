@@ -22,6 +22,9 @@ class ItemService:
     def get_product_to_show_by_id(self, item_id: str):
         return self.item_repository.get_item_by_id(item_id)
 
+    def get_item_by_id(self, item_id: str):
+        return self.item_repository.get_item_by_id(item_id)
+
     def fetch_item(self, item_name: str) -> Item:
         """
         In case a record with matching item name is available

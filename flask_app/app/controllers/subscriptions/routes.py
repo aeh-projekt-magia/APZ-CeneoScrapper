@@ -24,7 +24,7 @@ def index():
             user_id=current_user.id
         ).paginate(page=page, per_page=25)
     else:
-        products_to_show = SubscriptionService.get_user_subscriptions_by_name(
+        products_to_show = SubscriptionService.get_user_subscribed_items(
             user_id=current_user.id, product_name=query_name
         ).paginate(page=page, per_page=25)
 

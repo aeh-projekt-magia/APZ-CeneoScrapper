@@ -13,6 +13,7 @@ from app.services.emails.email_sender import EmailSender
 from app.services.scheduler.tasks import Tasks
 from app.services.scheduler.task_scheduler import TaskScheduler
 from app.services.subscription.subscription_service import SubscriptionService
+from services.price_history.price_history_service import PriceHistoryService
 
 
 class Container(containers.DeclarativeContainer):
@@ -47,6 +48,12 @@ class Container(containers.DeclarativeContainer):
 
     subscription_service: SubscriptionService = providers.Singleton(
         SubscriptionService,
+    )
+
+    price_hist_service: PriceHistoryService = providers.Singleton(
+        PriceHistoryService,
+        price_history_repository=price_hist_repository,
+        item_service=item_service
     )
 
     tasks = providers.Singleton(

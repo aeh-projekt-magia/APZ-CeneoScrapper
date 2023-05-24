@@ -1,48 +1,41 @@
+from abc import ABC, abstractmethod
+
 from app.models.SubscriptionModel import Subscription
 from app.extensions import db
+from repository.base_repository import BaseRepository
 
 
-def addSubscriber(itemId, userId, notificationFreq, notifyOnPriceChange):
-    newSubscriber = Subscription(itemId, userId, notificationFreq, notifyOnPriceChange)
-    db.session.add(newSubscriber)
-    db.session.commit()
+class SubscriptionRepository(BaseRepository, ABC):
+    @abstractmethod
+    def add_subscription(self, subscription: Subscription):
+        ...
+        # db.session.add(subscription)
+        # db.session.commit()
 
+    @abstractmethod
+    def get_subscription_by_id(self, subscription_id):
+        ...
 
-def getSubscriber(subscriptionId):
-    subscriber = db.session.execute(
-        db.select(Subscription).filter_by(id=subscriptionId)
-    ).scalar_one()
-    print(subscriber)
+    @abstractmethod
+    def get_subscription_by_item_and_user(self, item_id, user_id):
+        ...
 
+    @abstractmethod
+    def get_subscriptions_by_user(self, user_id):
+        ...
 
-def getAllSubscribers():
-    subscribers = db.session.execute(db.select(Subscription)).scalars()
-    for x in subscribers:
-        print(x)
+    @abstractmethod
+    def get_all_subscriptions(self):
+        ...
 
+    @abstractmethod
+    def delete_subscription_by_id(self, subscription_id):
+        ...
 
-def deleteSubscriber(subscriptionId):
-    subscriber = db.session.execute(
-        db.select(Subscription).filter_by(id=subscriptionId)
-    ).scalar_one()
-    db.session.delete(subscriber)
-    db.session.commit()
+    @abstractmethod
+    def delete_all_subscriptions(self):
+        ...
 
-
-def deleteAllSubscribers():
-    db.session.query(Subscription).delete()
-    db.session.commit()
-
-
-def updateSubscriber(
-    subscriptionId, notificationFreq, notifyOnPriceChange, sendNotification
-):
-    subscriber = db.session.execute(
-        db.select(Subscription).filter_by(id=subscriptionId)
-    ).scalar_one()
-
-    subscriber.notification_frequency = notificationFreq
-    subscriber.notify_on_price_change = notifyOnPriceChange
-    subscriber.send_notification = sendNotification
-
-    db.session.commit()
+    @abstractmethod
+    def update_subscription(self, subscription: Subscription):
+        ...
