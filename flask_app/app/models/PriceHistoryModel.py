@@ -9,7 +9,7 @@ class PriceHistory(db.Model):
     __tablename__ = "price_history"
 
     price_id: int
-    item_id: str
+    item_id: int
     price: float
     date: datetime
 
@@ -18,7 +18,7 @@ class PriceHistory(db.Model):
     date = db.Column(db.DateTime, default=datetime.datetime.now)
 
     """Relationships"""
-    item_id = db.Column(db.String, db.ForeignKey("items.id"))
+    item_id = db.Column(db.Integer, db.ForeignKey("items.id"))
     item = relationship("Item", back_populates="price_history")
 
     def __init__(self, price, date, item_id):

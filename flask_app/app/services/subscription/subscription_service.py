@@ -21,7 +21,7 @@ class SubscriptionService:
         )
 
         # user.subscriptions.append(product_to_subscribe)  # LUB!
-        db.session.add(Subscription(item_id=product_id, user_id=user_id))
+        db.session.add(Subscription(item_id=int(product_id), user_id=int(user_id)))
         db.session.commit()
 
     @staticmethod

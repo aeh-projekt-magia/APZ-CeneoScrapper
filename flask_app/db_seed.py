@@ -40,8 +40,10 @@ def towar(quantity: int, random: bool):
             category="Smartphone",
             # price= float(item["actual_price"][1:]
             #     .replace(',','')),
-            price=(lambda x: float(x.replace(",", "")) if x != "" else float(0))(
-                item["actual_price"][1:]
+            lowest_price=float(
+                (lambda x: float(x.replace(",", "")) if x != "" else float(0))(
+                    item["actual_price"][1:]
+                )
             ),
             available_shops_count="Available in 50 shops",
             reviews_count=item["no_of_ratings"],
@@ -51,33 +53,22 @@ def towar(quantity: int, random: bool):
         new_product_list.append(new_product)
 
     user = User.query.filter_by(id=1).first()
-    new_product = Item(
-        name="Iphone 17",
-        category="Smartphone",
-        price="5000",
-        available_shops_count="Available in 50 shops",
-        reviews_count="12 reviews",
-        description="Smartfon Apple z ekranem 6,1 cala, wyświetlacz OLED.\
-             Aparat 12 Mpix, pamięć 4 GB RAM. Obsługuje sieć: 5G",
-        image_url="https://image.ceneostatic.pl/data/products/115107321/i-apple-iphone-14-128gb-polnoc.jpg",
-    )
 
-    new_price_history = []
-    for index, x in enumerate(range(25)):
-        new_price_history.append(
-            PriceHistory(
-                item=new_product,
-                price=6000 - index * 200,
-                date=datetime.datetime.now() - datetime.timedelta(days=index),
-            )
-        )
+    # new_price_history = []
+    # for index, x in enumerate(range(25)):
+    #     new_price_history.append(
+    #         PriceHistory(
+    #             item=new_product_list[0],
+    #             price=6000 - index * 200,
+    #             date=datetime.datetime.now() - datetime.timedelta(days=index),
+    #         )
+    #     )
 
     user.subscriptions.append(new_product)
 
     try:
-        db.session.add(new_product)
         db.session.add_all(new_product_list)
-        db.session.add_all(new_price_history)
+        # db.session.add_all(new_price_history)
         db.session.commit()
     except Exception:
         db.session.rollback()
