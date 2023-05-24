@@ -24,34 +24,20 @@ def index(item_service: ItemService = Provide[Container.item_service]):
 
     query_name = request.args.get("query_name")
     query_name_ceneo = request.args.get("query_name_ceneo")
-    query_id_ceneo = request.args.get("query_id_ceneo")
 
     # Query products from ceneo by name
     if query_name_ceneo is not None and query_name_ceneo != "":
-        ceneo_item = CeneoItem()
         try:
-            item_by_name = ceneo_item.find_id_by_item_name(
-                item_name=str(query_name_ceneo)
-            )
+            item_service.fetch_item(item_name=query_name_ceneo)
+            flash("Success", "success")
+
         except Exception as e:
             print(e)
-            return {"query_result": "Error"}
+            return f"{e}"
 
-        return {"query_result": item_by_name}
-    # Query products from ceneo by id
-    if query_id_ceneo is not None and query_id_ceneo != "":
-        # ceneo_item = CeneoItem()
+        redirect(url_for("products.index"))
 
-        # try:
-        #     item_by_id = ceneo_item.fetch_lowest_price(item_id=str(query_id_ceneo))
-        # except Exception as e:
-        #     print(e)
-        #     return {"query_result": "Error"}
-        item_service.fetch_item(item_name=query_id_ceneo)
-
-        return {"query_result": 'ok'}
-
-    # Quering products from database by name or
+    # Quering products from database by name
     # all products if name is not provided or empty
     if query_name is None or query_name == "":
         products_to_show = item_service.get_all_products_to_show_paginate(

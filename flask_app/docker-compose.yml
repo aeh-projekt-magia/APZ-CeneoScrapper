@@ -58,6 +58,8 @@ services:
       - POSTGRES_USER=hello
       - POSTGRES_PASSWORD=hello
       - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
     networks:
       - appnetwork
     healthcheck:

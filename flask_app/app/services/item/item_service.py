@@ -33,13 +33,17 @@ class ItemService:
         Returns: the corresponding Item object
         """
         item = self.item_repository.get_item_by_name(item_name)
+
         if item is None:
             item_id_dict = self.ceneo_item.find_id_by_item_name(item_name)
             new_item = Item(
                 item_id=item_id_dict["item_id"],
                 name=item_id_dict["item_name"],
             )
-            self.item_repository.add_item(new_item)
+            
+            item_by_id = self.item_repository.get_item_by_id(item_id_dict["item_id"])
+            if item_by_id is None:
+                self.item_repository.add_item(new_item)
             return new_item
         return item
 
