@@ -11,6 +11,7 @@ from app.services.decorators import (
     admin_user_required,
     confirmed_user_required,
 )
+from app.services.scheduler.tasks import Tasks
 
 
 @bp.route("/start", methods=["POST"])
@@ -42,6 +43,23 @@ def stop_scheduler(scheduler: TaskScheduler = Provide[Container.task_scheduler])
     except Exception:
         return (
             f"SCHEDULER NOT STOPPED\n\n"
+            f"{traceback.format_exc()}\n\n"
+            f"{sys.exc_info()[2]}"
+        )
+
+
+@bp.route("/run-task", methods=["POST"])
+# @login_required
+# @admin_user_required
+# @confirmed_user_required
+@inject
+def run_update_subscribers(tasks: Tasks = Provide[Container.tasks]):
+    try:
+        tasks.update_subscribers()
+        return "OK"
+    except Exception:
+        return (
+            f"ERROR WHILE RUNNING TASK\n\n"
             f"{traceback.format_exc()}\n\n"
             f"{sys.exc_info()[2]}"
         )

@@ -21,7 +21,7 @@ class ImplUserRepository(UserRepository):
         return user
 
     def get_all_users(self) -> List[User]:
-        users = db.session.execute(db.select(User)).scalars()
+        users = db.session.execute(db.select(User)).scalars().all()
         return users
 
     def delete_user_by_email_address(self, email_address):

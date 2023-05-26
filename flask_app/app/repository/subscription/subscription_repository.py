@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from app.models.SubscriptionModel import Subscription
 from app.extensions import db
-from repository.base_repository import BaseRepository
+from app.repository.base_repository import BaseRepository
 
 
 class SubscriptionRepository(BaseRepository, ABC):
@@ -21,7 +21,11 @@ class SubscriptionRepository(BaseRepository, ABC):
         ...
 
     @abstractmethod
-    def get_subscriptions_by_user(self, user_id):
+    def get_subscriptions_by_user(self, user_id, paginate: bool, **kwargs):
+        ...
+
+    @abstractmethod
+    def get_subscriber_email(self, subscription: Subscription) -> str:
         ...
 
     @abstractmethod

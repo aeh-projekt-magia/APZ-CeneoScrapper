@@ -6,7 +6,7 @@ from app.extensions import db
 from app.models.UserModel import User
 from app.models.ItemModel import Item
 from app.models.SubscriptionModel import Subscription
-from repository.subscription.subscription_repository import SubscriptionRepository
+from app.repository.subscription.subscription_repository import SubscriptionRepository
 from services.subscription.invalid_subscription_exception import InvalidSubscriptionException
 
 
@@ -47,9 +47,9 @@ class SubscriptionService:
         )
         return bool(subscription)
 
-    def get_user_subscriptions(self, user_id):
+    def get_user_subscriptions(self, user_id, paginate, **kwargs):
         subscriptions = self.subscription_repository.get_subscriptions_by_user(
-            user_id=user_id
+            user_id=user_id, paginate=paginate, **kwargs
         )
         return subscriptions
 
@@ -73,6 +73,10 @@ class SubscriptionService:
     def get_all_subscriptions(self) -> List[Subscription]:
         subscriptions = self.subscription_repository.get_all_subscriptions()
         return subscriptions
+
+    def get_subscriber_email(self, subscription: Subscription) -> str:
+        email = self.subscription_repository.get_subscriber_email(subscription)
+        return email
 
     def should_be_updated(self, subscription: Subscription) -> bool:
         now = datetime.datetime.now()

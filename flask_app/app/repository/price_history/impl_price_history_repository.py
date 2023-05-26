@@ -26,11 +26,11 @@ class ImplPriceHistoryRepository(PriceHistoryRepository):
             .filter_by(item_id=item_id)
             .order_by(PriceHistory.date)
             .limit(n)
-        ).scalars()
+        ).scalars().all()
         return price_hist_list
 
     def get_all_price_history(self):
-        records = db.session.execute(db.select(PriceHistory)).scalars()
+        records = db.session.execute(db.select(PriceHistory)).scalars().all()
         return records
 
     def delete_price_history_by_id(self, price_hist_id: str):

@@ -1,10 +1,10 @@
 import datetime
 from typing import Tuple
 
-from models.PriceHistoryModel import PriceHistory
-from repository.price_history.price_history_repository import PriceHistoryRepository
-from services.item.item_service import ItemService
-from services.price_history.price_history_missing_exception import PriceHistoryMissingException
+from app.models.PriceHistoryModel import PriceHistory
+from app.repository.price_history.price_history_repository import PriceHistoryRepository
+from app.services.item.item_service import ItemService
+from app.services.price_history.price_history_missing_exception import PriceHistoryMissingException
 
 
 class PriceHistoryService:
@@ -81,9 +81,9 @@ class PriceHistoryService:
         price_difference = "{0:.2f}".format(price_difference)
 
         summary = f"{item.name}:\t" \
-                  f"({self._price_hist_date_and_price(price_hist_a)}" \
+                  f"{self._price_hist_date_and_price(price_hist_a)}" \
                   f"\t->\t" \
-                  f"({self._price_hist_date_and_price(price_hist_b)}" \
+                  f"{self._price_hist_date_and_price(price_hist_b)}" \
                   f"\tTotal price change: {price_difference} {self.currency}"
         return summary, has_changed
 
