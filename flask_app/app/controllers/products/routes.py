@@ -56,7 +56,9 @@ def index(item_service: ItemService = Provide[Container.item_service]):
 @confirmed_user_required
 @inject
 def single_product_view(
-    product_id, item_service: ItemService = Provide[Container.item_service]
+        product_id,
+        item_service: ItemService = Provide[Container.item_service],
+        subscription_service: SubscriptionService = Provide[Container.subscription_service]
 ):
     """Wyświetlenie konkretnego pobranego do tej pory produktu"""
 
@@ -65,12 +67,12 @@ def single_product_view(
     if request.method == "POST":
         if form.validate_on_submit():
             if form.subscribe_button.data:
-                SubscriptionService.add(user_id=current_user.id, product_id=product_id)
+                SubscriptionService.add(user_id=current_user.id, item_id=product_id)
                 is_already_subscribed = True
                 flash("Product subscribed", "success")
             elif form.unsubscribe_button.data:
-                SubscriptionService.remove(
-                    user_id=current_user.id, product_id=product_id
+                subscription_service.remove(
+                    user_id=current_user.id, item_id=product_id
                 )
                 is_already_subscribed = False
                 flash("Product unsubscribed", "success")
@@ -80,8 +82,8 @@ def single_product_view(
 
     tab = None
     product_to_show = item_service.get_product_to_show_by_id(product_id)
-    is_already_subscribed = SubscriptionService.check_if_subscribed(
-        user_id=current_user.id, product_id=product_id
+    is_already_subscribed = subscription_service.check_if_subscribed(
+        user_id=current_user.id, item_id=product_id
     )
 
     return render_template(
