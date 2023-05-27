@@ -25,6 +25,10 @@ class SubscriptionRepository(BaseRepository, ABC):
         ...
 
     @abstractmethod
+    def user_subscribed_items_query(self, user_id, item_name: str):
+        ...
+
+    @abstractmethod
     def get_subscriber_email(self, subscription: Subscription) -> str:
         ...
 
