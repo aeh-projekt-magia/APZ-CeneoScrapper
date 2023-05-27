@@ -26,7 +26,7 @@ class ImplItemRepository(ItemRepository):
         return item
 
     def get_items_by_name_contains(self, name: str) -> List[Item]:
-        q = Item.query.filter(Item.name.like(f"%{name}%"))
+        q = Item.query.filter(Item.name.ilike(f"%{name}%"))
         return q
 
     def get_all_items_paginate(self, page, pages: int):

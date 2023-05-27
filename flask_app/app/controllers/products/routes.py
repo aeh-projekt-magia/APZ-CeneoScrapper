@@ -25,10 +25,20 @@ def index(item_service: ItemService = Provide[Container.item_service]):
     query_name = request.args.get("query_name")
     query_name_ceneo = request.args.get("query_name_ceneo")
 
+    # Query products from ceneo by name
     if query_name_ceneo is not None and query_name_ceneo != "":
-        ceneo_item = CeneoItem()
-        item_id_dict = ceneo_item.find_id_by_item_name(query_name_ceneo)
+        try:
+            item_service.fetch_item(item_name=query_name_ceneo)
+            flash("Success", "success")
 
+        except Exception as e:
+            print(e)
+            return f"{e}"
+
+        redirect(url_for("products.index"))
+
+    # Quering products from database by name
+    # all products if name is not provided or empty
     if query_name is None or query_name == "":
         products_to_show = item_service.get_all_products_to_show_paginate(
             page=page, pages=25
@@ -70,24 +80,12 @@ def single_product_view(
                 url_for("products.single_product_view", product_id=product_id)
             )
 
-    # TODO: products/routes - Dodać obsługę repozytorium
     tab = None
     product_to_show = item_service.get_product_to_show_by_id(product_id)
     is_already_subscribed = subscription_service.check_if_subscribed(
         user_id=current_user.id, item_id=product_id
     )
 
-    # TODO: Nie ma już opinii, wywalić raczej
-    """Tabs switching comments/shops"""
-    if request.args.get("tab") == "1" and product_to_show:
-        tab = 1
-        return render_template(
-            "products/single_product.html",
-            product=product_to_show,
-            tab=tab,
-            reviews=product_to_show.children,
-            form=form,
-        )
     return render_template(
         "products/single_product.html",
         product=product_to_show,

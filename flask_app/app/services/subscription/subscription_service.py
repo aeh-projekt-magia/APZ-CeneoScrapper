@@ -33,10 +33,12 @@ class SubscriptionService:
         )
         self.subscription_repository.add_subscription(subscription)
 
+
     def remove(self, user_id, item_id):
         subscription = self.subscription_repository.get_subscription_by_item_and_user(
             item_id=item_id,
             user_id=user_id
+
         )
         self.subscription_repository.delete_subscription_by_id(subscription.id)
 

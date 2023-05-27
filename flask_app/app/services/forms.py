@@ -16,7 +16,6 @@ from app.models.UserModel import User
 class SubscriptionUpdate(FlaskForm):
     notification_frequency = IntegerField()
     notify_on_price_change = SelectField("Test", choices=[("Yes"), ("No")])
-    send_notification = SelectField("Test", choices=[("Yes"), ("No")])
 
 
 class SubscribeProductForm(FlaskForm):

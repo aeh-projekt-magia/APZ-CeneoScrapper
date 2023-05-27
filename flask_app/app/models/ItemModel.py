@@ -14,7 +14,7 @@ f"""This table has to be created first
 class Item(db.Model):
     __tablename__ = "items"
 
-    id = db.Column(db.String, primary_key=True, autoincrement=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     name = db.Column(db.String, default="")
     category = db.Column(db.String)
     price = db.Column(db.String)
@@ -52,7 +52,10 @@ class Item(db.Model):
         is_available=None,
         offer_url=None,
     ):
-        self.id = item_id
+        if item_id is None:
+            pass
+        else:
+            self.id = item_id
         self.name = name
         self.lowest_price = lowest_price
         self.available_shops_count = available_shops_count

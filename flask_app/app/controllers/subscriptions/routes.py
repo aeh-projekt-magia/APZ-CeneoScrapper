@@ -72,8 +72,12 @@ def single_subscription_update(
     product_id, item_service: ItemService = Provide[Container.item_service],
     subscription_service: SubscriptionService = Provide[Container.subscription_service]
 ):
+
+    # If item is not subscribed, return 404
+
     if not subscription_service.check_if_subscribed(
         user_id=current_user.id, item_id=product_id
+
     ):
         return render_template("errors/404.html")
 
@@ -87,7 +91,6 @@ def single_subscription_update(
     form = SubscriptionUpdate(
         notification_frequency=subscription.notification_frequency,
         notify_on_price_change="Yes" if subscription.notify_on_price_change else "No",
-        send_notification="Yes" if subscription.send_notification else "No",
     )
     if request.method == "POST":
         if form.validate_on_submit():
@@ -96,7 +99,6 @@ def single_subscription_update(
                 update={
                     "notification_frequency": form.notification_frequency.data,
                     "notify_on_price_change": form.notify_on_price_change.data,
-                    "send_notification": form.send_notification.data,
                 },
             )
             return redirect(
