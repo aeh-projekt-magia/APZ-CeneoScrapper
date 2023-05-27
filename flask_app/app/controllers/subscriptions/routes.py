@@ -12,7 +12,10 @@ from app.containers import Container
 @bp.route("/", methods=["GET"])
 @login_required
 @confirmed_user_required
-def index():
+@inject
+def index(
+        subscription_service: SubscriptionService = Provide[Container.subscription_service]
+):
     """Wyświetlenie zasubskrybowanych produktów"""
     # TODO:subscriptions/routes - Dodać repozytorium
 
@@ -20,12 +23,12 @@ def index():
 
     query_name = request.args.get("query_name")
     if query_name is None or query_name == "":
-        products_to_show = SubscriptionService.get_user_subscriptions(
-            user_id=current_user.id
-        ).paginate(page=page, per_page=25)
+        products_to_show = subscription_service.get_user_subscriptions(
+            user_id=current_user.id, paginate=True, per_page=25, page=page
+        )
     else:
-        products_to_show = SubscriptionService.get_user_subscriptions_by_name(
-            user_id=current_user.id, product_name=query_name
+        products_to_show = subscription_service.get_user_subscribed_items(
+            user_id=current_user.id, item_name=query_name
         ).paginate(page=page, per_page=25)
 
     return render_template("subscriptions/index.html", products=products_to_show)
@@ -36,19 +39,21 @@ def index():
 @confirmed_user_required
 @inject
 def single_subscription_view(
-    product_id, item_service: ItemService = Provide[Container.item_service]
+        product_id,
+        item_service: ItemService = Provide[Container.item_service],
+        subscription_service: SubscriptionService = Provide[Container.subscription_service]
 ):
     """Wyświetlenie konkretnego zasubskrybowanego do tej pory produktu"""
 
-    if not SubscriptionService.check_if_subscribed(
-        user_id=current_user.id, product_id=product_id
+    if not subscription_service.check_if_subscribed(
+        user_id=current_user.id, item_id=product_id
     ):
         return render_template("errors/404.html")
 
     product = item_service.get_product_to_show_by_id(item_id=product_id)
     product_price_history = product.price_history
-    subscription = SubscriptionService.get_subscription_details(
-        user_id=current_user.id, product_id=product_id
+    subscription = subscription_service.get_subscription_details(
+        user_id=current_user.id, item_id=product_id
     )
 
     return render_template(
@@ -64,17 +69,18 @@ def single_subscription_view(
 @confirmed_user_required
 @inject
 def single_subscription_update(
-    product_id, item_service: ItemService = Provide[Container.item_service]
+    product_id, item_service: ItemService = Provide[Container.item_service],
+    subscription_service: SubscriptionService = Provide[Container.subscription_service]
 ):
-    if not SubscriptionService.check_if_subscribed(
-        user_id=current_user.id, product_id=product_id
+    if not subscription_service.check_if_subscribed(
+        user_id=current_user.id, item_id=product_id
     ):
         return render_template("errors/404.html")
 
     product = item_service.get_product_to_show_by_id(item_id=product_id)
     product_price_history = product.price_history
-    subscription = SubscriptionService.get_subscription_details(
-        user_id=current_user.id, product_id=product_id
+    subscription = subscription_service.get_subscription_details(
+        user_id=current_user.id, item_id=product_id
     )
 
     # Create default values for form fields
@@ -85,7 +91,7 @@ def single_subscription_update(
     )
     if request.method == "POST":
         if form.validate_on_submit():
-            SubscriptionService.update_subscription(
+            subscription_service.update_subscription(
                 subscription=subscription,
                 update={
                     "notification_frequency": form.notification_frequency.data,

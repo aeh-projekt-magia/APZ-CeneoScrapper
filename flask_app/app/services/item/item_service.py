@@ -22,6 +22,9 @@ class ItemService:
     def get_product_to_show_by_id(self, item_id: str):
         return self.item_repository.get_item_by_id(item_id)
 
+    def get_item_by_id(self, item_id: str):
+        return self.item_repository.get_item_by_id(item_id)
+
     def fetch_item(self, item_name: str) -> Item:
         """
         In case a record with matching item name is available
@@ -47,7 +50,7 @@ class ItemService:
         lowest_price_dict = self.ceneo_item.fetch_lowest_price(item_id)
         updated_item = self.item_repository.get_item_by_id(item_id)
         updated_item.price = lowest_price_dict["price"]
-        updated_item.offer_url = lowest_price_dict["offer_url"]
+        updated_item.offer_url = lowest_price_dict["offer"]
         updated_item.is_available = True
         updated_item.last_updated = lowest_price_dict["timestamp"]
         self.item_repository.update_item(updated_item)
