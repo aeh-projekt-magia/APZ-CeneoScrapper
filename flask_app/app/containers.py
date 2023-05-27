@@ -13,11 +13,11 @@ from app.services.emails.email_sender import EmailSender
 from app.services.scheduler.tasks import Tasks
 from app.services.scheduler.task_scheduler import TaskScheduler
 from app.services.subscription.subscription_service import SubscriptionService
-from repository.subscription.impl_subscription_repository import ImplSubscriptionRepository
-from repository.subscription.subscription_repository import SubscriptionRepository
-from repository.user.impl_user_repository import ImplUserRepository
-from repository.user.user_repository import UserRepository
-from services.price_history.price_history_service import PriceHistoryService
+from app.repository.subscription.impl_subscription_repository import ImplSubscriptionRepository
+from app.repository.subscription.subscription_repository import SubscriptionRepository
+from app.repository.user.impl_user_repository import ImplUserRepository
+from app.repository.user.user_repository import UserRepository
+from app.services.price_history.price_history_service import PriceHistoryService
 
 
 class Container(containers.DeclarativeContainer):

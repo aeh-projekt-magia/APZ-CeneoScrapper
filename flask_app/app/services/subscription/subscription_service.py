@@ -7,7 +7,7 @@ from app.models.UserModel import User
 from app.models.ItemModel import Item
 from app.models.SubscriptionModel import Subscription
 from app.repository.subscription.subscription_repository import SubscriptionRepository
-from services.subscription.invalid_subscription_exception import InvalidSubscriptionException
+from app.services.subscription.invalid_subscription_exception import InvalidSubscriptionException
 
 
 class SubscriptionService:
@@ -23,8 +23,8 @@ class SubscriptionService:
         product_to_subscribe = Item.query.where(Item.id == product_id).first()
         return user, product_to_subscribe
 
-    def add(self, user_id, item_id, notification_frequency,
-            notify_on_price_change):
+    def add(self, user_id, item_id, notification_frequency:int = 1,
+            notify_on_price_change:bool = True):
         subscription = Subscription(
             item_id=item_id,
             user_id=user_id,
@@ -48,7 +48,7 @@ class SubscriptionService:
             user_id=user_id
         )
         return bool(subscription)
-
+#
     def get_user_subscriptions(self, user_id, paginate, **kwargs):
         subscriptions = self.subscription_repository.get_subscriptions_by_user(
             user_id=user_id, paginate=paginate, **kwargs
@@ -61,7 +61,7 @@ class SubscriptionService:
             Item.query.where(User.id == user.id)
             .where(Subscription.user_id == user.id)
             .where(Subscription.item_id == Item.id)
-            .filter(Item.name.like(f"%{item_name}%"))
+            .filter(Item.name.ilike(f"%{item_name}%"))
         )
         return items
 

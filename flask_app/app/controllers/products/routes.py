@@ -9,7 +9,6 @@ from app.services.forms import SubscribeProductForm
 from app.services.subscription.subscription_service import SubscriptionService
 from app.services.item.item_service import ItemService
 from app.containers import Container
-from app.services.ceneo.ceneo_item import CeneoItem
 
 
 @bp.route("/", methods=["GET"])
@@ -56,9 +55,9 @@ def index(item_service: ItemService = Provide[Container.item_service]):
 @confirmed_user_required
 @inject
 def single_product_view(
-        product_id,
-        item_service: ItemService = Provide[Container.item_service],
-        subscription_service: SubscriptionService = Provide[Container.subscription_service]
+    product_id,
+    item_service: ItemService = Provide[Container.item_service],
+    subscription_service: SubscriptionService = Provide[Container.subscription_service],
 ):
     """Wyświetlenie konkretnego pobranego do tej pory produktu"""
 
@@ -67,13 +66,11 @@ def single_product_view(
     if request.method == "POST":
         if form.validate_on_submit():
             if form.subscribe_button.data:
-                SubscriptionService.add(user_id=current_user.id, item_id=product_id)
+                subscription_service.add(user_id=current_user.id, item_id=product_id)
                 is_already_subscribed = True
                 flash("Product subscribed", "success")
             elif form.unsubscribe_button.data:
-                subscription_service.remove(
-                    user_id=current_user.id, item_id=product_id
-                )
+                subscription_service.remove(user_id=current_user.id, item_id=product_id)
                 is_already_subscribed = False
                 flash("Product unsubscribed", "success")
             return redirect(
@@ -93,12 +90,3 @@ def single_product_view(
         form=form,
         is_already_subscribed=is_already_subscribed,
     )
-
-
-@bp.route("/search/<product_name>", methods=["GET", "POST"])
-@login_required
-@confirmed_user_required
-@inject
-def search_product(product_name):
-    """Wyszukiwanie produktu z ceneo"""
-    return "Test"

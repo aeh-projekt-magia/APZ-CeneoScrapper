@@ -1,4 +1,4 @@
-from shared.basic_exception import BasicException
+from app.shared.basic_exception import BasicException
 
 
 class PriceHistoryMissingException(BasicException):

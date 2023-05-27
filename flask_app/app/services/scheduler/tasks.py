@@ -6,7 +6,7 @@ from app.services.emails.email_sender import EmailSender
 from app.models.SubscriptionModel import Subscription
 from app.services.subscription.subscription_service import SubscriptionService
 from app.services.price_history.price_history_service import PriceHistoryService
-from repository.user.user_repository import UserRepository
+from app.repository.user.user_repository import UserRepository
 
 
 class Tasks:
