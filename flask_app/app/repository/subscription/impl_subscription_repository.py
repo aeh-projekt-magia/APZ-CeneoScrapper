@@ -2,6 +2,7 @@ from app.models.SubscriptionModel import Subscription
 from app.extensions import db
 from app.models.UserModel import User
 from app.repository.subscription.subscription_repository import SubscriptionRepository
+from app.models.ItemModel import Item
 
 
 class ImplSubscriptionRepository(SubscriptionRepository):
@@ -42,6 +43,17 @@ class ImplSubscriptionRepository(SubscriptionRepository):
             select
         ).scalars().all()
         return subscriptions
+
+    def user_subscribed_items_query(self, user_id, item_name: str):
+        user = User.query.where(User.id == user_id).first()
+        query = (
+            Item.query.where(User.id == user.id)
+            .where(Subscription.user_id == user.id)
+            .where(Subscription.item_id == Item.id)
+        )
+        if item_name:
+            query = query.filter(Item.name.ilike(f"%{item_name}%"))
+        return query
 
     def get_subscriber_email(self, subscription: Subscription) -> str:
         user = db.session.execute(

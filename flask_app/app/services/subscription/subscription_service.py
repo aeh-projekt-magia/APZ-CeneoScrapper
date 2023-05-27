@@ -56,14 +56,11 @@ class SubscriptionService:
         return subscriptions
 
     def get_user_subscribed_items(self, user_id, item_name: str):
-        user = User.query.where(User.id == user_id).first()
-        items = (
-            Item.query.where(User.id == user.id)
-            .where(Subscription.user_id == user.id)
-            .where(Subscription.item_id == Item.id)
-            .filter(Item.name.ilike(f"%{item_name}%"))
+        query = self.subscription_repository.user_subscribed_items_query(
+            user_id,
+            item_name
         )
-        return items
+        return query
 
     def get_subscription_details(self, user_id, item_id):
         subscription = self.subscription_repository.get_subscription_by_item_and_user(

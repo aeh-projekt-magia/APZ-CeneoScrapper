@@ -22,14 +22,9 @@ def index(
     page = request.args.get("page", 1, type=int)
 
     query_name = request.args.get("query_name")
-    if query_name is None or query_name == "":
-        products_to_show = subscription_service.get_user_subscriptions(
-            user_id=current_user.id, paginate=True, per_page=25, page=page
-        )
-    else:
-        products_to_show = subscription_service.get_user_subscribed_items(
-            user_id=current_user.id, item_name=query_name
-        ).paginate(page=page, per_page=25)
+    products_to_show = subscription_service.get_user_subscribed_items(
+        user_id=current_user.id, item_name=query_name
+    ).paginate(page=page, per_page=25)
 
     return render_template("subscriptions/index.html", products=products_to_show)
 
