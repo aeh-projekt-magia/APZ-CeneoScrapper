@@ -26,6 +26,7 @@ class Container(containers.DeclarativeContainer):
             "app.controllers.products.routes",
             "app.controllers.scheduler.routes",
             "app.controllers.subscriptions.routes",
+            "app.controllers.accounts.routes",
         ]
     )
 
@@ -49,7 +50,13 @@ class Container(containers.DeclarativeContainer):
         ImplUserRepository
     )
 
-    email_service: EmailSender = providers.Singleton(EmailSender)
+    email_service: EmailSender = providers.Singleton(
+        EmailSender,
+        port=config.email.port,
+        smtp_server=config.email.smtp_server,
+        email_address=config.email.email_address,
+        password=config.email.password
+    )
 
     item_service: app.services.item.item_service.ItemService = providers.Singleton(
         app.services.item.item_service.ItemService,
@@ -66,7 +73,9 @@ class Container(containers.DeclarativeContainer):
     price_hist_service: PriceHistoryService = providers.Singleton(
         PriceHistoryService,
         price_history_repository=price_hist_repository,
-        item_service=item_service
+        item_service=item_service,
+        date_format=config.subscription_updates.date_format,
+        currency=config.subscription_updates.currency
     )
 
     tasks = providers.Singleton(
