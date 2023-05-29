@@ -32,9 +32,15 @@ elif [ $CHOICE == 6 ]; then
     docker exec $CONTAINER_ID python manage.py recreate_db
 
 elif [ $CHOICE == 7 ]; then
-    CONTAINER_ID=$(docker ps -f name=flask_app-app -q -n 1)
+    CONTAINER_ID=$(docker ps -f name=flask_app_app -q -n 1)
     echo "Using container id: $CONTAINER_ID"
-    docker exec $CONTAINER_ID python manage.py create_admin
+    unset PASSWORD
+    unset EMAIL
+    echo -n "Enter email: "
+    read EMAIL
+    echo -n "Enter password: "
+    read -s PASSWORD
+    docker exec $CONTAINER_ID python manage.py create_admin --email $EMAIL --password $PASSWORD
 else
     echo "Wrong option!"
 fi
