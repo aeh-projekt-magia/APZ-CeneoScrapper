@@ -27,7 +27,7 @@ elif [ $CHOICE == 5 ]; then
     docker-compose -f ./flask_app/docker-compose.yml up -d --scale app=5
 
 elif [ $CHOICE == 6 ]; then
-    CONTAINER_ID=$(docker ps -f name=flask_app-app -q -n 1)
+    CONTAINER_ID=$(docker ps -f name=flask_app_app -q -n 1)
     echo "Using container id: $CONTAINER_ID"
     docker exec $CONTAINER_ID python manage.py recreate_db
 

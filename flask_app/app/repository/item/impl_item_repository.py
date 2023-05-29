@@ -16,7 +16,7 @@ class ImplItemRepository(ItemRepository):
         return item
 
     def get_item_by_id(self, item_id: str):
-        item = db.session.execute(db.select(Item).filter_by(id=item_id)).scalar_one()
+        item = db.session.execute(db.select(Item).filter_by(id=item_id)).scalar_one_or_none()
         return item
 
     def get_item_by_name(self, name: str):

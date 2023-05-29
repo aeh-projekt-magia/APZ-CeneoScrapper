@@ -34,7 +34,7 @@ def index(item_service: ItemService = Provide[Container.item_service]):
             print(e)
             return f"{e}"
 
-        redirect(url_for("products.index"))
+        return redirect(url_for("products.index"))
 
     # Quering products from database by name
     # all products if name is not provided or empty
