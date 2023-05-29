@@ -1,10 +1,11 @@
+from getpass import getpass
+
 from flask.cli import FlaskGroup
 import click
 import pytest
 from app import create_app, db
 from app.models.UserModel import User
 from app.models.ItemModel import Item
-from app.models.PriceHistoryModel import PriceHistory
 from app.repository.item.impl_item_repository import ImplItemRepository
 from app.repository.user.impl_user_repository import ImplUserRepository
 
@@ -66,11 +67,13 @@ def coverage():
 
 
 @cli.command("create_admin")
-def create_admin():
+@click.option('--email')
+@click.option('--password')
+def create_admin(email, password):
     """Create admin user"""
     try:
         admin_user = User(
-            email="j@j.com", password="123456", is_admin=True, is_confirmed=True
+            email=email, password=password, is_admin=True, is_confirmed=True
         )
         db.session.add(admin_user)
         db.session.commit()

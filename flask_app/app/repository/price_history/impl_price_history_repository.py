@@ -24,7 +24,7 @@ class ImplPriceHistoryRepository(PriceHistoryRepository):
         price_hist_list = db.session.execute(
             select(PriceHistory)
             .filter_by(item_id=item_id)
-            .order_by(PriceHistory.date)
+            .order_by(PriceHistory.date.desc())
             .limit(n)
         ).scalars().all()
         return price_hist_list

@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from app import containers
 from app.extensions import db, bcrypt, migrate, login_manager
-from config import DevelopmentConfig
+from config import DevelopmentConfig, ProductionConfig, TestingConfig
 
 
 def create_app(

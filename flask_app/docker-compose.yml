@@ -34,9 +34,6 @@ services:
       - FLASK_DEBUG=1
       - FLASK_APP=app
       - FLASK_ENV=development
-      - EMAIL_ADDRESS=ceneowebscrapper@gmail.com
-      # DELETE PASSWORD BEFORE COMMITING!
-      - EMAIL_PASSWORD=...
       - SECURITY_PASSWORD_SALT=fkslkfsdlkfnsdfnsfd
       - DATABASE_URI=postgresql://hello:hello@db:5432/database_development
       - DATABASE_TEST_URI=postgresql://hello:hello@db:5432/database_testing
@@ -67,17 +64,17 @@ services:
       interval: 0.5s
       timeout: 3s
       retries: 5
-#
-#  nginx:
-#    image: nginx:1.13.0
-#    ports:
-#      - "80:80"
-#    depends_on:
-#      - app
-#    volumes:
-#      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-#    networks:
-#      - appnetwork
+
+  nginx:
+    image: nginx:1.13.0
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - appnetwork
 volumes:
   postgres_data:
 

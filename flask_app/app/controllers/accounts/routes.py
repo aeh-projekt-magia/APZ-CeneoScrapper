@@ -1,3 +1,5 @@
+from dependency_injector.wiring import inject, Provide
+
 from app import bcrypt, db
 from app.controllers.accounts import bp
 from app.models.UserModel import User
@@ -8,10 +10,13 @@ from app.services.token import TokenService
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
+from app.containers import Container
+
 
 @bp.route("/register", methods=["GET", "POST"])
 @logout_required
-def register():
+@inject
+def register(email_service: EmailSender = Provide[Container.email_service]):
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         user = User(email=form.email.data, password=form.password.data)
@@ -23,7 +28,7 @@ def register():
         login_user(user)
         flash("You registered and are now logged in. Welcome!", "success")
         try:
-            EmailSender.send_email(
+            email_service.send_email(
                 message=f"Token: {token}", subject="Your token", recipient=user.email
             )
             flash(f"Token has been sent on {user.email}", "success")
@@ -88,13 +93,14 @@ def confirm_account():
 
 @bp.route("/resend", methods=["GET", "POST"])
 @login_required
-def resend_token():
+@inject
+def resend_token(email_service: EmailSender = Provide[Container.email_service]):
     """Get current user email crom current_user.email global variable attached to user session,
     and send token again"""  # noqa: E501
     if current_user.email:
         token = TokenService.generate_token(email=current_user.email)
         try:
-            EmailSender.send_email(
+            email_service.send_email(
                 message=f"Token: {token}",
                 subject="Your token",
                 recipient=current_user.email,
