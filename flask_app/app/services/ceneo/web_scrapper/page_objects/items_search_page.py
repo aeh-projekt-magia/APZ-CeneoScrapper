@@ -28,10 +28,15 @@ class ItemsSearchPage(CeneoPage):
         return self._web_element_to_product(self.first_product)
 
     def _web_element_to_product(self, web_element: WebElement) -> ItemData:
+        l_image = (By.XPATH, ".//a/img")
+        image = web_element.find_element(*l_image)
         item_id = web_element.get_attribute("data-productid")
         item_name = web_element.get_attribute("data-productname")
+        image_url = image.get_attribute("src")
         return ItemData(
-            item_id=item_id, item_name=item_name, item_search_name=self.item_search_name
+            item_id=item_id, item_name=item_name,
+            item_search_name=self.item_search_name,
+            image_url=image_url
         )
 
     @staticmethod

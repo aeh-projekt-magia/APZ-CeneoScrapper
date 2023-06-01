@@ -28,6 +28,7 @@ def test_find_id_by_item_name(ceneo_item_mocks, item_name_, item_data_params):
         "item_id": item_data_params["item_id"],
         "item_name": item_data_params["item_name"],
         "item_search_name": item_data_params["item_search_name"],
+        "image_url": "img.url"
     }
 
     ceneo_item = CeneoItem()
@@ -53,3 +54,4 @@ def test_e2e_find_id_by_item_name(item_name_):
     assert len(item_id_dict["item_id"]) > 0
     assert "Apple iPhone 13" in item_id_dict["item_name"]
     assert item_id_dict["item_search_name"] == item_name_
+    assert len(item_id_dict["image_url"]) > 0
