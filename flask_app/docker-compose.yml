@@ -65,20 +65,20 @@ services:
       timeout: 3s
       retries: 5
 
-#  nginx:
-#    image: nginx:1.13.0
-#    ports:
-#      - "80:80"
-#    depends_on:
-#      - app
-#    volumes:
-#      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-#    networks:
-#      - appnetwork
+  nginx:
+    image: nginx:1.13.0
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - appnetwork
 volumes:
   postgres_data:
+
 
 networks:
   appnetwork:
     driver: bridge
-

@@ -17,12 +17,21 @@ from app.containers import Container
 @inject
 def index(item_service: ItemService = Provide[Container.item_service]):
     """Wyświetlenie pobranych do tej pory produktów"""
-    # TODO: products/routes - Dodać obsługę repozytorium
 
     page = request.args.get("page", 1, type=int)
 
-    query_name = request.args.get("query_name")
     query_name_ceneo = request.args.get("query_name_ceneo")
+
+    # Show products from database
+    if query_name_ceneo is None or query_name_ceneo == "":
+        products_to_show = item_service.get_all_products_to_show_paginate(
+            page=page, pages=25
+        )
+
+    else:
+        products_to_show = item_service.get_all_products_to_show_by_name(
+            item_name=query_name_ceneo
+        ).paginate(page=page, per_page=25)
 
     # Query products from ceneo by name
     if query_name_ceneo is not None and query_name_ceneo != "":
@@ -32,20 +41,9 @@ def index(item_service: ItemService = Provide[Container.item_service]):
 
         except Exception as e:
             print(e)
-            return f"{e}"
+            flash("There is a problem", "error")
 
         return redirect(url_for("products.index"))
-
-    # Quering products from database by name
-    # all products if name is not provided or empty
-    if query_name is None or query_name == "":
-        products_to_show = item_service.get_all_products_to_show_paginate(
-            page=page, pages=25
-        )
-    else:
-        products_to_show = item_service.get_all_products_to_show_by_name(
-            item_name=query_name
-        ).paginate(page=page, per_page=25)
 
     return render_template("products/index.html", products=products_to_show)
 

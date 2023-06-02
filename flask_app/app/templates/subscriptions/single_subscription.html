@@ -66,10 +66,6 @@
                             Price</th>
                         <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                             Date</th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            column-tbd</th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            column-tbd</th>
                     </tr>
                 </thead>
                 {% for single_price_history in price_history %}
@@ -77,15 +73,10 @@
                     <tr>
                         <td class="px-4 py-3">{{single_price_history.price}} zł</td>
                         <td class="px-4 py-3">{{single_price_history.date.strftime('%Y-%m-%d')}}</td>
-                        <td class="px-4 py-3">tbd</td>
-                        <td class="px-4 py-3">tbd</td>
                     </tr>
                 </tbody>
                 {% endfor %}
             </table>
-            <div class="flex flex-row justify-between lg:w-4/5 w-full my-3">
-                <span class="flex title-font font-medium text-2xl md:text-xl text-gray-900">Current price: 50 zł</span>
-            </div>
         </div>
 
 
