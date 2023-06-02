@@ -42,7 +42,8 @@ class ItemService:
             new_item = Item(
                 item_id=item_id_dict["item_id"],
                 name=item_id_dict["item_name"],
-                image_url=item_id_dict["image_url"]
+                image_url=item_id_dict["image_url"],
+                lowest_price=item_id_dict["item_price"]
             )
             
             item_by_id = self.item_repository.get_item_by_id(item_id_dict["item_id"])

@@ -9,19 +9,22 @@ class ItemData(CeneoDataObject):
             item_id: str = "",
             item_name: str = "",
             item_search_name: str = "",
-            image_url: str = ""
+            image_url: str = "",
+            item_price: float = 0.0
 
     ):
         self.item_id = item_id
         self.item_name = item_name
         self.item_search_name = item_search_name
         self.image_url = image_url
+        self.item_price = item_price
 
     def as_string(self):
         return (
             f"item name = {self.item_name}\n"
             f"item id = {self.item_id}\n"
             f"item search name = {self.item_search_name}\n"
+            f"item price = {self.item_price}\n"
             f"image url = {self.image_url}"
         )
 
@@ -30,5 +33,6 @@ class ItemData(CeneoDataObject):
             item_name=self.item_name,
             item_id=self.item_id,
             item_search_name=self.item_search_name,
-            image_url=self.image_url
+            image_url=self.image_url,
+            item_price=self.item_price
         )

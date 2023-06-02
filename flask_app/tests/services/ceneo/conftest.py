@@ -50,7 +50,8 @@ def item_data_params(item_id_):
         "item_id": item_id_,
         "item_name": "test_item_name",
         "item_search_name": "test_item_search_name",
-        "image_url": "img.url"
+        "image_url": "img.url",
+        "item_price": 1000.00
     }
 
 
