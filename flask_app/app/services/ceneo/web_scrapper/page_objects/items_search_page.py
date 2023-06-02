@@ -33,10 +33,12 @@ class ItemsSearchPage(CeneoPage):
         item_id = web_element.get_attribute("data-productid")
         item_name = web_element.get_attribute("data-productname")
         image_url = image.get_attribute("src")
+        item_price = float(web_element.get_attribute("data-productminprice"))
         return ItemData(
             item_id=item_id, item_name=item_name,
             item_search_name=self.item_search_name,
-            image_url=image_url
+            image_url=image_url,
+            item_price=item_price
         )
 
     @staticmethod

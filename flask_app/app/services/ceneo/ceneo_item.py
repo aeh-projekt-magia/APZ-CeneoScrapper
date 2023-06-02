@@ -37,6 +37,7 @@ class CeneoItem(CeneoItemInterface):
             item_id=item_data["item_id"],
             item_name=item_data["item_name"],
             item_search_name=item_data["item_search_name"],
-            image_url=item_data["image_url"]
+            image_url=item_data["image_url"],
+            item_price=item_data["item_price"]
         )
         return item_id
